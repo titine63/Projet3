@@ -31,6 +31,8 @@ function App() {
         <button type="submit" className="button">
           Se connecter
         </button>
+
+        <a href="#" className="button">Ceci est un lien</a>
       </section>
     </div>
   );
