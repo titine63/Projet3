@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .main {
-  @apply py-16;
+  @apply min-h-screen py-16;
 }
 
 .header {
