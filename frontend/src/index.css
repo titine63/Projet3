@@ -2,8 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.main {
+  @apply py-16;
+}
+
+.header {
+  @apply fixed top-0 flex w-full items-center justify-between bg-[#fce3d7] px-3 py-2;
+}
+
+.h1 {
+  @apply my-8 text-center text-4xl font-bold;
+}
+
 .logo {
-  @apply left-0 mx-8 my-8 text-4xl font-bold text-[#ec5a13];
+  @apply left-0 my-8 text-5xl font-bold text-[#ec5a13];
 }
 
 .h2 {
