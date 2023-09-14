@@ -7,7 +7,7 @@
 }
 
 .header {
-  @apply fixed top-0 flex w-full items-center justify-between bg-[#fce3d7] px-3 py-2;
+  @apply fixed top-0 flex w-full items-center justify-between bg-[#ffffff] px-3 py-2;
 }
 
 .h1 {
@@ -39,4 +39,16 @@
 }
 .menu-ul--horizontal {
   @apply flex items-center justify-between px-3;
+}
+.carousel {
+  @apply flex h-44 w-full items-center justify-around bg-[#FCE3D7];
+}
+.carousel-item {
+  @apply flex w-[80%] items-center justify-center gap-10;
+}
+.carousel-text {
+  @apply text-center text-sm font-semibold;
+}
+.home-section {
+  @apply mt-16 flex flex-col items-center justify-center text-center;
 }
