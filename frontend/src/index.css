@@ -96,4 +96,15 @@
   .search-bar-container {
     @apply ml-4;
   }
+.carousel {
+  @apply flex h-44 w-full items-center justify-around bg-[#FCE3D7];
+}
+.carousel-item {
+  @apply flex w-[80%] items-center justify-center gap-10;
+}
+.carousel-text {
+  @apply text-center text-sm font-semibold;
+}
+.home-section {
+  @apply mt-16 flex flex-col items-center justify-center text-center;
 }
