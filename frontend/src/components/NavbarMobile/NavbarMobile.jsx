@@ -15,22 +15,22 @@ export default function NavbarMobile() {
               </Link>
             </li>
             <li>
-              <Link to="#">
+              <Link to="/buy">
                 <img src={searchIcon} alt="searchIcon" />
               </Link>
             </li>
             <li>
-              <Link to="#">
+              <Link to="sell">
                 <img src={addIcon} alt="addIcon" />
               </Link>
             </li>
             <li>
-              <Link to="#">
+              <Link to="/chat">
                 <img src={msgIcon} alt="msgIcon" />
               </Link>
             </li>
             <li>
-              <Link to="#">
+              <Link to="/favorites">
                 <img src={heartIcon} alt="heartIcon" />
               </Link>
             </li>

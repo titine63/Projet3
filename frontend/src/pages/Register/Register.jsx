@@ -1,18 +1,19 @@
-import { useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
-
-export default function Login() {
-  const { isLogged, setIsLogged } = useContext(GlobalContext);
-
-  function handleLogin() {
-    setIsLogged(isLogged ? false : true);
-  }
-
+export default function Register() {
   return (
     <>
       <section className="section">
         <h2 className="h2">Connectez-vous</h2>
         <form className="form">
+          <label htmlFor="pseudo" className="label">
+            Email
+          </label>
+          <input
+            type="text"
+            id="pseudo"
+            name="pseudo"
+            className="input"
+            placeholder="Pseudo"
+          />
           <label htmlFor="email" className="label">
             Email
           </label>
@@ -33,10 +34,10 @@ export default function Login() {
             className="input"
             placeholder="Mot de passe"
           />
-          <button onClick={handleLogin} type="button" className="button">
-            Se connecter
-          </button>
         </form>
+        <button type="submit" className="button">
+          Se connecter
+        </button>
       </section>
     </>
   );

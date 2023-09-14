@@ -7,7 +7,11 @@
 }
 
 .header {
-  @apply fixed top-0 flex w-full items-center justify-between bg-[#fce3d7] px-3 py-2;
+  @apply fixed top-0 flex w-full items-center justify-between gap-4 bg-[#fce3d7] px-4 py-2;
+}
+
+.footer {
+  @apply fixed bottom-0 w-full bg-[#FCE3D7] px-4 py-2;
 }
 
 .h1 {
@@ -31,12 +35,65 @@
 }
 
 .button {
-  @apply bg-orange-400 px-4 py-2 font-bold;
+  @apply min-w-[100px] bg-[#ec5a13] px-4 py-2 font-bold;
 }
 
 .navbar-mobile {
   @apply h-full w-full;
 }
+
 .menu-ul--horizontal {
   @apply flex items-center justify-between px-3;
+}
+
+.navbar-desktop {
+  @apply flex gap-4;
+}
+
+.search-bar-container {
+  @apply relative mr-auto flex-grow rounded-lg border-y-2 border-[#ec5a13];
+}
+
+.search-bar {
+  @apply w-full rounded-lg border-[#ec5a13];
+}
+
+.nav-element-desktop {
+  @apply hidden;
+}
+
+@media screen and (min-width: 645px) {
+  .header {
+    @apply gap-6 px-6;
+  }
+
+  .navbar-mobile {
+    @apply hidden;
+  }
+
+  .footer {
+    @apply hidden;
+  }
+
+  .search-bar-container {
+    @apply max-w-[50%];
+  }
+
+  .nav-element-desktop {
+    @apply flex;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .header {
+    @apply px-8;
+  }
+
+  .navbar-desktop {
+    @apply flex gap-6;
+  }
+
+  .search-bar-container {
+    @apply ml-4;
+  }
 }
