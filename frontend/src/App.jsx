@@ -9,12 +9,10 @@ function App() {
     <>
       <Router>
         <Layout>
-          <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
             </Routes>
-          </main>
         </Layout>
       </Router>
     </>
