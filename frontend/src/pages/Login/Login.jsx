@@ -1,7 +1,7 @@
 export default function Login() {
   return (
     <>
-      <h1 className="h1">Hello Khaled !</h1>
+      <h1 className="logo">TRINDED</h1>
       <section className="section">
         <h2 className="h2">Connectez-vous</h2>
         <form className="form">
