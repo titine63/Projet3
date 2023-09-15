@@ -27,15 +27,18 @@
 }
 
 .section {
-  @apply flex flex-col items-center gap-4 bg-gray-200 p-8;
+  @apply flex flex-col items-center;
 }
 
 .form {
-  @apply mb-4 flex flex-col gap-2 rounded-xl bg-white px-8 pb-8 pt-6 shadow-md;
+  @apply mb-4 flex flex-col gap-5  px-6 pb-8 pt-6;
+}
+.input-auth {
+  @apply h-12 w-64 rounded-lg border-none bg-[#d9d9d9] pl-12;
 }
 
 .button {
-  @apply min-w-[100px] bg-[#ec5a13] px-4 py-2 text-white;
+  @apply min-w-[100px] rounded-lg bg-[#ec5a13] px-4 py-2 text-white;
 }
 
 .button-grey {
