@@ -1,20 +1,26 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
 function Carousel({ children }) {
-  const [id, setid] = useState(1);
-  const { length } = children;
+  const [id, setId] = useState(0); // Start with the first slide
+  const length = children.length;
 
   const handlePrevious = () => {
-    const newid = id - 1;
-    setid(newid < 0 ? length - 1 : newid);
+    setId((prevId) => (prevId - 1 + length) % length);
   };
 
   const handleNext = () => {
-    const newid = id + 1;
-    setid(newid >= length ? 0 : newid);
+    setId((prevId) => (prevId + 1) % length);
   };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setId((prevId) => (prevId + 1) % length);
+    }, 15000); // Change slide every 15 seconds
+
+    return () => clearInterval(intervalId); // Clean up the interval on component unmount
+  }, [length]);
 
   return (
     <div className="carousel">
