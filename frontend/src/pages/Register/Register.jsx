@@ -1,18 +1,20 @@
-import { useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
-
-export default function Login() {
-  const { isLogged, setIsLogged } = useContext(GlobalContext);
-
-  function handleLogin() {
-    setIsLogged(isLogged ? false : true);
-  }
-
+/* eslint-disable react/no-unescaped-entities */
+export default function Register() {
   return (
     <>
       <section className="section">
         <h2 className="h2">Connectez-vous</h2>
         <form className="form">
+          <label htmlFor="pseudo" className="label">
+            Email
+          </label>
+          <input
+            type="text"
+            id="pseudo"
+            name="pseudo"
+            className="input"
+            placeholder="Pseudo"
+          />
           <label htmlFor="email" className="label">
             Email
           </label>
@@ -34,8 +36,8 @@ export default function Login() {
             placeholder="Mot de passe"
           />
         </form>
-        <button onClick={handleLogin} type="button" className="button">
-          Se connecter
+        <button type="submit" className="button">
+          S'inscrire
         </button>
       </section>
     </>
