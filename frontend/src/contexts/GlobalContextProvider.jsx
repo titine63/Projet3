@@ -11,7 +11,7 @@ export function GlobalContextProvider({ children }) {
       isLogged,
       setIsLogged,
     }),
-    [isLogged],
+    [isLogged], //le variable qui doit être surveillé pour les changements, si la valeur de isLogged change, la fonction useMemo va être réexecutée 
   );
 
   return (
