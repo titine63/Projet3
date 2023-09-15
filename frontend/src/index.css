@@ -2,55 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-.main {
-  @apply min-h-screen py-16;
-}
+/* --Modbile-- */
 
-.header {
-  @apply fixed top-0 flex w-full items-center justify-between gap-4 bg-[#ffffff] px-4 py-2;
-}
-
-.footer {
-  @apply fixed bottom-0 w-full bg-[#FCE3D7] px-4 py-2;
-}
-
+/* Global */
 .h1 {
   @apply my-8 text-center text-4xl font-bold;
-}
-
-.logo {
-  @apply left-0 my-8 text-5xl font-bold text-[#ec5a13];
 }
 
 .h2 {
   @apply my-8 text-center text-2xl font-bold;
 }
 
+.button {
+  @apply min-w-[100px] bg-[#ec5a13] px-4 py-2 text-white;
+}
+
+.element-desktop {
+  @apply hidden;
+}
+
 .section {
   @apply flex flex-col items-center;
 }
-
+/* form, input-auth, button auth => Login.jsx & Register.jsx */
 .form {
   @apply mb-4 flex flex-col gap-5  px-6 pb-8 pt-6;
 }
+
 .input-auth {
   @apply h-12 w-64 rounded-lg border-none bg-[#d9d9d9] pl-12;
 }
 
-.button {
+.button-auth {
   @apply min-w-[100px] rounded-lg bg-[#ec5a13] px-4 py-2 text-white;
 }
 
-.button-grey {
-  @apply min-w-[100px] bg-[#d9d9d9] px-4 py-2;
+/* main => Layout.jsx */
+.main {
+  @apply min-h-screen py-16;
 }
 
-.navbar-mobile {
-  @apply h-full w-full;
+/* header, logo, navbar-desktop, search-bar-container, search-bar, button-grey => Header.jsx */
+.header {
+  @apply fixed top-0 flex w-full items-center justify-between gap-4 bg-[#ffffff] px-4 py-2;
 }
 
-.menu-ul--horizontal {
-  @apply flex items-center justify-between px-3;
+.logo {
+  @apply left-0 my-8 text-5xl font-bold text-[#ec5a13];
 }
 
 .navbar-desktop {
@@ -65,12 +63,32 @@
   @apply w-full rounded-lg border-[#ec5a13];
 }
 
-.nav-element-desktop {
-  @apply hidden;
+.button-grey {
+  @apply min-w-[100px] bg-[#d9d9d9] px-4 py-2;
 }
 
+/* footer => Footer.jsx */
+.footer {
+  @apply fixed bottom-0 w-full bg-[#FCE3D7] px-4 py-2;
+}
+
+/* navbar-mobile, menu-ul-horizontal => NavbarMobile.jsx */
+.navbar-mobile {
+  @apply h-full w-full;
+}
+
+.menu-ul-horizontal {
+  @apply flex items-center justify-between px-3;
+}
+
+/* carousel, carousel-items, carousel-text => Carousel */
 .carousel {
   @apply flex h-44 w-full items-center justify-around bg-[#FCE3D7];
+}
+
+/* home-section => Home.jsx */
+.home-section {
+  @apply mt-16 flex flex-col items-center justify-center text-center;
 }
 
 .carousel-item {
@@ -81,17 +99,16 @@
   @apply text-center text-sm font-semibold;
 }
 
-.home-section {
-  @apply mt-16 flex flex-col items-center justify-center text-center;
+.modal {
+  background: url("./assets/images/background-login.png") no-repeat center fixed;
+  background-size: contain;
 }
 
+/* --Tablet verical-- */
 @media screen and (min-width: 645px) {
+  /* Header.jsx */
   .header {
     @apply gap-6 px-6;
-  }
-
-  .navbar-mobile {
-    @apply hidden;
   }
 
   .footer {
@@ -102,16 +119,27 @@
     @apply max-w-[50%];
   }
 
-  .nav-element-desktop {
+  .element-desktop {
     @apply flex;
   }
 
-  .nav-element-mobile {
+  /* Navber-mobile.jsx */
+  .navbar-mobile {
+    @apply hidden;
+  }
+
+  .element-mobile {
     @apply hidden;
   }
 }
 
+/* --Tablet horizontal-- */
+@media screen and (min-width: 768px) {
+}
+
+/* --Desktop-- */
 @media screen and (min-width: 1024px) {
+  /* Header.jsx */
   .header {
     @apply px-8;
   }

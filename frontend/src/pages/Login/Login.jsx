@@ -2,7 +2,6 @@
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { Navigate } from "react-router-dom";
-import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -55,7 +54,7 @@ export default function Login() {
             Oups ! Mot de passe oublié ?
           </Link>
         </form>
-        <button onClick={handleLogin} type="submit" className="button">
+        <button onClick={handleLogin} type="submit" className="button-auth">
           Se connecter
         </button>
 

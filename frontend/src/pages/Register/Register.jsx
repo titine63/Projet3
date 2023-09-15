@@ -45,7 +45,7 @@ export default function Register() {
             placeholder="Mot de passe"
           />
         </form>
-        <button type="submit" className="button">
+        <button type="submit" className="button-auth">
           Créer un compte
         </button>
 

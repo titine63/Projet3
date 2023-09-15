@@ -5,13 +5,16 @@ export const GlobalContext = createContext();
 
 export function GlobalContextProvider({ children }) {
   const [isLogged, setIsLogged] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const value = useMemo(
     () => ({
       isLogged,
       setIsLogged,
+      showAuthModal,
+      setShowAuthModal,
     }),
-    [isLogged], //le variable qui doit être surveillé pour les changements, si la valeur de isLogged change, la fonction useMemo va être réexecutée 
+    [isLogged, showAuthModal],
   );
 
   return (

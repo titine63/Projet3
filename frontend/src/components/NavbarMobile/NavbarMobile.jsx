@@ -8,32 +8,32 @@ export default function NavbarMobile() {
   return (
     <>
       <nav className="navbar-mobile">
-        <ul className="menu-ul--horizontal">
-            <li>
-              <Link to="/">
-                <img src={homeIcon} alt="homeIcon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/buy">
-                <img src={searchIcon} alt="searchIcon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="sell">
-                <img src={addIcon} alt="addIcon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/chat">
-                <img src={msgIcon} alt="msgIcon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/favorites">
-                <img src={heartIcon} alt="heartIcon" />
-              </Link>
-            </li>
+        <ul className="menu-ul-horizontal">
+          <li>
+            <Link to="/">
+              <img src={homeIcon} alt="homeIcon" />
+            </Link>
+          </li>
+          <li>
+            <Link to="/buy">
+              <img src={searchIcon} alt="searchIcon" />
+            </Link>
+          </li>
+          <li>
+            <Link to="sell">
+              <img src={addIcon} alt="addIcon" />
+            </Link>
+          </li>
+          <li>
+            <Link to="/chat">
+              <img src={msgIcon} alt="msgIcon" />
+            </Link>
+          </li>
+          <li>
+            <Link to="/favorites">
+              <img src={heartIcon} alt="heartIcon" />
+            </Link>
+          </li>
         </ul>
       </nav>
     </>

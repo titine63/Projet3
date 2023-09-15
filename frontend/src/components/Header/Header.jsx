@@ -9,6 +9,8 @@ import { FaSearch } from "react-icons/fa";
 
 export default function Header() {
   const { isLogged } = useContext(GlobalContext);
+  const { setShowModal } = useContext(GlobalContext);
+
   // État pour stocker la valeur de la barre de recherche
   const [searchValue, setSearchValue] = useState("");
 
@@ -25,42 +27,45 @@ export default function Header() {
         <Link to="/">
           <span className="logo">TRINDED</span>
         </Link>
-        <form className="nav-element-desktop search-bar-container">
+        <form className="element-desktop search-bar-container">
           <input
             type="text"
             placeholder="Rechercher..."
             value={searchValue}
             onChange={handleSearchChange}
-            className="nav-element-desktop search-bar"
+            className="element-desktop search-bar"
           />
           <FaSearch className="search-icon absolute right-4 top-2 h-7 w-7 text-[#ec5a13]" />
         </form>
         <nav className="navbar-desktop">
           {isLogged && (
             <>
-              <Link to="/favorites" className="nav-element-desktop">
+              <Link to="/favorites" className="element-desktop">
                 <img src={heartIcon}></img>
               </Link>
-              <Link to="/chat" className="nav-element-desktop">
+              <Link to="/chat" className="element-desktop">
                 <img src={chatIcon}></img>
               </Link>
-              <Link to="/profile" className="nav-element-desktop">
+              <Link to="/profile" className="element-desktop">
                 <img src={userIcon}></img>
               </Link>
-              <Link to="/profile" className="nav-element-mobile">
+              <Link to="/profile" className="element-mobile">
                 <img src={userIcon}></img>
               </Link>
             </>
           )}
           {!isLogged && (
             <>
-              <Link to="/login" className="nav-element-desktop button-grey">
+              <Link to="/login-desktop" className="element-desktop button-grey">
                 Se connecter
               </Link>
-              <Link to="/register" className="nav-element-desktop button">
+              <button
+                className="element-desktop button"
+                onClick={() => setShowModal(true)}
+              >
                 Créer un compte
-              </Link>
-              <Link to="/login" className="nav-element-mobile">
+              </button>
+              <Link to="/login" className="element-mobile">
                 <img src={userIcon}></img>
               </Link>
             </>
