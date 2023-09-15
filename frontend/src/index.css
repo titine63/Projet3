@@ -102,6 +102,10 @@
   .nav-element-desktop {
     @apply flex;
   }
+
+  .nav-element-mobile {
+    @apply hidden;
+  }
 }
 
 @media screen and (min-width: 1024px) {

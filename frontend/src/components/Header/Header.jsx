@@ -44,7 +44,10 @@ export default function Header() {
               <Link to="/chat" className="nav-element-desktop">
                 <img src={chatIcon}></img>
               </Link>
-              <Link to="/profile">
+              <Link to="/profile" className="nav-element-desktop">
+                <img src={userIcon}></img>
+              </Link>
+              <Link to="/profile" className="nav-element-mobile">
                 <img src={userIcon}></img>
               </Link>
             </>
@@ -56,6 +59,9 @@ export default function Header() {
               </Link>
               <Link to="/register" className="nav-element-desktop button">
                 Créer un compte
+              </Link>
+              <Link to="/login" className="nav-element-mobile">
+                <img src={userIcon}></img>
               </Link>
             </>
           )}
