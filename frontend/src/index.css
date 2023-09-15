@@ -7,7 +7,7 @@
 }
 
 .header {
-  @apply fixed top-0 flex w-full items-center justify-between gap-4 bg-[#fce3d7] px-4 py-2;
+  @apply fixed top-0 flex w-full items-center justify-between gap-4 bg-[#ffffff] px-4 py-2;
 }
 
 .footer {
@@ -35,7 +35,11 @@
 }
 
 .button {
-  @apply min-w-[100px] bg-[#ec5a13] px-4 py-2 font-bold;
+  @apply min-w-[100px] bg-[#ec5a13] px-4 py-2 text-white;
+}
+
+.button-grey {
+  @apply min-w-[100px] bg-[#d9d9d9] px-4 py-2;
 }
 
 .navbar-mobile {
@@ -60,6 +64,22 @@
 
 .nav-element-desktop {
   @apply hidden;
+}
+
+.carousel {
+  @apply flex h-44 w-full items-center justify-around bg-[#FCE3D7];
+}
+
+.carousel-item {
+  @apply flex w-[80%] items-center justify-center gap-10;
+}
+
+.carousel-text {
+  @apply text-center text-sm font-semibold;
+}
+
+.home-section {
+  @apply mt-16 flex flex-col items-center justify-center text-center;
 }
 
 @media screen and (min-width: 645px) {
@@ -96,15 +116,4 @@
   .search-bar-container {
     @apply ml-4;
   }
-.carousel {
-  @apply flex h-44 w-full items-center justify-around bg-[#FCE3D7];
-}
-.carousel-item {
-  @apply flex w-[80%] items-center justify-center gap-10;
-}
-.carousel-text {
-  @apply text-center text-sm font-semibold;
-}
-.home-section {
-  @apply mt-16 flex flex-col items-center justify-center text-center;
 }

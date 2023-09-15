@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 export default function Register() {
   return (
     <>
@@ -36,7 +37,7 @@ export default function Register() {
           />
         </form>
         <button type="submit" className="button">
-          Se connecter
+          S'inscrire
         </button>
       </section>
     </>

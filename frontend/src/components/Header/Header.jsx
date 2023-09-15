@@ -51,11 +51,11 @@ export default function Header() {
           )}
           {!isLogged && (
             <>
-              <Link to="/login" className="nav-element-desktop button">
+              <Link to="/login" className="nav-element-desktop button-grey">
                 Se connecter
               </Link>
               <Link to="/register" className="nav-element-desktop button">
-                S'inscrire
+                Créer un compte
               </Link>
             </>
           )}

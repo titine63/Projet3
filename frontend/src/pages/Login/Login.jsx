@@ -33,10 +33,10 @@ export default function Login() {
             className="input"
             placeholder="Mot de passe"
           />
-          <button onClick={handleLogin} type="button" className="button">
-            Se connecter
-          </button>
         </form>
+        <button onClick={handleLogin} type="button" className="button">
+          Se connecter
+        </button>
       </section>
     </>
   );
