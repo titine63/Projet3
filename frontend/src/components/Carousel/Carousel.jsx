@@ -24,9 +24,15 @@ function Carousel({ children }) {
 
   return (
     <div className="carousel">
-      <FaChevronLeft className="leftArrow" onClick={handlePrevious} />
+      <FaChevronLeft
+        className="leftArrow sm:text-lg md:text-xl lg:text-2xl"
+        onClick={handlePrevious}
+      />
       {children[id]}
-      <FaChevronRight className="rightArrow" onClick={handleNext} />
+      <FaChevronRight
+        className="rightArrow sm:text-lg md:text-xl lg:text-2xl"
+        onClick={handleNext}
+      />
     </div>
   );
 }

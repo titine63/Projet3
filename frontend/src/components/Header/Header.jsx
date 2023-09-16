@@ -5,11 +5,14 @@ import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import heartIcon from "./../../assets/icons/heart.svg";
 import chatIcon from "./../../assets/icons/msg.svg";
 import userIcon from "./../../assets/icons/users-group-rounded-line.svg";
+import LoginDesktop from "../AuthModal/LoginDesktop";
+import RegisterDesktop from "../AuthModal/RegisterDesktop";
 import { FaSearch } from "react-icons/fa";
 
 export default function Header() {
   const { isLogged } = useContext(GlobalContext);
-  const { setShowModal } = useContext(GlobalContext);
+  const { showAuthModal, setShowAuthModal, closeModal, modalContent } =
+    useContext(GlobalContext);
 
   // État pour stocker la valeur de la barre de recherche
   const [searchValue, setSearchValue] = useState("");
@@ -18,6 +21,8 @@ export default function Header() {
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
+
+  console.log("modalContent :>> ", modalContent);
 
   // (Optionnel) Si vous souhaitez gérer la soumission de la recherche, ajoutez un gestionnaire d'événements ici.
 
@@ -30,12 +35,12 @@ export default function Header() {
         <form className="element-desktop search-bar-container">
           <input
             type="text"
-            placeholder="Rechercher..."
+            placeholder="Rechercher"
             value={searchValue}
             onChange={handleSearchChange}
             className="element-desktop search-bar"
           />
-          <FaSearch className="search-icon absolute right-4 top-2 h-7 w-7 text-[#ec5a13]" />
+          <FaSearch className="search-icon" />
         </form>
         <nav className="navbar-desktop">
           {isLogged && (
@@ -56,15 +61,29 @@ export default function Header() {
           )}
           {!isLogged && (
             <>
-              <Link to="/login-desktop" className="element-desktop button-grey">
+              <button
+                className="element-desktop button-grey"
+                onClick={() => setShowAuthModal(true)}
+              >
                 Se connecter
-              </Link>
+              </button>
               <button
                 className="element-desktop button"
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowAuthModal(true)}
               >
                 Créer un compte
               </button>
+              {showAuthModal && (
+                <div
+                  className="modal-overlay"
+                  onClick={closeModal}
+                ></div> /* Arrière-plan semi-transparent */
+              )}
+              {showAuthModal && (
+                <div className="modal">
+                  {modalContent ? <LoginDesktop /> : <RegisterDesktop />}
+                </div>
+              )}
               <Link to="/login" className="element-mobile">
                 <img src={userIcon}></img>
               </Link>

@@ -2,9 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tailwind Default Breakpoints */
+/* 
+  'sm': {'min': '640px', 'max': '767px'},
+  'md': {'min': '768px', 'max': '1023px'},
+  'lg': {'min': '1024px', 'max': '1279px'},
+  'xl': {'min': '1280px'} 
+  */
+
 /* --Modbile-- */
 
-/* Global */
+/* Global accross the application*/
 .h1 {
   @apply my-8 text-center text-4xl font-bold;
 }
@@ -14,7 +22,7 @@
 }
 
 .button {
-  @apply min-w-[100px] bg-[#ec5a13] px-4 py-2 text-white;
+  @apply min-w-[100px] bg-[#ec5a13] px-2 py-1 text-white shadow-sm shadow-black md:px-4 md:py-2;
 }
 
 .element-desktop {
@@ -24,27 +32,15 @@
 .section {
   @apply flex flex-col items-center;
 }
-/* form, input-auth, button auth => Login.jsx & Register.jsx */
-.form {
-  @apply mb-4 flex flex-col gap-5  px-6 pb-8 pt-6;
-}
 
-.input-auth {
-  @apply h-12 w-64 rounded-lg border-none bg-[#d9d9d9] pl-12;
-}
-
-.button-auth {
-  @apply min-w-[100px] rounded-lg bg-[#ec5a13] px-4 py-2 text-white;
-}
-
-/* main => Layout.jsx */
+/* Layout.jsx => main */
 .main {
   @apply min-h-screen py-16;
 }
 
-/* header, logo, navbar-desktop, search-bar-container, search-bar, button-grey => Header.jsx */
+/* Header.jsx => header, logo, navbar-desktop, search-bar-container, search-bar, button-grey */
 .header {
-  @apply fixed top-0 flex w-full items-center justify-between gap-4 bg-[#ffffff] px-4 py-2;
+  @apply fixed top-0 z-10 flex w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4;
 }
 
 .logo {
@@ -52,7 +48,7 @@
 }
 
 .navbar-desktop {
-  @apply flex gap-4;
+  @apply flex items-center gap-4;
 }
 
 .search-bar-container {
@@ -63,16 +59,20 @@
   @apply w-full rounded-lg border-[#ec5a13];
 }
 
+.search-icon {
+  @apply absolute right-2 top-3 h-5 w-5 text-[#ec5a13] md:right-4 md:top-2 md:h-7 md:w-7;
+}
+
 .button-grey {
-  @apply min-w-[100px] bg-[#d9d9d9] px-4 py-2;
+  @apply min-w-[100px] bg-[#d9d9d9] px-2 py-1 shadow-sm shadow-black md:px-4 md:py-2;
 }
 
-/* footer => Footer.jsx */
+/* Footer.jsx => footer */
 .footer {
-  @apply fixed bottom-0 w-full bg-[#FCE3D7] px-4 py-2;
+  @apply fixed bottom-0 z-10 w-full bg-stone-100 px-4 py-2;
 }
 
-/* navbar-mobile, menu-ul-horizontal => NavbarMobile.jsx */
+/* NavbarMobile.jsx => navbar-mobile, menu-ul-horizontal */
 .navbar-mobile {
   @apply h-full w-full;
 }
@@ -81,27 +81,90 @@
   @apply flex items-center justify-between px-3;
 }
 
-/* carousel, carousel-items, carousel-text => Carousel */
+/* Home.jsx => home-section, carousel-items, carousel-text */
+.carousel-item {
+  @apply flex w-[80%] items-center justify-center gap-8 md:gap-10 lg:gap-12 xl:gap-16;
+}
+
+.carousel-text {
+  @apply text-center text-sm font-semibold md:text-base lg:text-lg xl:text-xl;
+}
+
+.home-section {
+  @apply mt-16 flex flex-col items-center justify-center gap-7 text-center;
+}
+
+.container-button-home {
+  @apply flex flex-col items-center justify-center gap-2 text-center;
+}
+
+.button-homepage {
+  @apply flex min-w-[8.125rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2 shadow-sm shadow-black;
+}
+/* Carousel.jsx => carousel */
 .carousel {
   @apply flex h-44 w-full items-center justify-around bg-[#FCE3D7];
 }
 
-/* home-section => Home.jsx */
-.home-section {
-  @apply mt-16 flex flex-col items-center justify-center text-center;
+/* Login.jsx & Register.jsx => form, input-auth, button auth */
+.form {
+  @apply mb-4 flex flex-col gap-5  px-6 pb-8 pt-6;
 }
 
-.carousel-item {
-  @apply flex w-[80%] items-center justify-center gap-10;
+.input-auth {
+  @apply h-12 w-64 rounded-lg border-none bg-[#d9d9d9] pl-12 shadow-sm shadow-black lg:w-full;
 }
 
-.carousel-text {
-  @apply text-center text-sm font-semibold;
+.button-auth {
+  @apply min-w-[100px] rounded-lg bg-[#ec5a13] px-4 py-2 text-white shadow-md shadow-black;
 }
 
+/* Header.jsx (AuthModal) => modal, modal-overlay */
 .modal {
-  background: url("./assets/images/background-login.png") no-repeat center fixed;
-  background-size: contain;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 80vh;
+  background-color: white;
+  z-index: 1000; /* Assurez-vous qu'il est au-dessus des autres éléments */
+  overflow-y: auto; /* Pour permettre le défilement si le contenu est trop long */
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Ombre optionnelle pour un effet élévé */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999; /* Juste derrière la modale */
+}
+
+.button-switch {
+  @apply rounded-lg bg-white py-2 text-center text-black shadow-sm shadow-black;
+}
+
+/* LoginDesktop.jsx => modal-login */
+.modal-login {
+  @apply flex h-full w-full;
+}
+
+.close-button {
+  @apply absolute right-4 top-1 text-4xl;
+}
+
+.login-left-part {
+  flex: 4;
+  @apply relative h-full bg-stone-50;
+}
+
+.login-right-part {
+  flex: 2;
+  @apply relative h-full bg-[#ec5a13];
 }
 
 /* --Tablet verical-- */

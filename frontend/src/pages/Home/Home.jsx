@@ -1,5 +1,5 @@
 import Carousel from "../../components/Carousel/Carousel";
-
+import { Link } from "react-router-dom";
 import { BiSolidChevronsRight } from "react-icons/bi";
 
 export default function Home() {
@@ -52,20 +52,20 @@ export default function Home() {
         ))}
       </Carousel>
       <section className="home-section">
-        <div className="mb-7 flex flex-col items-center justify-center gap-1 text-center">
+        <div className="container-button-home">
           <h2>Explorez votre brocante virtuelle</h2>
-          <button className="flex min-w-[8.1rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2">
-            <p>Acheter</p>
+          <Link to="/buy" className="button-homepage">
+            Acheter
             <BiSolidChevronsRight className="justify-end text-[#ec5a13]" />
-          </button>
+          </Link>
         </div>
-        <div className="flex flex-col items-center justify-center gap-1 text-center">
-          <h2>Donnez une seconde vie à vos vêtements.</h2>
 
-          <button className="flex min-w-[8.1rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2">
-            <p>Vendre</p>
+        <div className="container-button-home">
+          <h2>Donnez une seconde vie à vos vêtements.</h2>
+          <Link to="/sell" className="button-homepage">
+            Vendre
             <BiSolidChevronsRight className="text-[#ec5a13]" />
-          </button>
+          </Link>
         </div>
       </section>
     </>
