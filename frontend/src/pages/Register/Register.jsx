@@ -4,6 +4,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
+// Contenu de la page d'inscription en mobile
 export default function Register() {
   return (
     <>

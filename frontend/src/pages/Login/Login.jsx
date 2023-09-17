@@ -6,6 +6,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
+// Contenu de la page de connexion en mobile
 export default function Login() {
   const { isLogged, setIsLogged } = useContext(GlobalContext);
   const [shouldRedirect, setShouldRedirect] = useState(false);

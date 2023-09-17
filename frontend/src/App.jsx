@@ -15,6 +15,7 @@ function App() {
   return (
     <>
       <Router>
+        {/* Contexte global enveloppe toute l'application*/}
         <GlobalContextProvider>
           <Layout>
             <Routes>

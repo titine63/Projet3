@@ -1,23 +1,43 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useMemo } from "react";
 
+// Création du contexte global de l'application
 export const GlobalContext = createContext();
 
+// Création du composant GlobalContextProvider
 export function GlobalContextProvider({ children }) {
+  // État pour savoir si l'utilisateur est connecté ou non
   const [isLogged, setIsLogged] = useState(false);
+  // État pour savoir si la modale est ouverte ou non
   const [showAuthModal, setShowAuthModal] = useState(false);
-  // État pour savoir si la modale est sur login ou register
-  // true = login, false = register
+  // État pour savoir si la modale est sur login ou register (true = login, false = register)
   const [modalContent, setModalContent] = useState(true);
 
-  const handleModalContent = () => {
+  // Change le contenu de la modale
+  function handleModalContent() {
     setModalContent(!modalContent);
-  };
+  }
 
-  const closeModal = () => {
+  // Ferme la modale
+  function closeModal() {
     setShowAuthModal(false);
-  };
+  }
 
+  // Ouvre la modale sur login
+  function openModalOnLogin() {
+    console.log("modalcontent :>> ", modalContent);
+    setModalContent(true);
+    setShowAuthModal(true);
+  }
+
+  // Ouvre la modale sur register
+  function openModalOnRegister() {
+    console.log("modalContent :>> ", modalContent);
+    setShowAuthModal(true);
+    setModalContent(false);
+  }
+
+  // useMemo permet de ne pas recréer la valeur du contexte à chaque fois que le composant est rendu
   const value = useMemo(
     () => ({
       isLogged,
@@ -27,11 +47,15 @@ export function GlobalContextProvider({ children }) {
       closeModal,
       modalContent,
       handleModalContent,
+      openModalOnLogin,
+      openModalOnRegister,
     }),
+    // les valeurs du tableau de dépendances à surveiller
     [isLogged, showAuthModal, modalContent],
   );
 
   return (
+    // On passe la valeur du contexte à tous les composants enfants
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
   );
 }
