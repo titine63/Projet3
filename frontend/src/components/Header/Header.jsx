@@ -44,7 +44,7 @@ export default function Header() {
             onChange={handleSearchChange}
             className="element-desktop search-bar"
           />
-          <FaSearch className="search-icon" />
+          <FaSearch className="search-icon cursor-pointer" />
         </form>
         {/* Boutons de navigation */}
         <nav className="navbar-desktop">

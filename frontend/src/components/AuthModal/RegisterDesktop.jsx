@@ -89,7 +89,7 @@ export default function RegisterDeskop() {
           </form>
           {/* Bouton pour fermer la modale */}
           <span
-            className="close-button absolute right-4 top-1 text-4xl"
+            className="close-button absolute right-4 top-1 cursor-pointer text-4xl"
             onClick={closeModal}
           >
             &times;

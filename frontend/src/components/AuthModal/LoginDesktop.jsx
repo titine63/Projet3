@@ -72,7 +72,7 @@ export default function LoginDeskop() {
         <div className="login-right-part relative h-full flex-[2] bg-[#ec5a13]">
           {/* Bouton pour fermer la modale en haut à droite (une croix -> X ) */}
           <span
-            className="close-button absolute right-4 top-1 text-4xl"
+            className="close-button absolute right-4 top-1 cursor-pointer text-4xl"
             onClick={closeModal}
           >
             &times;
