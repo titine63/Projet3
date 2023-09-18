@@ -1,19 +1,13 @@
 /* eslint-disable react/prop-types */
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import AuthModal from "../AuthModal/AuthModal";
-import { useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
 
+// Permet de mettre en place la structure de base à l'intérieur de laquelle on peut insérer les composants
 export default function Layout({ children }) {
-  const { showModall } = useContext(GlobalContext);
   return (
     <>
       <Header />
-      <main className="main">
-        {children}
-        {showModall && <AuthModal />}
-      </main>
+      <main className="main">{children}</main>
       <Footer />
     </>
   );

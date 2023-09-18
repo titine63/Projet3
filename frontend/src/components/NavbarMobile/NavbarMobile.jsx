@@ -4,6 +4,8 @@ import searchIcon from "./../../assets/icons/search.svg";
 import addIcon from "./../../assets/icons/add.svg";
 import msgIcon from "./../../assets/icons/msg.svg";
 import heartIcon from "./../../assets/icons/heart.svg";
+
+// Navbar en mobile (en bas de l'écran) avec des icônes
 export default function NavbarMobile() {
   return (
     <>

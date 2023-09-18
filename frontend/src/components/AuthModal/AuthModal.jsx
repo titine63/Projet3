@@ -1,31 +1,16 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
-import LoginDeskop from "./LoginDesktop";
+import LoginDesktop from "./LoginDesktop";
+import RegisterDesktop from "./RegisterDesktop";
 
+// Cette modale affiche soit LoginDesktop, soit RegisterDesktop en fonction de l'état de modalContent.
 export default function AuthModal() {
-  const { showModal, setShowModal } = useContext(GlobalContext);
-  const [login, setLogin] = useState(true);
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const handleLogin = () => {
-    setLogin(true);
-  };
-
+  // Importer l'état depuis le contexte global
+  const { modalContent } = useContext(GlobalContext);
+  // modalContent : true = login, false = register
   return (
-    <>
-      {showModal && (
-        <div className="modal h-full w-[80vw] bg-pink-300">
-          <div className="modal-content">
-            <span className="close-button" onClick={closeModal}>
-              &times;
-            </span>
-            {login ? <LoginDeskop /> : <h2 onClick={handleLogin}>Register</h2>}
-          </div>
-        </div>
-      )}
-    </>
+    <div className="modal modal-desktop">
+      {modalContent ? <LoginDesktop /> : <RegisterDesktop />}
+    </div>
   );
 }

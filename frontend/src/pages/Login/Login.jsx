@@ -6,6 +6,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
+// Contenu de la page de connexion en mobile
 export default function Login() {
   const { isLogged, setIsLogged } = useContext(GlobalContext);
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -34,7 +35,7 @@ export default function Login() {
           </h2>
         </div>
         <form className="form relative">
-          <HiOutlineMail className=" absolute bottom-[9.2rem] left-10 text-xl text-[#5e5e5e]" />
+          <HiOutlineMail className=" absolute bottom-[9.3rem] left-10 text-xl text-[#5e5e5e]" />
           <input
             type="email"
             id="email"
@@ -42,7 +43,7 @@ export default function Login() {
             className="input-auth"
             placeholder="Email"
           />
-          <RiLockPasswordFill className=" absolute bottom-[5rem] left-10 text-xl text-[#5e5e5e]" />
+          <RiLockPasswordFill className=" absolute bottom-[5.1rem] left-10 text-xl text-[#5e5e5e]" />
           <input
             type="password"
             id="password"
