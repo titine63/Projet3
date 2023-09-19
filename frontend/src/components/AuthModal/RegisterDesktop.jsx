@@ -4,6 +4,7 @@ import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { Link } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { AiOutlineUser } from "react-icons/ai";
 
 export default function RegisterDeskop() {
   // Importer les états et fonctions depuis le contexte global
@@ -43,7 +44,7 @@ export default function RegisterDeskop() {
         {/* Partie droite en position relative pour placer ses enfants directs en absolute, flex-4 permet de donner un proportion à l'élément en largeur, ici 4/6 */}
         <div className="register-right-part relative h-full flex-[4] bg-[#F5F5F5]">
           {/* La div contenant la phrase au dessus du formulaire */}
-          <div className="abolute ml-[5%] mr-0 mt-[10%] flex w-[80%] justify-start gap-10 pl-6 xl:w-[95%] xl:gap-20">
+          <div className="abolute ml-[5%] mr-0 mt-2 flex w-[80%] justify-start gap-10 pl-6 xl:w-[95%] xl:gap-20">
             <p className="h2">
               Inscrivez<span className="text-[#ec5a13]">.</span>
             </p>
@@ -55,8 +56,18 @@ export default function RegisterDeskop() {
             </p>
           </div>
           {/* Formulaire d'inscription */}
-          <form className="w-30 form absolute left-[10%] top-[25%] flex flex-col lg:w-[70%] xl:w-[60%]">
-            <div className="relative mt-6">
+          <form className="w-30 form absolute left-[10%] top-[12%] flex flex-col lg:w-[70%] xl:w-[60%]">
+            <div className="relative mt-4">
+              <AiOutlineUser className=" absolute left-4 top-[0.9rem] text-xl text-[#5e5e5e]" />
+              <input
+                type="pseudo"
+                id="pseudo"
+                name="pseudo"
+                className="input-auth"
+                placeholder="Pseudo"
+              />
+            </div>
+            <div className="relative mt-4">
               <HiOutlineMail className=" absolute left-4 top-[0.9rem] text-xl text-[#5e5e5e]" />
               <input
                 type="email"
@@ -66,7 +77,7 @@ export default function RegisterDeskop() {
                 placeholder="Email"
               />
             </div>
-            <div className="relative mt-6">
+            <div className="relative mt-4">
               <RiLockPasswordFill className=" absolute left-4 top-[0.9rem] text-xl text-[#5e5e5e]" />
               <input
                 type="password"
@@ -74,6 +85,16 @@ export default function RegisterDeskop() {
                 name="password"
                 className="input-auth"
                 placeholder="Mot de passe"
+              />
+            </div>
+            <div className="relative mt-4">
+              <RiLockPasswordFill className=" absolute left-4 top-[0.9rem] text-xl text-[#5e5e5e]" />
+              <input
+                type="confirm-password"
+                id="confirm-password"
+                name="confirm-password"
+                className="input-auth"
+                placeholder="Confirmez votre mot de passe"
               />
             </div>
             <Link to="#" className="mt-4 text-center text-xs underline">

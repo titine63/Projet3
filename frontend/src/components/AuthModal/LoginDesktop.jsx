@@ -1,12 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 
 // Contenu de la modale de connexion
 export default function LoginDeskop() {
+  // Etat pour gérer la redirection après la connexion
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   // Importer les états et fonctions depuis le contexte global
   const { isLogged, setIsLogged, closeModal, handleModalContent } =
     useContext(GlobalContext);
@@ -14,6 +16,11 @@ export default function LoginDeskop() {
   // Gestionnaire pour mettre à jour l'état isLogged
   function handleLogin() {
     setIsLogged(isLogged ? false : true);
+    setShouldRedirect(true);
+  }
+
+  if (shouldRedirect) {
+    return <Navigate to="/profile" replace />;
   }
 
   return (
