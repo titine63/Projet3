@@ -1,11 +1,18 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import { Navigate } from "react-router-dom";
 
 export default function Profile() {
   const { isLogged, setIsLogged } = useContext(GlobalContext);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  function handleLogin() {
+  function handleLogout() {
     setIsLogged(isLogged ? false : true);
+    setShouldRedirect(true);
+  }
+
+  if (shouldRedirect) {
+    return <Navigate to="/login" replace />;
   }
 
   return (
@@ -15,7 +22,11 @@ export default function Profile() {
         Retrouvez vos annonces et vos commandes ainsi que vos informations de
         profil ici
       </h2>
-      <button onClick={handleLogin} type="button" className="button ml-8 mt-16">
+      <button
+        onClick={handleLogout}
+        type="button"
+        className="button ml-8 mt-16"
+      >
         Se déconnecter
       </button>
     </>

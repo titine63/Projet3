@@ -6,7 +6,7 @@ export default function Register() {
         <h2 className="h2">Connectez-vous</h2>
         <form className="form">
           <label htmlFor="pseudo" className="label">
-            Email
+            pseudo
           </label>
           <input
             type="text"
