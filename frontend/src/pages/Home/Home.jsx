@@ -51,22 +51,31 @@ export default function Home() {
           </div>
         ))}
       </Carousel>
-      <section className="home-section">
-        <div className="container-button-home">
-          <h2>Explorez votre brocante virtuelle</h2>
-          <Link to="/buy" className="button-homepage">
-            Acheter
-            <BiSolidChevronsRight className="justify-end text-[#ec5a13]" />
-          </Link>
-        </div>
+      {/* *************************************************fin carousel ************************************************** */}
 
-        <div className="container-button-home">
-          <h2>Donnez une seconde vie à vos vêtements.</h2>
-          <Link to="/sell" className="button-homepage">
-            Vendre
-            <BiSolidChevronsRight className="text-[#ec5a13]" />
-          </Link>
+      <section className="home-bottom">
+        <div className="home-buttons">
+          <div className="container-button-home">
+            <h2>Explorez votre brocante virtuelle</h2>
+            <Link to="/buy" className="button-homepage">
+              Acheter
+              <BiSolidChevronsRight className="justify-end text-[#ec5a13]" />
+            </Link>
+          </div>
+
+          <div className="container-button-home">
+            <h2>Donnez une seconde vie à vos vêtements.</h2>
+            <Link to="/sell" className="button-homepage">
+              Vendre
+              <BiSolidChevronsRight className="text-[#ec5a13]" />
+            </Link>
+          </div>
         </div>
+        <img
+          className="home-img"
+          src="./../../../public/images/home-image.png"
+          alt="home-img"
+        />
       </section>
     </main>
   );

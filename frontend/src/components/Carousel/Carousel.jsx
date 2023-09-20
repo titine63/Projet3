@@ -31,12 +31,12 @@ export default function Carousel({ children }) {
   return (
     <div className="carousel">
       <FaChevronLeft
-        className="leftArrow cursor-pointer sm:text-lg md:text-xl lg:text-2xl"
+        className="leftArrow cursor-pointer text-[#ec5a13] sm:text-lg md:text-xl lg:text-2xl"
         onClick={handlePrevious}
       />
       {children[id]}
       <FaChevronRight
-        className="rightArrow cursor-pointer sm:text-lg md:text-xl lg:text-2xl"
+        className="rightArrow cursor-pointer text-[#ec5a13] sm:text-lg md:text-xl lg:text-2xl"
         onClick={handleNext}
       />
     </div>
