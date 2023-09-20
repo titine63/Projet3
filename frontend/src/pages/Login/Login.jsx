@@ -12,13 +12,12 @@ export default function Login() {
   const { isLogged, setIsLogged } = useContext(GlobalContext);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  const { register, handleSubmit } = useForm();
+  const { register } = useForm();
 
   // Gestionnaire pour mettre à jour l'état isLogged
-  function onSubmit(data) {
+  function handleLogin() {
     setIsLogged(isLogged ? false : true);
     setShouldRedirect(true);
-    console.log(data);
   }
 
   // Si l'utilisateur est connecté, on le redirige vers la page de profil
@@ -27,7 +26,7 @@ export default function Login() {
   }
 
   return (
-    <>
+    <main className="main flex flex-col justify-center">
       <section className="section">
         <div>
           <h2 className="h2">
@@ -48,7 +47,7 @@ export default function Login() {
             name="email"
             className="input-auth"
             placeholder="Email"
-            ref={register}
+            ref={register("email")}
           />
           <RiLockPasswordFill className=" absolute bottom-[5.1rem] left-10 text-xl text-[#5e5e5e]" />
           <input
@@ -57,17 +56,13 @@ export default function Login() {
             name="password"
             className="input-auth"
             placeholder="Mot de passe"
-            ref={register}
+            ref={register("password")}
           />
           <Link to="#" className="text-center text-xs underline">
             Oups ! Mot de passe oublié ?
           </Link>
         </form>
-        <button
-          onSubmit={handleSubmit(onSubmit)}
-          type="submit"
-          className="button-auth"
-        >
+        <button onClick={handleLogin} type="submit" className="button-auth">
           Se connecter
         </button>
 
@@ -75,39 +70,6 @@ export default function Login() {
           Pas encore du compte ?
         </Link>
       </section>
-    </>
+    </main>
   );
 }
-
-//******************************************************************** */
-{
-  /* <section className="section">
-        <h2 className="h2">Connectez-vous</h2>
-        <form className="form">
-          <label htmlFor="email" className="label">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="input"
-            placeholder="Email"
-          />
-          <label htmlFor="password" className="label">
-            Mot de passe
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="input"
-            placeholder="Mot de passe"
-          />
-        </form>
-        <button onClick={handleLogin} type="button" className="button">
-          Se connecter
-        </button>
-      </section> */
-}
-/***************************************************** */

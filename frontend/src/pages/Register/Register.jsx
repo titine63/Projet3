@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 // Contenu de la page d'inscription en mobile
 export default function Register() {
   return (
-    <>
+    <main className="main flex flex-col justify-center">
       <section className="section">
         <div>
           <h2 className="h2">
@@ -54,6 +54,6 @@ export default function Register() {
           Vous avez déjà un compte ?
         </Link>
       </section>
-    </>
+    </main>
   );
 }

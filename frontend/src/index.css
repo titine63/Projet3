@@ -30,7 +30,8 @@
 }
 
 .section {
-  @apply flex flex-col items-center;
+  box-sizing: border-box;
+  @apply flex h-full h-max flex-col items-center;
 }
 
 /* Layout.jsx => main */
