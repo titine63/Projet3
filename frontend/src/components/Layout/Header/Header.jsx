@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
-import heartIcon from "./../../assets/icons/heart.svg";
-import chatIcon from "./../../assets/icons/msg.svg";
-import userIcon from "./../../assets/icons/users-group-rounded-line.svg";
-import AuthModal from "../AuthModal/AuthModal";
+import { GlobalContext } from "../../../contexts/GlobalContextProvider";
+import heartIcon from "./../../../assets/icons/heart.svg";
+import chatIcon from "./../../../assets/icons/msg.svg";
+import userIcon from "./../../../assets/icons/users-group-rounded-line.svg";
+import AuthModal from "../../AuthModal/AuthModal";
 import { FaSearch } from "react-icons/fa";
 
 export default function Header() {

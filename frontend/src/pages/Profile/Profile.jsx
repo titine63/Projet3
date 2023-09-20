@@ -16,7 +16,7 @@ export default function Profile() {
   }
 
   return (
-    <>
+    <main className="main flex flex-col justify-center">
       <h1 className="h1">Votre profil</h1>
       <h2 className="h2">
         Retrouvez vos annonces et vos commandes ainsi que vos informations de
@@ -29,6 +29,6 @@ export default function Profile() {
       >
         Se déconnecter
       </button>
-    </>
+    </main>
   );
 }

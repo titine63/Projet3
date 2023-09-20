@@ -43,7 +43,7 @@ export default function Home() {
     },
   ];
   return (
-    <>
+    <main className="main flex flex-col">
       <Carousel>
         {carouselItems.map((item) => (
           <div className="carousel-item" key={item.id}>
@@ -68,6 +68,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-    </>
+    </main>
   );
 }

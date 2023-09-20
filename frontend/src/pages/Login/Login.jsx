@@ -1,27 +1,32 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
-import { Navigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Navigate, Link } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
 
 // Contenu de la page de connexion en mobile
 export default function Login() {
+  // Importer les états et fonctions depuis le contexte global`
   const { isLogged, setIsLogged } = useContext(GlobalContext);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
+  const { register } = useForm();
+
+  // Gestionnaire pour mettre à jour l'état isLogged
   function handleLogin() {
     setIsLogged(isLogged ? false : true);
     setShouldRedirect(true);
   }
 
+  // Si l'utilisateur est connecté, on le redirige vers la page de profil
   if (shouldRedirect) {
     return <Navigate to="/profile" replace />;
   }
 
   return (
-    <>
+    <main className="main flex flex-col justify-center">
       <section className="section">
         <div>
           <h2 className="h2">
@@ -42,6 +47,7 @@ export default function Login() {
             name="email"
             className="input-auth"
             placeholder="Email"
+            ref={register("email")}
           />
           <RiLockPasswordFill className=" absolute bottom-[5.1rem] left-10 text-xl text-[#5e5e5e]" />
           <input
@@ -50,6 +56,7 @@ export default function Login() {
             name="password"
             className="input-auth"
             placeholder="Mot de passe"
+            ref={register("password")}
           />
           <Link to="#" className="text-center text-xs underline">
             Oups ! Mot de passe oublié ?
@@ -63,39 +70,6 @@ export default function Login() {
           Pas encore du compte ?
         </Link>
       </section>
-    </>
+    </main>
   );
 }
-
-//******************************************************************** */
-{
-  /* <section className="section">
-        <h2 className="h2">Connectez-vous</h2>
-        <form className="form">
-          <label htmlFor="email" className="label">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="input"
-            placeholder="Email"
-          />
-          <label htmlFor="password" className="label">
-            Mot de passe
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="input"
-            placeholder="Mot de passe"
-          />
-        </form>
-        <button onClick={handleLogin} type="button" className="button">
-          Se connecter
-        </button>
-      </section> */
-}
-/***************************************************** */
