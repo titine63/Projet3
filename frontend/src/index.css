@@ -137,16 +137,52 @@
   @apply ml-5 grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5;
 }
 .tend-img {
-  @apply w-28;
+  @apply w-28 md:w-60 md:content-center;
 }
 .product-imgs {
-  @apply m-auto w-40;
+  @apply m-auto w-40 md:w-72;
+}
+.product-price {
+  @apply text-2xl text-[#ec5a13] md:text-3xl;
+}
+.btn-fav {
+  @apply w-72 bg-[#ec5a13] text-center text-white md:w-[100%];
+}
+.buy-btn {
+  @apply my-11 h-9 w-72 bg-[#ec5a13] text-center text-xl text-white md:w-[100%];
 }
 .product-card {
   @apply flex flex-col items-center gap-5;
 }
 .product-details {
-  @apply flex flex-col justify-start justify-center gap-5;
+  @apply flex flex-col justify-start justify-center gap-3;
+}
+.titles {
+  @apply relative font-semibold;
+}
+.titles::before {
+  content: "";
+  position: absolute;
+  height: 5px;
+  width: 100%;
+  background-color: #ec5a13;
+  bottom: -10px;
+}
+.product-description {
+  @apply mt-3;
+}
+.product-Criteria {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: min-content;
+  gap: 10px 35vw;
+  @apply mt-3;
+}
+.btn-user {
+  @apply mt-6 gap-5 bg-[#ec5a13] text-center text-xl text-white;
+}
+.user-section {
+  @apply mb-8;
 }
 /* Login.jsx & Register.jsx => form, input-auth, button auth */
 .form {

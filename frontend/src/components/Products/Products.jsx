@@ -15,7 +15,8 @@ const Products = () => {
       clothing_type: "Veste",
       brand: "Autre",
       color: "noir",
-      category: "man",
+      category: "homme",
+      Etat: "très bon état",
     },
     {
       id: 2,
@@ -27,7 +28,8 @@ const Products = () => {
       clothing_type: "Veste",
       brand: "Autre",
       color: "noir",
-      category: "man",
+      category: "homme",
+      Etat: "très bon état",
     },
     {
       id: 3,
@@ -39,7 +41,8 @@ const Products = () => {
       clothing_type: "Veste",
       brand: "Autre",
       color: "noir",
-      category: "man",
+      category: "homme",
+      Etat: "très bon état",
     },
   ];
   const filteredProducts = products.filter(
