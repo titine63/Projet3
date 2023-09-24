@@ -124,12 +124,12 @@
 }
 
 .button-auth {
-  @apply mt-4  w-fit rounded-lg bg-[#f5ac89] px-4 py-2 shadow-sm shadow-black;
+  @apply mt-4 rounded-xl bg-[#f5ac89] px-6 py-2 font-medium shadow-sm shadow-black;
 }
 
 /* Modale (Header.jsx) => modal, modal-overlay, button-switch */
 .modal {
-  @apply fixed left-[50%] top-[50%] z-[1000] h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-lg bg-white drop-shadow-2xl;
+  @apply fixed left-[50%] top-[50%] z-[1000] h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white drop-shadow-2xl;
 }
 
 .modal-overlay {
@@ -137,5 +137,5 @@
 }
 
 .button-switch {
-  @apply rounded-lg bg-white py-2 text-center text-black shadow-sm shadow-black;
+  @apply rounded-xl bg-[#F5F5F5] px-6 py-2 text-center font-medium text-black shadow-sm shadow-black;
 }

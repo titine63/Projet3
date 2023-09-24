@@ -29,7 +29,7 @@ export default function RegisterDeskop() {
             <button
               onClick={handleModalContent}
               type="button"
-              className="button-switch w-[55%] rounded-lg bg-[#F5F5F5] py-2 text-center text-black shadow-sm shadow-black xl:w-[45%]"
+              className="button-switch"
             >
               Se connecter
             </button>

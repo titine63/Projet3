@@ -15,7 +15,7 @@ export default function Login() {
             Economisez<span className="text-[#ec5a13]">.</span>
           </h2>
         </div>
-        <LoginForm className="form m:gap-8 items-center gap-4 md:w-1/2 md:gap-8 xl:w-1/3" />
+        <LoginForm className="form w-4/5 items-center gap-4 sm:w-3/4 md:w-2/3 md:gap-8 lg:w-1/2 xl:w-1/3" />
       </section>
     </main>
   );
