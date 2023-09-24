@@ -9,7 +9,6 @@ import Favorites from "./pages/Favorites/Favorites";
 import Profile from "./pages/Profile/Profile";
 import Sell from "./pages/Sell/Sell";
 import Buy from "./pages/Buy/Buy";
-import LoginDeskop from "./components/AuthModal/LoginDesktop";
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/login-desktop" element={<LoginDeskop />} />
               <Route path="/register" element={<Register />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/favorites" element={<Favorites />} />

@@ -1,15 +1,11 @@
-/* eslint-disable react/no-unescaped-entities */
-import { AiOutlineUser } from "react-icons/ai";
-import { HiOutlineMail } from "react-icons/hi";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import RegisterForm from "../../components/Auth/AuthForms/RegisterForm";
 
 // Contenu de la page d'inscription en mobile
 export default function Register() {
   return (
     <main className="main flex flex-col justify-center">
-      <section className="section">
-        <div>
+      <section className="section gap-6 md:gap-12">
+        <div className="flex flex-col gap-3 md:gap-6 lg:gap-9">
           <h2 className="h2">
             Inscrivez<span className="text-[#ec5a13]">.</span>
           </h2>
@@ -20,39 +16,7 @@ export default function Register() {
             Economisez<span className="text-[#ec5a13]">.</span>
           </h2>
         </div>
-        <form className="form relative">
-          <AiOutlineUser className="absolute left-10 top-10 text-xl text-[#5e5e5e]" />
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="input-auth"
-            placeholder="Pseudo"
-          />
-          <HiOutlineMail className=" absolute left-10 top-[6.8rem] text-xl text-[#5e5e5e]" />
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="input-auth"
-            placeholder="Email"
-          />
-          <RiLockPasswordFill className=" absolute bottom-[2.8rem] left-10 text-xl text-[#5e5e5e]" />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="input-auth"
-            placeholder="Mot de passe"
-          />
-        </form>
-        <button type="submit" className="button-auth">
-          Créer un compte
-        </button>
-
-        <Link to="/login" className="text-l mt-5 underline">
-          Vous avez déjà un compte ?
-        </Link>
+        <RegisterForm className="form m:gap-8 items-center gap-4 md:w-1/2 md:gap-8 xl:w-1/3" />
       </section>
     </main>
   );
