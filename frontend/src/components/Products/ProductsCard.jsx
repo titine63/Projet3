@@ -23,27 +23,58 @@ const ProductCard = ({ product }) => {
       <p className="product-price">{price}</p>
       <div className="product-details">
         <Link to="/favorites">
-          <p className="btn-fav">Ajouter aux favorits</p>
+          <p className="btn-fav">Ajouter aux favoris</p>
         </Link>
-        <p className="titles mt-7">Desciption</p>
+        <p className="titles mt-7">Description</p>
 
         <p className="product-description">{description}</p>
         <p className="titles">Critères</p>
         <div className="product-Criteria">
-          <p> Catégorie {category}</p>
-          <p> Type de vêtements {clothing_type}</p>
-          <p> Taille {size}</p>
-          <p> Marque {brand}</p>
-          <p> Coleur {color}</p>
-          <p> Etat {Etat}</p>
+          <p>
+            <span className="criterias">
+              Catégorie <br />
+            </span>
+            {category}
+          </p>
+          <p>
+            <span className="criterias">
+              Type de vêtement <br />
+            </span>
+            {clothing_type}
+          </p>
+          <p>
+            <span className="criterias">
+              Taille <br />
+            </span>
+            {size}
+          </p>
+          <p>
+            <span className="criterias">
+              Marque <br />
+            </span>
+            {brand}
+          </p>
+          <p>
+            <span className="criterias">
+              Coleur <br />
+            </span>
+            {color}
+          </p>
+          <p>
+            <span className="criterias">
+              Etat <br />
+            </span>
+            {Etat}
+          </p>
         </div>
         <Link to="/card">
           <p className="buy-btn">Acheter</p>
         </Link>
+
+        <p className="titles">User</p>
         <div className="user-section">
-          <p className="titles">User</p>
           <Link to="/profile">
-            <p className="btn-user">Voir son profile</p>
+            <p className="btn-user">Voir son profil</p>
           </Link>
           <Link to="/messages">
             <p className="btn-user">Envoyer un message</p>
