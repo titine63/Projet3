@@ -5,7 +5,7 @@ import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import heartIcon from "./../../../assets/icons/heart.svg";
 import chatIcon from "./../../../assets/icons/msg.svg";
 import userIcon from "./../../../assets/icons/users-group-rounded-line.svg";
-import AuthModal from "../../AuthModal/AuthModal";
+import AuthModal from "../../Auth/AuthModal/AuthModal";
 import { FaSearch } from "react-icons/fa";
 
 export default function Header() {
@@ -36,13 +36,13 @@ export default function Header() {
           <span className="logo">TRINDED</span>
         </Link>
         {/* Barre de recherche */}
-        <form className="element-desktop search-bar-container">
+        <form className="search-bar-container hidden sm:block">
           <input
             type="text"
             placeholder="Rechercher"
             value={searchValue}
             onChange={handleSearchChange}
-            className="element-desktop search-bar"
+            className="search-bar hidden sm:block"
           />
           <FaSearch className="search-icon cursor-pointer" />
         </form>
@@ -52,19 +52,19 @@ export default function Header() {
           {isLogged && (
             <>
               {/* Lien vers favoris desktop */}
-              <Link to="/favorites" className="element-desktop">
+              <Link to="/favorites" className="hidden sm:block">
                 <img src={heartIcon}></img>
               </Link>
               {/* Lien vers chat desktop */}
-              <Link to="/chat" className="element-desktop">
+              <Link to="/chat" className="hidden sm:block">
                 <img src={chatIcon}></img>
               </Link>
               {/* Lien vers profil desktop */}
-              <Link to="/profile" className="element-desktop">
+              <Link to="/profile" className="hidden sm:block">
                 <img src={userIcon}></img>
               </Link>
               {/* Lien vers profil mobile (si connecté, l'icône user renvoie vers le profil) */}
-              <Link to="/profile" className="element-mobile">
+              <Link to="/profile" className="lg:hidden">
                 <img src={userIcon}></img>
               </Link>
             </>
@@ -74,14 +74,14 @@ export default function Header() {
             <>
               {/* Bouton login en desktop (ouvre la modale) */}
               <button
-                className="element-desktop button-grey"
+                className="button-grey hidden lg:block"
                 onClick={openModalOnLogin}
               >
                 Se connecter
               </button>
               {/* Bouton register en desktop (ouvre la modale) */}
               <button
-                className="element-desktop button"
+                className="button hidden lg:block"
                 onClick={openModalOnRegister}
               >
                 Créer un compte
@@ -89,14 +89,14 @@ export default function Header() {
               {/* Arrière-plan semi-transparent, si on clique en dehors de la modale, elle se ferme */}
               {showAuthModal && (
                 <div
-                  className="modal-overlay modal-desktop"
+                  className="modal-overlay hidden lg:block"
                   onClick={closeModal}
                 ></div>
               )}
               {/* Modale d'authentification, ne s'affiche qu'à partir de 1024px de large (80vw x 80wh) */}
               {showAuthModal && <AuthModal />}
               {/* Lien vers login en mobile (si déconnecté, l'icône user renvoie vers le login) */}
-              <Link to="/login" className="element-mobile">
+              <Link to="/login" className="lg:hidden">
                 <img src={userIcon}></img>
               </Link>
             </>

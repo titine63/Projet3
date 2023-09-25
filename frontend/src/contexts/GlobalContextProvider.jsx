@@ -25,14 +25,12 @@ export function GlobalContextProvider({ children }) {
 
   // Ouvre la modale sur login
   function openModalOnLogin() {
-    console.log("modalcontent :>> ", modalContent);
     setModalContent(true);
     setShowAuthModal(true);
   }
 
   // Ouvre la modale sur register
   function openModalOnRegister() {
-    console.log("modalContent :>> ", modalContent);
     setShowAuthModal(true);
     setModalContent(false);
   }

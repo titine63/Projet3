@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import LoginDesktop from "./LoginDesktop";
 import RegisterDesktop from "./RegisterDesktop";
 
