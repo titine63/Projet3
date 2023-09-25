@@ -18,7 +18,7 @@
 }
 
 .h2 {
-  @apply my-8 text-center text-2xl font-bold;
+  @apply text-center text-xl font-bold md:text-2xl;
 }
 
 .button {
@@ -30,8 +30,7 @@
 }
 
 .section {
-  box-sizing: border-box;
-  @apply flex h-full h-max flex-col items-center;
+  @apply flex h-full flex-col items-center py-8;
 }
 
 /* Layout.jsx => main */
@@ -41,7 +40,7 @@
 
 /* Header.jsx => header, logo, navbar-desktop, search-bar-container, search-bar, button-grey */
 .header {
-  @apply fixed top-0 z-10 flex w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4;
+  @apply fixed top-0 z-10 flex w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8;
 }
 
 .logo {
@@ -49,11 +48,11 @@
 }
 
 .navbar-desktop {
-  @apply flex items-center gap-4;
+  @apply flex items-center gap-4 lg:gap-6;
 }
 
 .search-bar-container {
-  @apply relative mr-auto flex-grow rounded-lg border-y-2 border-[#ec5a13];
+  @apply relative mr-auto flex-grow rounded-lg border-y-2 border-[#ec5a13] sm:max-w-[50%] lg:ml-4;
 }
 
 .search-bar {
@@ -70,12 +69,12 @@
 
 /* Footer.jsx => footer */
 .footer {
-  @apply fixed bottom-0 z-10 w-full bg-stone-100 px-4 py-2;
+  @apply fixed bottom-0 z-10 w-full bg-stone-100 px-4 py-2 sm:hidden;
 }
 
 /* NavbarMobile.jsx => navbar-mobile, menu-ul-horizontal */
 .navbar-mobile {
-  @apply h-full w-full;
+  @apply h-full w-full sm:hidden;
 }
 
 .menu-ul-horizontal {
@@ -117,106 +116,34 @@
 }
 /* Login.jsx & Register.jsx => form, input-auth, button auth */
 .form {
-  @apply mb-4 flex flex-col gap-5  px-6 pb-8 pt-6;
+  @apply flex flex-col;
+}
+
+.div-input {
+  @apply relative w-full sm:w-3/4;
 }
 
 .input-auth {
-  @apply h-12 w-64 rounded-lg border-none bg-[#d9d9d9] pl-12 shadow-sm shadow-black lg:w-full;
+  @apply h-12 w-full rounded-lg border-none bg-[#d9d9d9] pl-12 shadow-sm shadow-black;
+}
+
+.error-span {
+  @apply max-w-[90%] self-start text-center text-sm font-semibold text-red-500;
 }
 
 .button-auth {
-  @apply min-w-[100px] rounded-lg bg-[#ec5a13] px-4 py-2 text-white shadow-md shadow-black;
+  @apply mt-4 rounded-xl bg-[#f5ac89] px-6 py-2 font-medium shadow-sm shadow-black;
 }
 
-/* Modale (Header.jsx) => modal, modal-overlay */
+/* Modale (Header.jsx) => modal, modal-overlay, button-switch */
 .modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80vw;
-  height: 80vh;
-  background-color: white;
-  z-index: 1000; /* Assurez-vous qu'il est au-dessus des autres éléments */
-  overflow-y: auto; /* Pour permettre le défilement si le contenu est trop long */
-  border-radius: 8px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Ombre optionnelle pour un effet élévé */
+  @apply fixed left-[50%] top-[50%] z-[1000] h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white drop-shadow-2xl;
 }
 
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999; /* Juste derrière la modale */
-}
-
-.modal-desktop {
-  @apply hidden;
+  @apply fixed left-0 top-0 z-[999] h-full w-full bg-black opacity-50;
 }
 
 .button-switch {
-  @apply rounded-lg bg-white py-2 text-center text-black shadow-sm shadow-black;
-}
-
-/* --Tablet verical-- */
-@media screen and (min-width: 645px) {
-  /* Header.jsx */
-  .header {
-    @apply gap-6 px-6;
-  }
-
-  .footer {
-    @apply hidden;
-  }
-
-  .search-bar-container {
-    @apply max-w-[50%];
-  }
-
-  .element-desktop {
-    @apply flex;
-  }
-
-  /* Navber-mobile.jsx */
-  .navbar-mobile {
-    @apply hidden;
-  }
-
-  .element-mobile {
-    @apply hidden;
-  }
-}
-
-/* --Tablet horizontal-- */
-@media screen and (min-width: 768px) {
-}
-
-/* --Desktop-- */
-@media screen and (min-width: 1024px) {
-  /* Header.jsx */
-  .header {
-    @apply px-8;
-  }
-
-  .navbar-desktop {
-    @apply flex gap-6;
-  }
-
-  .modal-desktop {
-    @apply block;
-  }
-
-  .search-bar-container {
-    @apply ml-4;
-  }
-}
-
-/* --Large Desktop-- */
-@media screen and (min-width: 1280px) {
-  .modal {
-    width: 70vw;
-  }
+  @apply rounded-xl bg-[#F5F5F5] px-6 py-2 text-center font-medium text-black shadow-sm shadow-black;
 }
