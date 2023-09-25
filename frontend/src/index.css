@@ -35,7 +35,7 @@
 
 /* Layout.jsx => main */
 .main {
-  @apply min-h-screen py-16 md:pb-0;
+  @apply min-h-screen pb-16 pt-24 md:pb-0;
 }
 
 /* Header.jsx => header, logo, navbar-desktop, search-bar-container, search-bar, button-grey */
@@ -113,6 +113,78 @@
 }
 .home-buttons {
   @apply my-16 flex flex-grow flex-col items-center gap-10  md:text-2xl xl:mb-64;
+}
+/***** buy pages ******/
+
+.buy-page-home {
+  @apply mt-16 flex flex-grow flex-col xl:mr-[50rem] xl:mt-0 xl:flex-grow-0;
+}
+.buy-page-home-h2 {
+  @apply mb-9 text-center text-xl font-bold md:text-2xl xl:text-3xl xl:font-medium;
+}
+
+.buy-imgs {
+  @apply mx-auto mb-16 grid max-w-[28vw] gap-5 md:w-[36vw] xl:flex xl:w-80;
+}
+.tendence {
+  @apply flex items-baseline justify-center gap-5 xl:ml-36;
+}
+.button-filter {
+  @apply flex max-h-8 gap-3 bg-[#FCE3D7] text-lg;
+}
+.tend-imgs {
+  @apply ml-5 grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-3 md:items-center md:self-center lg:grid-cols-5;
+}
+.tend-img {
+  @apply w-28 md:w-48 md:content-center;
+}
+.product-imgs {
+  @apply m-auto w-40 md:w-72;
+}
+.product-price {
+  @apply text-2xl text-[#ec5a13] md:text-3xl;
+}
+.btn-fav {
+  @apply w-[100%] bg-[#ec5a13] py-1 text-center text-xl text-white md:text-2xl;
+}
+.buy-btn {
+  @apply my-11 bg-[#ec5a13]  py-1 text-center text-xl text-white md:w-[100%] md:text-2xl;
+}
+.product-card {
+  @apply flex flex-col items-center gap-5;
+}
+.product-details {
+  @apply flex flex-col justify-center gap-3;
+}
+.titles {
+  @apply relative font-semibold md:text-2xl;
+}
+.titles::before {
+  content: "";
+  position: absolute;
+  height: 5px;
+  width: 100%;
+  background-color: #ec5a13;
+  bottom: -10px;
+}
+.product-description {
+  @apply mt-3 md:text-xl;
+}
+.product-Criteria {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: min-content;
+  gap: 10px 35vw;
+  @apply mt-3 md:max-w-none md:text-lg;
+}
+.criterias {
+  @apply font-medium md:text-xl;
+}
+.btn-user {
+  @apply mt-6  bg-[#ec5a13] px-3 py-1 text-base text-white md:text-2xl;
+}
+.user-section {
+  @apply mb-8 flex justify-between gap-2;
 }
 /* Login.jsx & Register.jsx => form, input-auth, button auth */
 .form {

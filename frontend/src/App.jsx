@@ -9,6 +9,7 @@ import Favorites from "./pages/Favorites/Favorites";
 import Profile from "./pages/Profile/Profile";
 import Sell from "./pages/Sell/Sell";
 import Buy from "./pages/Buy/Buy";
+import Products from "./components/Products/Products";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/buy" element={<Buy />} />
               <Route path="/sell" element={<Sell />} />
+              <Route path="/buy/product/:id" element={<Products />} />
             </Routes>
           </Layout>
         </GlobalContextProvider>
