@@ -161,11 +161,11 @@
 }
 
 .product-card {
-  @apply top-6 mt-6 flex flex-col items-center gap-5 xl:absolute xl:right-[5%] xl:w-[50%];
+  @apply top-6 my-6 flex flex-col items-center gap-5 xl:absolute xl:right-[5%] xl:w-[50%];
 }
 
 .product-details {
-  @apply flex w-[90%] flex-col justify-center gap-8 md:w-[80%] xl:w-full xl:gap-16;
+  @apply mb-6 flex w-[90%] flex-col justify-center gap-8 md:w-[80%] xl:w-full xl:gap-16;
 }
 
 .titles {

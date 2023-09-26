@@ -1,13 +1,13 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { HiUserGroup } from "react-icons/hi";
 import { BsTagsFill } from "react-icons/bs";
 import { PiHandHeartFill } from "react-icons/pi";
 import { GiClothes, GiBodyHeight } from "react-icons/gi";
 import { IoIosColorPalette } from "react-icons/io";
 
-const ProductCard = ({ product }) => {
+export default function ProductCard({ product }) {
   const {
     title,
     description,
@@ -98,7 +98,14 @@ const ProductCard = ({ product }) => {
             <p className="buy-btn">Acheter</p>
           </Link>
           <div>
-            <h2 className="titles">User</h2>
+            <div className="titles flex items-center gap-4">
+              <img
+                className="w-16 rounded-[50%] md:w-24 lg:w-32"
+                src="../../../public/images/Ellipse 1.png"
+                alt="seller picture"
+              />
+              <h2 className="">User</h2>
+            </div>
             <div className="flex justify-between gap-2">
               <Link to="/profile">
                 <p className="btn-user">Voir le profil</p>
@@ -112,20 +119,4 @@ const ProductCard = ({ product }) => {
       </div>
     </section>
   );
-};
-
-ProductCard.propTypes = {
-  product: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
-    size: PropTypes.string.isRequired,
-    clothing_type: PropTypes.string.isRequired,
-    brand: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    state: PropTypes.string.isRequired,
-  }).isRequired,
-};
-export default ProductCard;
+}
