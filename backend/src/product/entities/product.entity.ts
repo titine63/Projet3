@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { User } from './../../users/user.entity/user.entity';
 
 @Entity()
 export class Product {
@@ -41,11 +44,9 @@ export class Product {
   @Column({ type: 'boolean', default: false })
   isSold: boolean;
 
-  @Column({ length: 10 })
-  userId: number;
-
-  @Column({ length: 10 })
-  orderId: number;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
   @CreateDateColumn({
     type: 'timestamp',
