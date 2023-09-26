@@ -14,7 +14,7 @@
 
 /* Global accross the application*/
 .h1 {
-  @apply my-8 text-center text-4xl font-bold;
+  @apply text-center text-2xl md:text-3xl lg:text-4xl font-bold;
 }
 
 .h2 {
@@ -139,7 +139,7 @@
   @apply md:content-center;
 }
 .product-imgs {
-  @apply m-auto w-40 md:w-72;
+  @apply m-auto w-40 md:w-72 xl:left-0;
 }
 .product-price {
   @apply text-2xl text-[#ec5a13] md:text-3xl;
