@@ -16,20 +16,20 @@ const Products = () => {
       brand: "Autre",
       color: "noir",
       category: "homme",
-      Etat: "très bon état",
+      state: "très bon état",
     },
     {
       id: 2,
       title: "magnifique veste",
       description: "veste de taille M",
-      price: "15€",
+      price: 15,
       size: "M",
       image: "./../../../public/images/woman-image.png",
       clothing_type: "Veste",
       brand: "Autre",
       color: "noir",
       category: "homme",
-      Etat: "très bon état",
+      state: "très bon état",
     },
     {
       id: 3,
@@ -42,7 +42,7 @@ const Products = () => {
       brand: "Autre",
       color: "noir",
       category: "homme",
-      Etat: "très bon état",
+      state: "très bon état",
     },
   ];
   const filteredProducts = products.filter(
