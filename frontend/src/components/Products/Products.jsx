@@ -16,7 +16,7 @@ const Products = () => {
       brand: "Autre",
       color: "noir",
       category: "homme",
-      Etat: "très bon état",
+      state: "très bon état",
     },
     {
       id: 2,
@@ -29,7 +29,7 @@ const Products = () => {
       brand: "Autre",
       color: "noir",
       category: "homme",
-      Etat: "très bon état",
+      state: "très bon état",
     },
     {
       id: 3,
@@ -42,7 +42,7 @@ const Products = () => {
       brand: "Autre",
       color: "noir",
       category: "homme",
-      Etat: "très bon état",
+      state: "très bon état",
     },
   ];
   const filteredProducts = products.filter(
