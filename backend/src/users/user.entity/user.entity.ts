@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
+import { Product } from './../../product/entities/product.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('users')
@@ -26,6 +28,13 @@ export class User {
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
+
+  @OneToMany(() => Product, (product) => product.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  product: Product[];
 
   @CreateDateColumn({
     type: 'timestamp',
