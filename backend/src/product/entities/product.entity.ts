@@ -10,9 +10,9 @@ import {
 import { User } from './../../users/user.entity/user.entity';
 
 export enum Category {
-  MEN = 'homme',
-  WOMMEN = 'femme',
-  KIDS = 'enfant',
+  MEN = 'Homme',
+  WOMMEN = 'Femme',
+  KIDS = 'Enfant',
 }
 
 @Entity()
