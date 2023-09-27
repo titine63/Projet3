@@ -9,6 +9,12 @@ import {
 } from 'typeorm';
 import { User } from './../../users/user.entity/user.entity';
 
+export enum Category {
+  MEN = 'Homme',
+  WOMMEN = 'Femme',
+  KIDS = 'Enfant',
+}
+
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
@@ -35,8 +41,11 @@ export class Product {
   @Column({ type: 'varchar', length: 20, nullable: true })
   color: string;
 
-  @Column({ type: 'varchar', length: 10 })
-  category: string;
+  @Column({
+    type: 'enum',
+    enum: Category,
+  })
+  category: Category;
 
   @Column({ type: 'varchar', length: 20, nullable: true })
   state: string;
