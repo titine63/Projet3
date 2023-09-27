@@ -18,19 +18,19 @@ export class ProductService {
     return await this.productRepository.save(createProductDto);
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async getProducts(): Promise<Product[]> {
+    return await this.productRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOneProduct(id: number): Promise<Product> {
+    return await this.productRepository.findOneBy({ id: id });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async updateProduct(id: number, updateProductDto: UpdateProductDto) {
+    return await this.productRepository.update(id, updateProductDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number) {
+    return await this.productRepository.delete(id);
   }
 }

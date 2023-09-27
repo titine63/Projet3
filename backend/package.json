@@ -8,10 +8,10 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
+    "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d src/config/migration.config.ts",
     "migration:up": "ts-node ./node_modules/typeorm/cli.js migration:run -d src/config/migration.config.ts",
-    "migration:down": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:revert -d src/config/migration.config.ts",
+    "migration:down": "ts-node ./node_modules/typeorm/cli.js migration:revert -d src/config/migration.config.ts",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",

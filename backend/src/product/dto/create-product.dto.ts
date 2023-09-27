@@ -1,11 +1,13 @@
 import {
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
   MaxLength,
-  IsInt,
+  // IsInt,
 } from 'class-validator';
+import { Category } from '../entities/product.entity';
 
 export class CreateProductDto {
   @IsString()
@@ -31,7 +33,7 @@ export class CreateProductDto {
   size: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   @MaxLength(20)
   clothing_type: string;
 
@@ -48,7 +50,8 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(10)
-  category: string;
+  @IsEnum(Category)
+  category: Category;
 
   @IsString()
   @IsOptional()

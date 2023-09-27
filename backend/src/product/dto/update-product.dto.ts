@@ -1,12 +1,14 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateProductDto } from './create-product.dto';
 import {
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
   MaxLength,
 } from 'class-validator';
+import { Category } from '../entities/product.entity';
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {
   @IsString()
@@ -49,18 +51,14 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @IsString()
   @IsNotEmpty()
   @MaxLength(10)
-  category: string;
+  @IsEnum(Category)
+  category: Category;
 
   @IsString()
   @IsOptional()
   @MaxLength(20)
   state: string;
 
-  @IsNumber({
-    allowNaN: false,
-    allowInfinity: false,
-    maxDecimalPlaces: 2,
-  })
-  @IsNotEmpty()
-  user: number;
+  // @IsNotEmpty()
+  // user: number;
 }
