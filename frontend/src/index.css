@@ -10,11 +10,11 @@
   'xl': {'min': '1280px'} 
   */
 
-/* --Modbile-- */
+/* --Mobile-- */
 
 /* Global accross the application*/
 .h1 {
-  @apply text-center text-2xl md:text-3xl lg:text-4xl font-bold;
+  @apply text-center text-2xl font-bold md:text-3xl lg:text-4xl;
 }
 
 .h2 {
@@ -101,16 +101,20 @@
 .button-homepage {
   @apply flex min-w-[8.125rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2 shadow-sm shadow-black;
 }
+
 /* Carousel.jsx => carousel */
 .carousel {
   @apply flex h-44 w-full items-center justify-around bg-[#FCE3D7] md:h-[16.5rem];
 }
+
 .home-bottom {
   @apply md:flex md:flex-col md:items-center md:justify-center xl:flex-row;
 }
+
 .home-img {
   @apply hidden  md:block xl:max-w-[62%] xl:self-start;
 }
+
 .home-buttons {
   @apply my-16 flex flex-grow flex-col items-center gap-10  md:text-2xl;
 }
@@ -119,6 +123,7 @@
 .buy-page-home {
   @apply mt-16 flex w-full flex-grow flex-col xl:mr-[50rem] xl:mt-0 xl:flex-grow-0;
 }
+
 .buy-page-home-h2 {
   @apply mb-9 text-center text-xl font-bold md:text-2xl xl:text-3xl xl:font-medium;
 }
@@ -126,39 +131,47 @@
 .buy-imgs {
   @apply mx-[5%] mb-16 grid grid-cols-3 gap-5 xl:mx-[10%] xl:justify-items-center xl:gap-0;
 }
+
 .tendence {
   @apply flex items-baseline justify-center gap-5 xl:ml-36;
 }
+
 .button-filter {
   @apply flex max-h-8 gap-3 bg-[#FCE3D7] text-lg;
 }
+
 .tend-imgs {
   @apply mx-[5%] grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 md:items-center md:self-center lg:grid-cols-5 xl:mx-[10%] xl:grid-cols-6 xl:justify-items-center;
 }
+
 .tend-img {
   @apply md:content-center;
 }
-.product-imgs {
-  @apply m-auto w-40 md:w-72 xl:left-0;
-}
+
 .product-price {
   @apply text-2xl text-[#ec5a13] md:text-3xl;
 }
+
 .btn-fav {
   @apply w-[100%] bg-[#ec5a13] py-1 text-center text-xl text-white md:text-2xl;
 }
+
 .buy-btn {
-  @apply my-11 bg-[#ec5a13]  py-1 text-center text-xl text-white md:w-[100%] md:text-2xl;
+  @apply bg-[#ec5a13] py-1 text-center text-xl text-white md:w-[100%] md:text-2xl;
 }
+
 .product-card {
-  @apply flex flex-col items-center gap-5;
+  @apply top-6 my-6 flex flex-col items-center gap-5 xl:absolute xl:right-[5%] xl:w-[50%];
 }
+
 .product-details {
-  @apply flex flex-col justify-center gap-3;
+  @apply mb-6 flex w-[90%] flex-col justify-center gap-8 md:w-[80%] xl:w-full xl:gap-16;
 }
+
 .titles {
-  @apply relative font-semibold md:text-2xl;
+  @apply relative mb-6 font-semibold md:text-2xl;
 }
+
 .titles::before {
   content: "";
   position: absolute;
@@ -167,25 +180,19 @@
   background-color: #ec5a13;
   bottom: -10px;
 }
-.product-description {
-  @apply mt-3 md:text-xl;
+
+.product-criteria {
+  @apply grid grid-cols-2 md:text-lg xl:grid-cols-3;
 }
-.product-Criteria {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  max-width: min-content;
-  gap: 10px 35vw;
-  @apply mt-3 md:max-w-none md:text-lg;
-}
+
 .criterias {
-  @apply font-medium md:text-xl;
+  @apply pl-8 font-medium md:text-xl;
 }
+
 .btn-user {
-  @apply mt-6  bg-[#ec5a13] px-3 py-1 text-base text-white md:text-2xl;
+  @apply bg-[#ec5a13] px-3 py-1 text-center text-white md:text-2xl;
 }
-.user-section {
-  @apply mb-8 flex justify-between gap-2;
-}
+
 /* Login.jsx & Register.jsx => form, input-auth, button auth */
 .form {
   @apply flex flex-col;
