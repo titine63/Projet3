@@ -17,10 +17,7 @@ export default function RegisterForm({ className }) {
 
   const schema = yup
     .object({
-      pseudo: yup
-        .string()
-        .required("Ce champ est obligatoire.")
-        .email("L'email est incorrect."),
+      pseudo: yup.string().required("Ce champ est obligatoire."),
       email: yup
         .string()
         .required("Ce champ est obligatoire.")
