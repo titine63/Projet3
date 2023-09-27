@@ -53,8 +53,10 @@ export class Product {
   @Column({ type: 'boolean', default: false })
   isSold: boolean;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'userId' })
+  @ManyToOne(() => User, (user) => user.product, {
+    cascade: false,
+    nullable: false,
+  })
   user: User;
 
   @CreateDateColumn({
