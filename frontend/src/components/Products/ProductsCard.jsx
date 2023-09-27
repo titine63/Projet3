@@ -13,7 +13,6 @@ export default function ProductCard({ product }) {
     description,
     price,
     size,
-    image,
     clothing_type,
     brand,
     color,
@@ -24,12 +23,16 @@ export default function ProductCard({ product }) {
   return (
     <section className="relative">
       <div className="hidden xl:fixed xl:bottom-[45%] xl:left-[5%] xl:block xl:w-[32%] xl:translate-y-1/2">
-        <img src={image} alt={title} className="w-full" />
+        <img
+          src="https://picsum.photos/800/920"
+          alt={title}
+          className="w-full"
+        />
       </div>
       <div className="product-card">
         <h1 className="h1 md:mb-6">{title}</h1>
         <img
-          src={image}
+          src="https://picsum.photos/400/600"
           alt={title}
           className="sm:w- m-auto w-[60%] xl:left-0 xl:hidden"
         />
