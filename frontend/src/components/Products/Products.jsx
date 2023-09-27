@@ -22,7 +22,7 @@ const Products = () => {
       id: 2,
       title: "magnifique veste",
       description: "veste de taille M",
-      price: 15,
+      price: "15€",
       size: "M",
       image: "./../../../public/images/woman-image.png",
       clothing_type: "Veste",
