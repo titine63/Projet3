@@ -1,18 +1,19 @@
+//LoginForm.jsx
 /* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Navigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function LoginForm({ className }) {
-  // Importer les états et fonctions depuis le contexte global`
-  const { isLogged, setIsLogged } = useContext(GlobalContext);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
-
+  const { setIsLogged, closeModal } = useContext(GlobalContext); // Ajout de closeModal
+  let navigate = useNavigate();
   const schema = yup
     .object({
       email: yup
@@ -35,16 +36,23 @@ export default function LoginForm({ className }) {
     resolver: yupResolver(schema),
   });
 
-  function onSubmit(data) {
-    console.log(data);
-    setIsLogged(!isLogged);
-    setShouldRedirect(true);
+  async function onSubmit(data) {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/auth/login",
+        data,
+      );
+      if (response.status === 200 && response.data.access_token) {
+        Cookies.set("token", response.data.access_token); // Stockage du token dans un cookie
+        setIsLogged(true);
+        closeModal(); // Ajout de cette ligne pour fermer le modal
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.error("Erreur de connexion:", error);
+    }
   }
 
-  // Si l'utilisateur est connecté, on le redirige vers la page de profil
-  if (shouldRedirect) {
-    return <Navigate to="/profile" replace />;
-  }
   return (
     <>
       <form className={className} onSubmit={handleSubmit(onSubmit)}>
@@ -83,7 +91,7 @@ export default function LoginForm({ className }) {
           Se connecter
         </button>
         <Link to="/register" className="mt-5 underline md:text-lg lg:hidden">
-          Pas encore du compte ?
+          Pas encore de compte ?
         </Link>
       </form>
     </>
