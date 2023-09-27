@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+import { Shipping } from './../../shipping/entities/shipping.entity';
+import { Order } from './../../order/entities/order.entity';
 import { Product } from './../../product/entities/product.entity';
 import {
   Entity,
@@ -35,6 +37,20 @@ export class User {
     nullable: true,
   })
   product: Product[];
+
+  @OneToMany(() => Order, (order) => order.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  order: Order[];
+
+  @OneToMany(() => Shipping, (shipping) => shipping.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  shipping: Shipping[];
 
   @CreateDateColumn({
     type: 'timestamp',
