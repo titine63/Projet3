@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateShippingDto } from './dto/create-shipping.dto';
 import { UpdateShippingDto } from './dto/update-shipping.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Shipping } from './entities/shipping.entity';
 
 @Injectable()
 export class ShippingService {
-  create(createShippingDto: CreateShippingDto) {
-    return 'This action adds a new shipping';
+  constructor(
+    @InjectRepository(Shipping)
+    private shippingRepository: Repository<Shipping>,
+  ) {}
+
+  async create(createShippingDto: CreateShippingDto) {
+    return await this.shippingRepository.save(createShippingDto);
   }
 
-  findAll() {
-    return `This action returns all shipping`;
+  async findAll() {
+    return await this.shippingRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} shipping`;
+  async findOne(id: number) {
+    return await this.shippingRepository.findOneBy({ id: id });
   }
 
-  update(id: number, updateShippingDto: UpdateShippingDto) {
-    return `This action updates a #${id} shipping`;
+  async update(id: number, updateShippingDto: UpdateShippingDto) {
+    return await this.shippingRepository.update(id, updateShippingDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} shipping`;
+  async remove(id: number) {
+    return await this.shippingRepository.delete(id);
   }
 }
