@@ -1,6 +1,6 @@
 //Profile.jsx
 import { useContext, useState } from "react";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
