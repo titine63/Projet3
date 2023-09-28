@@ -1,6 +1,6 @@
 //LoginForm.jsx
 /* eslint-disable react/prop-types */
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,6 +12,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export default function LoginForm({ className }) {
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const { setIsLogged, closeModal } = useContext(GlobalContext); // Ajout de closeModal
   let navigate = useNavigate();
   const schema = yup
@@ -39,7 +40,7 @@ export default function LoginForm({ className }) {
   async function onSubmit(data) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        `${backendURL}/auth/login`,
         data,
       );
       if (response.status === 200 && response.data.access_token) {

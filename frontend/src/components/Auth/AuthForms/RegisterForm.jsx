@@ -1,7 +1,7 @@
 //RegisterForm.jsx
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
@@ -14,6 +14,7 @@ import axios from "axios";
 import Cookies from "js-cookie"; // Ajout de l'importation de js-cookie
 
 export default function RegisterForm({ className }) {
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const { setIsLogged, closeModal } = useContext(GlobalContext); // Ajout de closeModal
   //const [shouldRedirect, setShouldRedirect] = useState(false);
   let navigate = useNavigate();
@@ -50,7 +51,7 @@ export default function RegisterForm({ className }) {
   async function onSubmit(data) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/register",
+        `${backendURL}/auth/register`,
         data,
       );
       console.log("Status de la réponse:", response.status); // Ajout du console.log ici
