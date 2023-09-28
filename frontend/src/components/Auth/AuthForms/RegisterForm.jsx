@@ -1,20 +1,23 @@
+//RegisterForm.jsx
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
+import Cookies from "js-cookie"; // Ajout de l'importation de js-cookie
 
 export default function RegisterForm({ className }) {
-  // Importer les états et fonctions depuis le contexte global  const [shouldRedirect, setShouldRedirect] = useState(false);
-  const { isLogged, setIsLogged } = useContext(GlobalContext);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
-
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const { setIsLogged, closeModal } = useContext(GlobalContext); // Ajout de closeModal
+  //const [shouldRedirect, setShouldRedirect] = useState(false);
+  let navigate = useNavigate();
   const schema = yup
     .object({
       pseudo: yup.string().required("Ce champ est obligatoire."),
@@ -45,16 +48,26 @@ export default function RegisterForm({ className }) {
     resolver: yupResolver(schema),
   });
 
-  function onSubmit(data) {
-    console.log(data);
-    setIsLogged(!isLogged);
-    setShouldRedirect(true);
+  async function onSubmit(data) {
+    try {
+      const response = await axios.post(
+        `${backendURL}/auth/register`,
+        data,
+      );
+      console.log("Status de la réponse:", response.status); // Ajout du console.log ici
+      if (response.status === 200 || response.status === 201) {
+        // Votre code pour gérer l'inscription réussie
+        // Stockage du token JWT dans un cookie
+        Cookies.set("token", response.data.access_token);
+        setIsLogged(true);
+        closeModal();
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.error("Erreur d'inscription:", error);
+    }
   }
 
-  // Si l'utilisateur est connecté, on le redirige vers la page de profil
-  if (shouldRedirect) {
-    return <Navigate to="/profile" replace />;
-  }
   return (
     <form className={className} onSubmit={handleSubmit(onSubmit)}>
       <div className="div-input">
