@@ -1,10 +1,10 @@
-// src/auth/auth.service.ts
-
-import { User } from './../users/user.entity/user.entity';
-import { JwtService } from '@nestjs/jwt';
-import { UsersService } from './../users/users.service';
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { User } from './../users/user.entity/user.entity';
+import { UsersService } from './../users/users.service';
 import * as crypto from 'crypto';
+import { Response } from 'express'; // Ajoutez cet import
 
 @Injectable()
 export class AuthService {
@@ -13,33 +13,30 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  /**
-   * Validate the user in parameter
-   */
   async validate(email: string): Promise<any> {
     return this.usersService.getUserByEmail(email);
   }
 
-  /**
-   * Try to login the user in parameter.
-   * Return an access token if login is successfull otherwise return
-   * a 404 status
-   * @param user
-   */
-  public async login(user: User): Promise<any | { status: number }> {
+  public async login(
+    user: User,
+    res: Response,
+  ): Promise<any | { status: number }> {
     return this.validate(user.email).then((userData) => {
-      // user not found
-      if (!userData || userData.password != this.hash(user.password)) {
+      if (!userData || userData.password !== this.hash(user.password)) {
         return { status: 404 };
       }
 
-      // user found
-      // The access token will be composed by the email
       const payload = `${userData.email}`;
       const accessToken = this.jwtService.sign(payload);
 
+      res.cookie('jwt', accessToken, {
+        httpOnly: true,
+        secure: false, // true si vous utilisez HTTPS
+        sameSite: 'strict',
+      });
+
       return {
-        expires_in: 3600, // 1hour
+        expires_in: 3600,
         access_token: accessToken,
       };
     });
@@ -47,14 +44,10 @@ export class AuthService {
 
   public async register(user: User): Promise<any> {
     user.password = this.hash(user.password);
-
     return this.usersService.saveUser(user);
   }
 
-  /**
-   * Hash the password in parameter.
-   */
-  private hash(password): string {
+  private hash(password: string): string {
     return crypto.createHmac('sha256', password).digest('hex');
   }
 }
