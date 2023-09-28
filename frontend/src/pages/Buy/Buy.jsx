@@ -1,46 +1,25 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { AiOutlineFilter } from "react-icons/ai";
 
 export default function Buy() {
-  const products = [
-    {
-      id: 1,
-      title: "magnifique veste",
-      description: "veste de taille M",
-      price: 15,
-      size: "M",
-      image: "./../../../public/images/man-image.png",
-      clothing_type: "Veste",
-      brand: "Autre",
-      color: "noir",
-      category: "man",
-    },
-    {
-      id: 2,
-      title: "magnifique veste",
-      description: "veste de taille M",
-      price: 15,
-      size: "M",
-      image: "./../../../public/images/woman-image.png",
-      clothing_type: "Veste",
-      brand: "Autre",
-      color: "noir",
-      category: "man",
-    },
-    {
-      id: 3,
-      title: "magnifique veste",
-      description: "veste de taille M",
-      price: 15,
-      size: "M",
-      image: "./../../../public/images/kids-image.png",
-      clothing_type: "Veste",
-      brand: "Autre",
-      color: "noir",
-      category: "man",
-    },
-  ];
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${backendURL}/product`)
+      .then((res) => {
+        setProducts(res.data);
+        console.log("res.data :>> ", products);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
     <main className="main flex flex-col justify-center">
@@ -66,22 +45,29 @@ export default function Buy() {
 
         <div className="tendence">
           <h2 className="buy-page-home-h2">Tendences du moment</h2>
-          <Link to="/buy" className="button-filter relative pl-3 pr-9">
+          <Link to="#" className="button-filter relative pl-3 pr-9">
             Filtres
             <AiOutlineFilter className="absolute bottom-1 right-1 text-xl text-[#ec5a13] " />
           </Link>
         </div>
         <div className="tend-imgs">
-          {products.map((product) => (
-            <Link key={product.id} to={`product/${product.id}`}>
-              <img
-                key={product.id}
-                className="tend-img"
-                src={product.image}
-                alt="man-img"
-              />
-            </Link>
-          ))}
+          {products
+            .filter((product) => product.id >= 1 && product.id <= 13)
+            .map((product) => (
+              <Link key={product.id} to={`product/${product.id}`}>
+                <div key={product.id}>
+                  <h3>
+                    {product.title} <span>{product.price} €</span>
+                  </h3>
+                  <img
+                    key={product.id}
+                    className="tend-img"
+                    src="https://picsum.photos/150/200"
+                    alt="man-img"
+                  />
+                </div>
+              </Link>
+            ))}
         </div>
       </div>
     </main>
