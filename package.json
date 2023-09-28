@@ -9,7 +9,7 @@
     "start:both": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "dev": "cross-env-shell 'concurrently -c green,yellow -t \"HH:mm:ss\" -p \"{name} {time}\" \"$npm_package_config_cli:dev-*\"'",
+    "dev": "cross-env-shell 'concurrently -c green,yellow -t \"HH:cocktail_tropical:ss\" -p \"{name} {time}\" \"$npm_package_config_cli:dev-*\"'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

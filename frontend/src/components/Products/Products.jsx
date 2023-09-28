@@ -1,63 +1,37 @@
+/* eslint-disable no-unused-vars */
 import { useParams } from "react-router-dom";
 import ProductCard from "./ProductsCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-// import man-image from "./../../../public/images/home-images.png";
 const Products = () => {
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const { id } = useParams();
-  const products = [
-    {
-      id: 1,
-      title: "magnifique veste",
-      description: "veste de taille M",
-      price: 15,
-      size: "M",
-      image: "./../../../public/images/man-image.png",
-      clothing_type: "Veste",
-      brand: "Autre",
-      color: "noir",
-      category: "homme",
-      state: "très bon état",
-    },
-    {
-      id: 2,
-      title: "magnifique veste",
-      description: "veste de taille M",
-      price: "15€",
-      size: "M",
-      image: "./../../../public/images/woman-image.png",
-      clothing_type: "Veste",
-      brand: "Autre",
-      color: "noir",
-      category: "homme",
-      state: "très bon état",
-    },
-    {
-      id: 3,
-      title: "magnifique veste",
-      description: "veste de taille M",
-      price: 15,
-      size: "M",
-      image: "./../../../public/images/kids-image.png",
-      clothing_type: "Veste",
-      brand: "Autre",
-      color: "noir",
-      category: "homme",
-      state: "très bon état",
-    },
-  ];
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${backendURL}/product`)
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   const filteredProducts = products.filter(
     (product) => product.id === parseInt(id),
   );
 
   return (
     <main className="main">
-      <div className="Products-container">
-        <div className="products-grid">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
+      <section>
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </section>
     </main>
   );
 };
