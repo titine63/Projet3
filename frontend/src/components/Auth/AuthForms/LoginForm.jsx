@@ -1,7 +1,7 @@
 //LoginForm.jsx
 /* eslint-disable react/prop-types */
 import { useContext } from "react";
-import { GlobalContext } from "../../../contexts/GlobalContextProvider";
+import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -39,10 +39,7 @@ export default function LoginForm({ className }) {
 
   async function onSubmit(data) {
     try {
-      const response = await axios.post(
-        `${backendURL}/auth/login`,
-        data,
-      );
+      const response = await axios.post(`${backendURL}/auth/login`, data);
       if (response.status === 200 && response.data.access_token) {
         Cookies.set("token", response.data.access_token); // Stockage du token dans un cookie
         setIsLogged(true);
