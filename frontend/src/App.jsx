@@ -10,6 +10,7 @@ import Profile from "./pages/Profile/Profile";
 import Sell from "./pages/Sell/Sell";
 import Buy from "./pages/Buy/Buy";
 import Products from "./components/Products/Products";
+import Category from "./components/Products/category";
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
               <Route path="/buy" element={<Buy />} />
               <Route path="/sell" element={<Sell />} />
               <Route path="/buy/product/:id" element={<Products />} />
+              <Route
+                path="/product/category/:category"
+                element={<Category />}
+              />
             </Routes>
           </Layout>
         </GlobalContextProvider>
