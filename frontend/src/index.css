@@ -193,6 +193,50 @@
   @apply bg-[#ec5a13] px-3 py-1 text-center text-white md:text-2xl;
 }
 
+/******************************************************************** .modal-filter ***************************************************
+  */
+
+.filter-modal {
+  width: 80%; /* Largeur du modal */
+  display: flex;
+  max-width: 400px; /* Largeur maximale du modal */
+  background-color: #fce3d7;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style du contenu du modal */
+.filter-modal-content {
+  text-align: left;
+  position: relative;
+  right: 0; /* Alignement du texte à gauche */
+}
+
+/* Style pour les éléments de filtrage */
+.filter-modal-content label {
+  margin-bottom: 10px;
+}
+.filter-modal-content input[type="number"] {
+  width: 30%;
+}
+
+.filter-modal-content select {
+  width: 50%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.filter-modal-content h3 {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+
+/******************************************************************** .modal-filter ***************************************************
+  */
+
 /* Login.jsx & Register.jsx => form, input-auth, button auth */
 .form {
   @apply flex flex-col;
