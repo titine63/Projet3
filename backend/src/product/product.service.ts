@@ -1,3 +1,4 @@
+import { Category } from './entities/product.entity';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
@@ -24,6 +25,10 @@ export class ProductService {
 
   async findOneProduct(id: number): Promise<Product> {
     return await this.productRepository.findOneBy({ id: id });
+  }
+
+  async findProductsByCategory(category: Category): Promise<Product[]> {
+    return await this.productRepository.find({ where: { category } });
   }
 
   async updateProduct(id: number, updateProductDto: UpdateProductDto) {
