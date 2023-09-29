@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './order/order.module';
 import { ShippingModule } from './shipping/shipping.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [

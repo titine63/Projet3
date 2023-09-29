@@ -52,7 +52,7 @@ export default function Buy() {
         </div>
         <div className="tend-imgs">
           {products
-            .filter((product) => product.id >= 1 && product.id <= 13)
+            // .filter((product) => product.id >= 1 && product.id <= 13)
             .map((product) => (
               <Link key={product.id} to={`product/${product.id}`}>
                 <div key={product.id}>

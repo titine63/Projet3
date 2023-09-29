@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class SeedDB1695823881556 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`INSERT INTO \`product\` (title, description, price, size, clothing_type, brand, color, category, state, userId) VALUES ('Jean', 'Un classique du dressing', 32.86, 'XL', 'Femme', 'Zara', 'Gris', 'Bas', 'Acceptable', 1),
+    await queryRunner.query(`INSERT INTO \`product\` (title, description, price, size, clothing_type, brand, color, category, state, userId) VALUES ('Jean', 'Un classique du dressing', 32.86, 'XL', 'Jean', 'Zara', 'Gris', 'Femme', 'Acceptable', 1),
     ('Veste', "Idéal pour l'été", 20.37, 'XS', 'Veste', 'Lacoste', 'Gris', 'Femme', 'Neuf', 1),
     ('T-shirt', 'Un classique du dressing', 23.34, 'S', 'T-shirt', 'Zara', 'Bleu', 'Enfant', 'Bon', 1),
     ('T-shirt', 'Neuf avec étiquette', 143.27, 'M', 'Femme', 'T-shirt', 'Noir', 'Femme', 'Neuf', 1),
