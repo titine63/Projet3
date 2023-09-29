@@ -1,4 +1,4 @@
-// jwt-auth.guard.ts
+// jwt-auth.guards.ts
 
 import { Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';

@@ -1,7 +1,17 @@
-import { Controller, Post, Body, Res } from '@nestjs/common'; // Ajoutez Res à vos imports
+//auth.controller.ts
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  Get,
+  UseGuards,
+  Request,
+} from '@nestjs/common'; // Ajoutez Res à vos imports
 import { AuthService } from './auth.service';
 import { User } from '../users/user.entity/user.entity';
-import { Response } from 'express'; // Ajoutez cet import
+import { Response } from 'express';
+import { JwtAuthGuard } from './jwt-aut.guards';
 
 @Controller('auth')
 export class AuthController {
@@ -20,5 +30,13 @@ export class AuthController {
   @Post('register')
   async register(@Body() user: User): Promise<any> {
     return this.authService.register(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async getProfile(@Request() req): Promise<any> {
+    const user = req.user;
+    delete user.password; // Supprime le mot de passe avant de renvoyer l'objet
+    return user;
   }
 }

@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 
 export default function LoginForm({ className }) {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const { setIsLogged, closeModal } = useContext(GlobalContext); // Ajout de closeModal
+  const { setIsLogged, closeModal, setUserInfo } = useContext(GlobalContext); // Ajout de closeModal
   let navigate = useNavigate();
   const schema = yup
     .object({
@@ -41,9 +41,19 @@ export default function LoginForm({ className }) {
     try {
       const response = await axios.post(`${backendURL}/auth/login`, data);
       if (response.status === 200 && response.data.access_token) {
-        Cookies.set("token", response.data.access_token); // Stockage du token dans un cookie
+        Cookies.set("token", response.data.access_token);
         setIsLogged(true);
-        closeModal(); // Ajout de cette ligne pour fermer le modal
+
+        // Nouvelle requête pour obtenir les informations de profil de l'utilisateur
+        const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
+          headers: {
+            Authorization: `Bearer ${response.data.access_token}`, // Utilisez le token pour l'autorisation
+          },
+        });
+        console.log("Réponse du profil:", profileResponse.data); // Ajout de cette ligne
+        setUserInfo(profileResponse.data); // Mettez à jour l'état global avec les informations de profil
+
+        closeModal();
         navigate("/profile");
       }
     } catch (error) {

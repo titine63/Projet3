@@ -1,3 +1,4 @@
+/*index css*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -225,4 +226,14 @@
 
 .button-switch {
   @apply rounded-xl bg-[#F5F5F5] px-6 py-2 text-center font-medium text-black shadow-sm shadow-black;
+}
+
+/* Profil */
+.star-icon {
+  @apply relative w-[33px] h-[33px];
+}
+
+.star-icon::before {
+  content: "";
+  @apply absolute left-[8.33%] right-[8.33%] top-[8.33%] bottom-[8.33%] bg-[#EC5A13] border-[1.5px] border-[#EC5A13];
 }
