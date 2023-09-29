@@ -14,7 +14,6 @@ export default function Buy() {
       .get(`${backendURL}/product`)
       .then((res) => {
         setProducts(res.data);
-        console.log("res.data :>> ", products);
       })
       .catch((err) => {
         console.error(err);
