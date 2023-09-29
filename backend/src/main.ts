@@ -11,6 +11,8 @@ async function bootstrap() {
   const cors = process.env.FRONTEND_URL || 'http://localhost:5173/';
   app.use(cookieParser());
 
+  // Activer CORS
+
   app.enableCors({
     origin: cors, // Remplacez par l'URL de votre frontend
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
