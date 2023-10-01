@@ -1,5 +1,11 @@
 /* eslint-disable react/prop-types */
 import Modal from "react-modal";
+import { AiOutlineEuroCircle } from "react-icons/ai";
+import { GiClothes, GiBodyHeight } from "react-icons/gi";
+import { BsTagsFill } from "react-icons/bs";
+import { PiHandHeartFill } from "react-icons/pi";
+import { IoIosColorPalette } from "react-icons/io";
+
 export default function FilterModal(props) {
   return (
     <Modal
@@ -11,18 +17,31 @@ export default function FilterModal(props) {
       <div className="filter-modal-content main">
         <h3>Filtrer par :</h3>
 
-        <label>
-          Prix
+        <div className="relative">
+          <AiOutlineEuroCircle className="absolute top-1 text-xl text-[#ec5a13]" />
+          <span className="criterias">Prix</span>
+        </div>
+
+        <div className="price-filter">
+          <label>
+            Min
+            <br />
+            <input type="number" name="price-min" />
+          </label>
           <br />
-          Max
-          <input type="number" name="price-max" />
-          Min
-          <input type="number" name="price-min" />
-        </label>
-        <br />
+          <label>
+            Max
+            <br />
+            <input type="number" name="price-max" />
+          </label>
+        </div>
+
         <label>
-          Type de vêtement
-          <br />
+          <div className="relative my-4">
+            <GiClothes className="absolute top-1 text-xl text-[#ec5a13]" />
+            <span className="criterias">Type de vêtement</span>
+          </div>
+
           <select name="clothingType">
             <option value="T-shert">T-shert</option>
             <option value="Pantalon">Pantalon</option>
@@ -32,10 +51,13 @@ export default function FilterModal(props) {
             <option value="Sous-vêtement">Sous-vêtement</option>
           </select>
         </label>
-        <br />
+
         <label>
-          Marque
-          <br />
+          <div className="relative my-4">
+            <BsTagsFill className="absolute top-1 text-xl text-[#ec5a13]" />
+            <span className="criterias">Marque</span>
+          </div>
+
           <select name="brand">
             <option value="Nike">Nike</option>
             <option value="Adidas">Adidas</option>
@@ -45,11 +67,13 @@ export default function FilterModal(props) {
             <option value="Puma">Puma</option>
           </select>
         </label>
-        <br />
 
         <label>
-          Taille
-          <br />
+          <div className="relative my-4">
+            <GiBodyHeight className="absolute top-1 text-xl text-[#ec5a13]" />
+            <span className="criterias">Taille</span>
+          </div>
+
           <select name="size">
             <option value="XS">XS</option>
             <option value="S">S</option>
@@ -60,10 +84,13 @@ export default function FilterModal(props) {
             <option value="XXXL">XXXL</option>
           </select>
         </label>
-        <br />
+
         <label>
-          Etat
-          <br />
+          <div className="relative my-4">
+            <PiHandHeartFill className="absolute top-1 text-xl text-[#ec5a13]" />
+            <span className="criterias">Etat</span>
+          </div>
+
           <select name="state">
             <option value="Neuf">Neuf</option>
             <option value="Très bon état">Très bon état</option>
@@ -71,9 +98,13 @@ export default function FilterModal(props) {
             <option value="Satisfaisnt">Satisfaisnt</option>
           </select>
         </label>
-        <br />
+
         <label>
-          Coleur <br />
+          <div className="relative my-4">
+            <IoIosColorPalette className="absolute top-1 text-xl text-[#ec5a13]" />
+            <span className="criterias">Coleur</span>
+          </div>
+
           <select name="color">
             <option value="rouge">Rouge</option>
             <option value="orange">Orange</option>

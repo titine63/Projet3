@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { AiOutlineFilter } from "react-icons/ai";
 import FilterModal from "../../components/Filter/Filter";
-import Modal from "react-modal";
 
 export default function Buy() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
