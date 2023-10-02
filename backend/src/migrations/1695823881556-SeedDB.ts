@@ -27,11 +27,40 @@ export class SeedDB1695823881556 implements MigrationInterface {
         ('Chemise', "Idéal pour l'été", 121.2, 'M', 'Chemise', 'Adidas', "Devred", 'Femme', 'Neuf', 3),
         ('Chaussures', 'En bon état, porté quelques fois', 76.9, 'XS', 'Chaussures', 'Adidas', 'Gris', 'Homme', 'Comme neuf', 2),
         ('Pull', 'Confortable et à la mode', 25.33, 'XXL', 'Pull', 'Levis', 'Noir', 'Femme', 'Neuf', 3);`);
+
+    await queryRunner.query(`INSERT INTO \`shipping\` (firstname, lastname, address, city, postalCode, country, shippingMethod, userId) VALUES
+        ('John', 'Doe', '123 Main St', 'Paris', '75001', 'France', 'Express', 1),
+        ('Jane', 'Smith', '456 Elm St', 'Lyon', '69001', 'France', 'Standard', 2),
+        ('Alice', 'Johnson', '789 Maple Ave', 'Marseille', '13001', 'France', 'Express', 3),
+        ('Bob', 'Martin', '101 Pine Rd', 'Toulouse', '31000', 'France', 'Standard', 1),
+        ('Charlie', 'Brown', '202 Oak Ln', 'Nice', '06000', 'France', 'Express', 2),
+        ('David', 'Clark', '303 Birch Dr', 'Nantes', '44000', 'France', 'Standard', 3),
+        ('Eva', 'Adams', '404 Cedar Pl', 'Strasbourg', '67000', 'France', 'Express', 1),
+        ('Frank', 'Baker', '505 Fir Ct', 'Bordeaux', '33000', 'France', 'Standard', 2),
+        ('Grace', 'Turner', '606 Spruce Way', 'Lille', '59000', 'France', 'Express', 3),
+        ('Henry', 'White', '707 Redwood Blvd', 'Rennes', '35000', 'France', 'Standard', 1);
+        `);
+
+    await queryRunner.query(`INSERT INTO \`order\` (status, paymentMethod, userId, shippingId) VALUES
+        ('pending', 'paypal', 1, 1),
+        ('paid', 'stripe', 2, 2),
+        ('shipped', 'paypal', 3, 3),
+        ('delivered', 'stripe', 1, 4),
+        ('pending', 'paypal', 2, 5),
+        ('paid', 'stripe', 3, 6),
+        ('shipped', 'paypal', 1, 7),
+        ('delivered', 'stripe', 2, 8),
+        ('pending', 'paypal', 3, 9),
+        ('paid', 'stripe', 1, 10);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`DELETE FROM \`product\``);
 
     await queryRunner.query(`DELETE FROM \`users\``);
+
+    await queryRunner.query(`DELETE FROM \`shipping\``);
+
+    await queryRunner.query(`DELETE FROM \`order\``);
   }
 }
