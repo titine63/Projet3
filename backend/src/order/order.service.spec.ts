@@ -22,53 +22,53 @@ describe('OrderService', () => {
     service = module.get<OrderService>(OrderService);
   });
 
-  const mockOrders = [
-    {
-      id: 1,
-      status: 'processed',
-      paymentMethod: 'card',
-      user: 1,
-      shipping: 5,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 2,
-      status: 'shipped',
-      paymentMethod: 'paypal',
-      user: 2,
-      shipping: 4,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 3,
-      status: 'delivered',
-      paymentMethod: 'card',
-      user: 3,
-      shipping: 3,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 4,
-      status: 'processed',
-      paymentMethod: 'card',
-      user: 4,
-      shipping: 2,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 5,
-      status: 'cancelled',
-      paymentMethod: 'paypal',
-      user: 5,
-      shipping: 1,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
+  // const mockOrders = [
+  //   {
+  //     id: 1,
+  //     status: 'processed',
+  //     paymentMethod: 'card',
+  //     user: 1,
+  //     shipping: 5,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //   },
+  //   {
+  //     id: 2,
+  //     status: 'shipped',
+  //     paymentMethod: 'paypal',
+  //     user: 2,
+  //     shipping: 4,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //   },
+  //   {
+  //     id: 3,
+  //     status: 'delivered',
+  //     paymentMethod: 'card',
+  //     user: 3,
+  //     shipping: 3,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //   },
+  //   {
+  //     id: 4,
+  //     status: 'processed',
+  //     paymentMethod: 'card',
+  //     user: 4,
+  //     shipping: 2,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //   },
+  //   {
+  //     id: 5,
+  //     status: 'cancelled',
+  //     paymentMethod: 'paypal',
+  //     user: 5,
+  //     shipping: 1,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //   },
+  // ];
 
   it('should be defined', () => {
     expect(service).toBeDefined();
