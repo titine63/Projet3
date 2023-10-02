@@ -9,14 +9,26 @@ import FilterModal from "../../components/Filter/Filter";
 export default function Buy() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const [products, setProducts] = useState([]);
+  const [filterValues, setFilterValues] = useState({});
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const openFilterModal = () => {
-    setIsFilterModalOpen(true);
+    setIsFilterModalOpen(!isFilterModalOpen);
   };
-  const closeFilterModal = () => {
-    setIsFilterModalOpen(false);
+
+  const handleFilterChange = (newValues) => {
+    setFilterValues({ ...filterValues, ...newValues });
+    console.log(filterValues);
   };
+
+  const productsFiltred = products.filter((product) => {
+    return product.price == filterValues.price;
+  });
+
+  useEffect(() => {
+    setFilteredProducts(productsFiltred);
+  }, [filterValues]);
 
   useEffect(() => {
     axios
@@ -28,6 +40,7 @@ export default function Buy() {
         console.error(err);
       });
   }, []);
+
   return (
     <main className="main flex flex-col justify-center">
       <div className="buy-page-home">
@@ -77,29 +90,47 @@ export default function Buy() {
 
           <FilterModal
             isOpen={isFilterModalOpen}
-            onRequestClose={closeFilterModal}
+            onRequestClose={openFilterModal}
+            onFilterChange={handleFilterChange}
           />
         </div>
-
+        {/* http://localhost:3000/products?price=15&title=pantalon */}
         <div className="tend-imgs">
-          {products
-            .filter((product) => product.id >= 1 && product.id <= 13)
-            .map((product) => (
-              <Link key={product.id} to={`product/${product.id}`}>
-                <div key={product.id}>
-                  <h3 className="text-center">
-                    {product.title} <br />
-                    <span>{product.price} €</span>
-                  </h3>
-                  <img
-                    key={product.id}
-                    className="tend-img"
-                    src="https://picsum.photos/150/200"
-                    alt="man-img"
-                  />
-                </div>
-              </Link>
-            ))}
+          {filteredProducts.length
+            ? filteredProducts.map((product) => {
+                return (
+                  <Link key={product.id} to={`product/${product.id}`}>
+                    <div key={product.id}>
+                      <h3 className="text-center">
+                        {product.title} <br />
+                        <span>{product.price} €</span>
+                      </h3>
+                      <img
+                        key={product.id}
+                        className="tend-img"
+                        src="https://picsum.photos/150/200"
+                        alt="man-img"
+                      />
+                    </div>
+                  </Link>
+                );
+              })
+            : products.map((product) => (
+                <Link key={product.id} to={`product/${product.id}`}>
+                  <div key={product.id}>
+                    <h3 className="text-center">
+                      {product.title} <br />
+                      <span>{product.price} €</span>
+                    </h3>
+                    <img
+                      key={product.id}
+                      className="tend-img"
+                      src="https://picsum.photos/150/200"
+                      alt="man-img"
+                    />
+                  </div>
+                </Link>
+              ))}
         </div>
       </div>
     </main>

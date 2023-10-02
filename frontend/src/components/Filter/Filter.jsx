@@ -5,8 +5,19 @@ import { GiClothes, GiBodyHeight } from "react-icons/gi";
 import { BsTagsFill } from "react-icons/bs";
 import { PiHandHeartFill } from "react-icons/pi";
 import { IoIosColorPalette } from "react-icons/io";
+import { useState } from "react";
 
 export default function FilterModal(props) {
+  const [priceMin, setPriceMin] = useState("");
+  const [priceMax, setPriceMax] = useState("");
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setPriceMax(value);
+    setPriceMin(value);
+    props.onFilterChange({ price: value });
+  };
+
   return (
     <Modal
       isOpen={props.isOpen}
@@ -26,13 +37,23 @@ export default function FilterModal(props) {
           <label>
             Min
             <br />
-            <input type="number" name="price-min" />
+            <input
+              type="number"
+              name="price-min"
+              value={priceMin}
+              onChange={handleChange}
+            />
           </label>
           <br />
           <label>
             Max
             <br />
-            <input type="number" name="price-max" />
+            <input
+              type="number"
+              name="price-max"
+              value={priceMax}
+              onChange={handleChange}
+            />
           </label>
         </div>
 
@@ -43,12 +64,24 @@ export default function FilterModal(props) {
           </div>
 
           <select name="clothingType">
-            <option value="T-shert">T-shert</option>
-            <option value="Pantalon">Pantalon</option>
-            <option value="Jean">Jean</option>
-            <option value="Rob">Rob</option>
-            <option value="Short">Short</option>
-            <option value="Sous-vêtement">Sous-vêtement</option>
+            <option  onChange={handleChange}>
+              T-shert
+            </option>
+            <option onChange={handleChange}>
+              Pantalon
+            </option>
+            <option onChange={handleChange}>
+              Jean
+            </option>
+            <option onChange={handleChange}>
+              Rob
+            </option>
+            <option onChange={handleChange}>
+              Short
+            </option>
+            <option onChange={handleChange}>
+              Sous-vêtement
+            </option>
           </select>
         </label>
 

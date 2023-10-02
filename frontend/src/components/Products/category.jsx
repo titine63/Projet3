@@ -30,18 +30,19 @@ export default function Category() {
   }, []);
 
   return (
-    <div className="main">
+    <main className="main">
       <div className="tendence">
         <h2 className="buy-page-home-h2 mt-9">Filtrer par : {category}</h2>
 
-        <Link
-          to="#"
+        <button
+          type
+          ="button"
           className="button-filter relative pl-3 pr-9"
           onClick={openFilterModal}
         >
           Filtres
           <AiOutlineFilter className="absolute bottom-1 right-1 text-xl text-[#ec5a13] " />
-        </Link>
+        </button>
 
         <FilterModal
           isOpen={isFilterModalOpen}
@@ -65,6 +66,6 @@ export default function Category() {
           </Link>
         ))}
       </div>
-    </div>
+    </main>
   );
 }
