@@ -6,7 +6,6 @@ import { AiOutlineFilter } from "react-icons/ai";
 
 export default function Buy() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
-
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -19,27 +18,39 @@ export default function Buy() {
         console.error(err);
       });
   }, []);
-
   return (
     <main className="main flex flex-col justify-center">
       <div className="buy-page-home">
         <h2 className="buy-page-home-h2">Filtrer par catégorie</h2>
         <div className="buy-imgs">
-          <img
-            className="buy-img"
-            src="./../../../public/images/man-image.png"
-            alt="man-img"
-          />
-          <img
-            className="buy-img"
-            src="./../../../public/images/woman-image.png"
-            alt="woman-img"
-          />
-          <img
-            className="buy-img"
-            src="./../../../public/images/kids-image.png"
-            alt="kids-img"
-          />
+          <Link to={`/product/category/homme`}>
+            <div>
+              <img
+                className="buy-img"
+                src="./../../../public/images/man-image.png"
+                alt="man-img"
+              />
+            </div>
+          </Link>
+
+          <Link to={`/product/category/femme`}>
+            <div>
+              <img
+                className="buy-img"
+                src="./../../../public/images/woman-image.png"
+                alt="man-img"
+              />
+            </div>
+          </Link>
+          <Link to={`/product/category/enfant`}>
+            <div>
+              <img
+                className="buy-img"
+                src="./../../../public/images/kids-image.png"
+                alt="man-img"
+              />
+            </div>
+          </Link>
         </div>
 
         <div className="tendence">
@@ -55,8 +66,9 @@ export default function Buy() {
             .map((product) => (
               <Link key={product.id} to={`product/${product.id}`}>
                 <div key={product.id}>
-                  <h3>
-                    {product.title} <span>{product.price} €</span>
+                  <h3 className="text-center">
+                    {product.title} <br />
+                    <span>{product.price} €</span>
                   </h3>
                   <img
                     key={product.id}

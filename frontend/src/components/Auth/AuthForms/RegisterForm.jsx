@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import { useContext } from "react";
-import { GlobalContext } from "../../../contexts/GlobalContextProvider";
+import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -50,10 +50,7 @@ export default function RegisterForm({ className }) {
 
   async function onSubmit(data) {
     try {
-      const response = await axios.post(
-        `${backendURL}/auth/register`,
-        data,
-      );
+      const response = await axios.post(`${backendURL}/auth/register`, data);
       console.log("Status de la réponse:", response.status); // Ajout du console.log ici
       if (response.status === 200 || response.status === 201) {
         // Votre code pour gérer l'inscription réussie

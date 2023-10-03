@@ -10,7 +10,9 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   const cors = process.env.FRONTEND_URL || 'http://localhost:5173/';
   app.use(cookieParser());
+
   // Activer CORS
+
   app.enableCors({
     origin: cors, // Remplacez par l'URL de votre frontend
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

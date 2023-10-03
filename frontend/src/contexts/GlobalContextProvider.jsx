@@ -13,6 +13,7 @@ export function GlobalContextProvider({ children }) {
   const [showAuthModal, setShowAuthModal] = useState(false);
   // État pour savoir si la modale est sur login ou register (true = login, false = register)
   const [modalContent, setModalContent] = useState(true);
+  const [userInfo, setUserInfo] = useState(null); // Nouvel état pour les informations de l'utilisateur
 
   // Change le contenu de la modale
   function handleModalContent() {
@@ -48,6 +49,8 @@ export function GlobalContextProvider({ children }) {
       handleModalContent,
       openModalOnLogin,
       openModalOnRegister,
+      userInfo,
+      setUserInfo, // Ajout de setUserInfo dans le contexte
     }),
     // les valeurs du tableau de dépendances à surveiller
     [isLogged, showAuthModal, modalContent],
