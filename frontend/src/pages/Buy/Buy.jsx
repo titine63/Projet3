@@ -9,26 +9,39 @@ import FilterModal from "../../components/Filter/Filter";
 export default function Buy() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const [products, setProducts] = useState([]);
-  const [filterValues, setFilterValues] = useState({});
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filtredProducts, setFiltredProducts] = useState(null);
+  const [filterParams, setFilterParams] = useState({
+    minPrice: "",
+    maxPrice: "",
+    clothing_type: "",
+    brand: "",
+    size: "",
+    state: "",
+    color: "",
+  });
+
+  const handleFilterChange = (newValues) => {
+    setFilterParams({ ...filterParams, ...newValues });
+  };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(filterParams);
+    const filterUrl = `${backendURL}/product/filter?${queryParams.toString()}`;
+
+    axios
+      .get(filterUrl)
+      .then((res) => {
+        setFiltredProducts(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [filterParams]);
 
   const openFilterModal = () => {
     setIsFilterModalOpen(!isFilterModalOpen);
   };
-
-  const handleFilterChange = (newValues) => {
-    setFilterValues({ ...filterValues, ...newValues });
-    console.log(filterValues);
-  };
-
-  const productsFiltred = products.filter((product) => {
-    return product.price == filterValues.price;
-  });
-
-  useEffect(() => {
-    setFilteredProducts(productsFiltred);
-  }, [filterValues]);
 
   useEffect(() => {
     axios
@@ -40,7 +53,7 @@ export default function Buy() {
         console.error(err);
       });
   }, []);
-
+  console.log("filterParams :>> ", filterParams);
   return (
     <main className="main flex flex-col justify-center">
       <div className="buy-page-home">
@@ -91,13 +104,21 @@ export default function Buy() {
           <FilterModal
             isOpen={isFilterModalOpen}
             onRequestClose={openFilterModal}
+            filterParams={filterParams}
+            setFilterParams={setFilterParams}
             onFilterChange={handleFilterChange}
           />
         </div>
-        {/* http://localhost:3000/products?price=15&title=pantalon */}
+
+        {filtredProducts && filtredProducts.length === 0 ? (
+          <h2 className="not-found">
+          Désolé ! Aucun produit de correspond à votre recherche ... 
+          </h2>
+        ) : null}
+
         <div className="tend-imgs">
-          {filteredProducts.length
-            ? filteredProducts.map((product) => {
+          {filtredProducts && filtredProducts.length != 0
+            ? filtredProducts.map((product) => {
                 return (
                   <Link key={product.id} to={`product/${product.id}`}>
                     <div key={product.id}>
@@ -115,22 +136,26 @@ export default function Buy() {
                   </Link>
                 );
               })
-            : products.map((product) => (
-                <Link key={product.id} to={`product/${product.id}`}>
-                  <div key={product.id}>
-                    <h3 className="text-center">
-                      {product.title} <br />
-                      <span>{product.price} €</span>
-                    </h3>
-                    <img
-                      key={product.id}
-                      className="tend-img"
-                      src="https://picsum.photos/150/200"
-                      alt="man-img"
-                    />
-                  </div>
-                </Link>
-              ))}
+            : filtredProducts && filtredProducts.length === 0
+            ? null
+            : products
+                .filter((product) => product.id >= 1 && product.id <= 13)
+                .map((product) => (
+                  <Link key={product.id} to={`product/${product.id}`}>
+                    <div key={product.id}>
+                      <h3 className="text-center">
+                        {product.title} <br />
+                        <span>{product.price} €</span>
+                      </h3>
+                      <img
+                        key={product.id}
+                        className="tend-img"
+                        src="https://picsum.photos/150/200"
+                        alt="man-img"
+                      />
+                    </div>
+                  </Link>
+                ))}
         </div>
       </div>
     </main>

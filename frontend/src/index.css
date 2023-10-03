@@ -215,6 +215,9 @@
 .filter-modal-content h3 {
   @apply mb-4 text-2xl;
 }
+.not-found {
+  @apply m-auto text-center text-2xl font-semibold text-[#ec5a13] md:text-3xl;
+}
 
 /******************************************************************** .modal-filter ***************************************************
   */

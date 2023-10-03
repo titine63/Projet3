@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import Modal from "react-modal";
 import { AiOutlineEuroCircle } from "react-icons/ai";
@@ -5,23 +6,26 @@ import { GiClothes, GiBodyHeight } from "react-icons/gi";
 import { BsTagsFill } from "react-icons/bs";
 import { PiHandHeartFill } from "react-icons/pi";
 import { IoIosColorPalette } from "react-icons/io";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function FilterModal(props) {
-  const [priceMin, setPriceMin] = useState("");
-  const [priceMax, setPriceMax] = useState("");
-
+export default function FilterModal({
+  filterParams,
+  setFilterParams,
+  onFilterChange,
+  isOpen,
+  onRequestClose,
+}) {
   const handleChange = (e) => {
-    const value = e.target.value;
-    setPriceMax(value);
-    setPriceMin(value);
-    props.onFilterChange({ price: value });
+    const { name, value } = e.target;
+    const newFilterParams = { ...filterParams, [name]: value };
+    setFilterParams(newFilterParams);
+    onFilterChange(newFilterParams);
   };
 
   return (
     <Modal
-      isOpen={props.isOpen}
-      onRequestClose={props.onRequestClose}
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
       contentLabel="Filtres"
       className="filter-modal"
     >
@@ -39,8 +43,8 @@ export default function FilterModal(props) {
             <br />
             <input
               type="number"
-              name="price-min"
-              value={priceMin}
+              name="minPrice"
+              value={filterParams.minPrice}
               onChange={handleChange}
             />
           </label>
@@ -50,8 +54,8 @@ export default function FilterModal(props) {
             <br />
             <input
               type="number"
-              name="price-max"
-              value={priceMax}
+              name="maxPrice"
+              value={filterParams.maxPrice}
               onChange={handleChange}
             />
           </label>
@@ -63,25 +67,18 @@ export default function FilterModal(props) {
             <span className="criterias">Type de vêtement</span>
           </div>
 
-          <select name="clothingType">
-            <option  onChange={handleChange}>
-              T-shert
-            </option>
-            <option onChange={handleChange}>
-              Pantalon
-            </option>
-            <option onChange={handleChange}>
-              Jean
-            </option>
-            <option onChange={handleChange}>
-              Rob
-            </option>
-            <option onChange={handleChange}>
-              Short
-            </option>
-            <option onChange={handleChange}>
-              Sous-vêtement
-            </option>
+          <select
+            type="string"
+            name="clothing_type"
+            value={filterParams.clothing_type}
+            onChange={handleChange}
+          >
+            <option value="T-shert">T-shert</option>
+            <option value="Pantalon">Pantalon</option>
+            <option value="Jean">Jean</option>
+            <option value="Rob">Rob</option>
+            <option value="Short">Short</option>
+            <option value="Sous-vêtement">Sous-vêtement</option>
           </select>
         </label>
 
@@ -91,7 +88,11 @@ export default function FilterModal(props) {
             <span className="criterias">Marque</span>
           </div>
 
-          <select name="brand">
+          <select
+            name="brand"
+            value={filterParams.brand}
+            onChange={handleChange}
+          >
             <option value="Nike">Nike</option>
             <option value="Adidas">Adidas</option>
             <option value="Lacoste">Lacoste</option>
@@ -107,7 +108,7 @@ export default function FilterModal(props) {
             <span className="criterias">Taille</span>
           </div>
 
-          <select name="size">
+          <select name="size" value={filterParams.size} onChange={handleChange}>
             <option value="XS">XS</option>
             <option value="S">S</option>
             <option value="M">M</option>
@@ -124,7 +125,11 @@ export default function FilterModal(props) {
             <span className="criterias">Etat</span>
           </div>
 
-          <select name="state">
+          <select
+            name="state"
+            value={filterParams.state}
+            onChange={handleChange}
+          >
             <option value="Neuf">Neuf</option>
             <option value="Très bon état">Très bon état</option>
             <option value="bon état">bon état</option>
@@ -138,7 +143,11 @@ export default function FilterModal(props) {
             <span className="criterias">Coleur</span>
           </div>
 
-          <select name="color">
+          <select
+            name="color"
+            value={filterParams.color}
+            onChange={handleChange}
+          >
             <option value="rouge">Rouge</option>
             <option value="orange">Orange</option>
             <option value="gris">gris</option>
