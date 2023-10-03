@@ -15,6 +15,7 @@ const Products = () => {
       .get(`${backendURL}/product`)
       .then((res) => {
         setProducts(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
