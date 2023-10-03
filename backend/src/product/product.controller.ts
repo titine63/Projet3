@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -25,6 +26,16 @@ export class ProductController {
   @Get()
   getProducts() {
     return this.productService.getProducts();
+  }
+
+  @Get('filter')
+  //NestJS extrait automatiquement les paramètres de l'URL et les place dans un objet filter
+  async filterProductWithQuery(@Query() filter: any) {
+    console.log(
+      'this.productService. :>> ',
+      await this.productService.filterProductWithQuery(filter),
+    );
+    return await this.productService.filterProductWithQuery(filter);
   }
 
   @Get(':id')
