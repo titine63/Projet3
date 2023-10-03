@@ -12,23 +12,23 @@ export class ShippingService {
     private shippingRepository: Repository<Shipping>,
   ) {}
 
-  async create(createShippingDto: CreateShippingDto) {
+  async create(createShippingDto: CreateShippingDto): Promise<Shipping> {
     return await this.shippingRepository.save(createShippingDto);
   }
 
-  async findAll() {
+  async findAll(): Promise<Shipping[]> {
     return await this.shippingRepository.find();
   }
 
-  async findOne(id: number) {
-    return await this.shippingRepository.findOneBy({ id: id });
+  async findOne(id: number): Promise<Shipping> {
+    return this.shippingRepository.findOne({ where: { id: id } });
   }
 
-  async update(id: number, updateShippingDto: UpdateShippingDto) {
+  async update(id: number, updateShippingDto: UpdateShippingDto): Promise<any> {
     return await this.shippingRepository.update(id, updateShippingDto);
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<any> {
     return await this.shippingRepository.delete(id);
   }
 }

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 export class CreateShippingDto {
   @IsString()
@@ -35,4 +35,8 @@ export class CreateShippingDto {
   @IsNotEmpty()
   @MaxLength(20)
   shippingMethod: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  userId: number;
 }

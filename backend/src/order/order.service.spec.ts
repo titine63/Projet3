@@ -1,142 +1,123 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrderService } from './order.service';
+import { Order } from './entities/order.entity';
+import { Repository } from 'typeorm';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderDto } from './dto/update-order.dto';
 
 describe('OrderService', () => {
   let service: OrderService;
-  const mockOrderRepository = {
-    save: jest.fn(),
-    find: jest.fn(),
-    findOneBy: jest.fn(),
-    update: jest.fn(),
-    delete: jest.fn(),
-  };
+  let repository: Repository<Order>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OrderService,
-        { provide: 'OrderRepository', useValue: mockOrderRepository },
+        {
+          provide: 'OrderRepository',
+          useClass: Repository,
+        },
       ],
     }).compile();
 
     service = module.get<OrderService>(OrderService);
+    repository = module.get<Repository<Order>>('OrderRepository');
   });
 
-  // const mockOrders = [
-  //   {
-  //     id: 1,
-  //     status: 'processed',
-  //     paymentMethod: 'card',
-  //     user: 1,
-  //     shipping: 5,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //   },
-  //   {
-  //     id: 2,
-  //     status: 'shipped',
-  //     paymentMethod: 'paypal',
-  //     user: 2,
-  //     shipping: 4,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //   },
-  //   {
-  //     id: 3,
-  //     status: 'delivered',
-  //     paymentMethod: 'card',
-  //     user: 3,
-  //     shipping: 3,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //   },
-  //   {
-  //     id: 4,
-  //     status: 'processed',
-  //     paymentMethod: 'card',
-  //     user: 4,
-  //     shipping: 2,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //   },
-  //   {
-  //     id: 5,
-  //     status: 'cancelled',
-  //     paymentMethod: 'paypal',
-  //     user: 5,
-  //     shipping: 1,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date(),
-  //   },
-  // ];
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  // describe('findAll', () => {
-  //   it('should return an array of orders', async () => {
-  //     mockOrderRepository.find.mockResolvedValue(mockOrders);
+  it('should create a new order successfully', async () => {
+    const mockCreateOrderDto: CreateOrderDto = {
+      // Populate with appropriate mock data
+      status: 'pending',
+      paymentMethod: 'paypal',
+      userId: 1,
+      shippingId: 1,
+    };
 
-  //     const orders = await service.findAll();
-  //     expect(orders).toEqual(mockOrders);
-  //   });
-  // });
+    const mockResponse = {
+      ...mockCreateOrderDto,
+      id: 1,
+    };
 
-  // // Test pour la méthode create
-  // describe('create', () => {
-  //   it('should create an order', async () => {
-  //     const createOrderDto = {
-  //       status: 'processed',
-  //       paymentMethod: 'card',
-  //       user: 1,
-  //       shipping: 5,
-  //     };
-  //     const mockCreatedOrder = { id: 1, ...createOrderDto };
-  //     mockOrderRepository.save.mockResolvedValue(mockCreatedOrder);
+    jest.spyOn(repository, 'save').mockResolvedValue(mockResponse as any);
+    const result = await service.create(mockCreateOrderDto);
 
-  //     const result = await service.create(createOrderDto);
-  //     expect(result).toEqual(mockCreatedOrder);
-  //   });
-  // });
+    expect(result).toBeDefined();
+    expect(result.status).toEqual(mockCreateOrderDto.status);
+    expect(result.paymentMethod).toEqual(mockCreateOrderDto.paymentMethod);
+    expect(result.userId).toEqual(mockCreateOrderDto.userId);
+    expect(result.shippingId).toEqual(mockCreateOrderDto.shippingId);
+  });
 
-  // // Test pour la méthode findOne
-  // describe('findOne', () => {
-  //   it('should return one order by id', async () => {
-  //     const id = 1;
-  //     mockOrderRepository.findOneBy.mockResolvedValue(mockOrders[0]);
+  // Similarly, add tests for other methods like `findAll`, `findOne`, `update`, and `remove`.
 
-  //     const result = await service.findOne(id);
-  //     expect(result).toEqual(mockOrders[0]);
-  //   });
-  // });
+  it('should update an order successfully', async () => {
+    const mockUpdateOrderDto: UpdateOrderDto = {
+      paymentMethod: 'stripe',
+      status: 'paid',
+    };
 
-  // // Test pour la méthode update
-  // describe('update', () => {
-  //   it('should update an order', async () => {
-  //     const id = 1;
-  //     const updateOrderDto = {
-  //       status: 'shipped',
-  //       paymentMethod: 'paypal',
-  //     };
-  //     mockOrderRepository.update.mockResolvedValue(null); // Simulant que la mise à jour a été réussie
+    jest.spyOn(repository, 'update').mockResolvedValue({ affected: 1 } as any);
+    const result = await service.update(1, mockUpdateOrderDto);
 
-  //     await service.update(id, updateOrderDto);
-  //     expect(mockOrderRepository.update).toHaveBeenCalledWith(
-  //       id,
-  //       updateOrderDto,
-  //     );
-  //   });
-  // });
+    expect(result).toBeDefined();
+    expect(result).toEqual({ affected: 1 });
+  });
 
-  // // Test pour la méthode remove
-  // describe('remove', () => {
-  //   it('should delete an order', async () => {
-  //     const id = 1;
-  //     mockOrderRepository.delete.mockResolvedValue(null); // Simulant que la suppression a été réussie
-
-  //     await service.remove(id);
-  //     expect(mockOrderRepository.delete).toHaveBeenCalledWith(id);
-  //   });
-  // });
+  // ... Add the rest of the tests here
 });
+
+// const mockOrders = [
+//   {
+//     id: 1,
+//     status: 'processed',
+//     paymentMethod: 'card',
+//     user: 1,
+//     shipping: 5,
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//   },
+//   {
+//     id: 2,
+//     status: 'shipped',
+//     paymentMethod: 'paypal',
+//     user: 2,
+//     shipping: 4,
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//   },
+//   {
+//     id: 3,
+//     status: 'delivered',
+//     paymentMethod: 'card',
+//     user: 3,
+//     shipping: 3,
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//   },
+//   {
+//     id: 4,
+//     status: 'processed',
+//     paymentMethod: 'card',
+//     user: 4,
+//     shipping: 2,
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//   },
+//   {
+//     id: 5,
+//     status: 'cancelled',
+//     paymentMethod: 'paypal',
+//     user: 5,
+//     shipping: 1,
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//   },
+// ];

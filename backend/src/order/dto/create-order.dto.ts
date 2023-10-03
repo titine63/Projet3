@@ -1,4 +1,10 @@
-import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateOrderDto {
   @IsString()
@@ -12,4 +18,12 @@ export class CreateOrderDto {
   @MaxLength(20)
   @IsEnum(['paypal', 'stripe'])
   paymentMethod: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  userId: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  shippingId: number;
 }

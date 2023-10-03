@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from './../../users/user.entity/user.entity';
 import { Shipping } from './../../shipping/entities/shipping.entity';
@@ -24,13 +25,21 @@ export class Order {
     cascade: false,
     nullable: false,
   })
+  @JoinColumn({ name: 'userId' })
   user: User;
+
+  @Column()
+  userId: number;
 
   @ManyToOne(() => Shipping, (shipping) => shipping.order, {
     cascade: false,
     nullable: false,
   })
+  @JoinColumn({ name: 'shippingId' })
   shipping: Shipping;
+
+  @Column()
+  shippingId: number;
 
   @CreateDateColumn({
     type: 'timestamp',
