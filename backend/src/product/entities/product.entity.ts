@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from './../../users/user.entity/user.entity';
 
@@ -56,7 +57,11 @@ export class Product {
     cascade: false,
     nullable: false,
   })
+  @JoinColumn({ name: 'userId' })
   user: User;
+
+  @Column()
+  userId: number;
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -20,7 +20,7 @@ export class OrderService {
   }
 
   async findOne(id: number) {
-    return await this.orderRepository.findOneBy({ id: id });
+    return await this.orderRepository.findOne({ where: { id: id } });
   }
 
   async update(id: number, updateOrderDto: UpdateOrderDto) {
