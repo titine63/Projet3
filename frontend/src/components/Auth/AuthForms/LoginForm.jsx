@@ -1,6 +1,6 @@
-//LoginForm.jsx
 /* eslint-disable react/prop-types */
-import { useContext } from "react";
+//LoginForm.jsx
+import { useContext, useState } from "react"; // Import useState
 import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,11 +10,17 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import axios from "axios";
 import Cookies from "js-cookie";
+import ModalResetPassword from "./../../../components/Auth/Modals/ModalResetPassword"; // Import du composant
+import ModalError from "./../../../components/Auth/Modals/ModalError"; // Import du composant
 
 export default function LoginForm({ className }) {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const { setIsLogged, closeModal, setUserInfo } = useContext(GlobalContext); // Ajout de closeModal
+  const { setIsLogged, closeModal, setUserInfo } = useContext(GlobalContext);
+  const [showErrorModal, setShowErrorModal] = useState(false); // Ajout de l'état pour la modale d'erreur
+  const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
+
   let navigate = useNavigate();
+
   const schema = yup
     .object({
       email: yup
@@ -44,25 +50,36 @@ export default function LoginForm({ className }) {
         Cookies.set("token", response.data.access_token);
         setIsLogged(true);
 
-        // Nouvelle requête pour obtenir les informations de profil de l'utilisateur
         const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
           headers: {
-            Authorization: `Bearer ${response.data.access_token}`, // Utilisez le token pour l'autorisation
+            Authorization: `Bearer ${response.data.access_token}`,
           },
         });
-        console.log("Réponse du profil:", profileResponse.data); // Ajout de cette ligne
-        setUserInfo(profileResponse.data); // Mettez à jour l'état global avec les informations de profil
 
+        setUserInfo(profileResponse.data);
         closeModal();
         navigate("/profile");
       }
     } catch (error) {
       console.error("Erreur de connexion:", error);
+      setShowErrorModal(true); // Afficher la modale d'erreur si une erreur se produit
     }
   }
 
   return (
     <>
+      {/* Modale d'erreur */}
+      <ModalError
+        isOpen={showErrorModal}
+        onClose={() => setShowErrorModal(false)}
+      />
+
+      {/* Modale de réinitialisation du mot de passe */}
+      <ModalResetPassword
+        isOpen={showResetPasswordModal}
+        onClose={() => setShowResetPasswordModal(false)}
+      />
+
       <form className={className} onSubmit={handleSubmit(onSubmit)}>
         <div className="div-input">
           <HiOutlineMail className=" absolute left-5 top-[0.9rem] text-xl text-[#5e5e5e]" />
@@ -92,9 +109,14 @@ export default function LoginForm({ className }) {
             <span className="error-span">{errors.password.message}</span>
           )}
         </div>
-        <Link to="#" className="md:text:lg mt-2 text-center underline lg:mt-4">
+        <Link
+          to="#"
+          className="md:text:lg mt-2 text-center underline lg:mt-4"
+          onClick={() => setShowResetPasswordModal(true)}
+        >
           Oups ! Mot de passe oublié ?
         </Link>
+
         <button type="submit" className="button-auth">
           Se connecter
         </button>
