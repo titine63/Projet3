@@ -117,6 +117,7 @@ export default function Buy() {
         ) : null}
 
         <div className="tend-imgs">
+
           {filtredProducts && filtredProducts.length != 0
             ? filtredProducts.map((product) => {
                 return (

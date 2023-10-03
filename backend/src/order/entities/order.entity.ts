@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany,
 } from 'typeorm';
 import { User } from './../../users/user.entity/user.entity';
 import { Shipping } from './../../shipping/entities/shipping.entity';

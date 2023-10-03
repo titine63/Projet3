@@ -58,7 +58,7 @@ export class CreateProductDto {
   @MaxLength(20)
   state: string;
 
-  //   @IsInt()
-  //   @IsNotEmpty()
-  //   user: number;
+  // @IsInt()
+  // @IsNotEmpty()
+  // userId: number;
 }
