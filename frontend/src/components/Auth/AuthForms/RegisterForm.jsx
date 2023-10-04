@@ -6,39 +6,22 @@ import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
 import axios from "axios";
-import Cookies from "js-cookie"; // Ajout de l'importation de js-cookie
 
-export default function RegisterForm({ className }) {
+import { schema } from "../../../utils/const";
+
+export default function RegisterForm({
+  className,
+  setModalContent,
+  modalContent,
+}) {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const { setIsLogged, closeModal, setUserInfo } = useContext(GlobalContext); // Ajout de closeModal
+  const { closeModal } = useContext(GlobalContext); // Ajout de closeModal
   //const [shouldRedirect, setShouldRedirect] = useState(false);
-  let navigate = useNavigate();
-
-  const schema = yup
-    .object({
-      pseudo: yup.string().required("Ce champ est obligatoire."),
-      email: yup
-        .string()
-        .required("Ce champ est obligatoire.")
-        .email("L'email est incorrect."),
-      password: yup
-        .string()
-        .min(8, "Au minimum au moins 8 caractères.")
-        .required("Ce champ est obligatoire."),
-      confirmpassword: yup
-        .string()
-        .oneOf(
-          [yup.ref("password"), null],
-          "Les mots de passe ne correspondent pas.",
-        )
-        .required("Ce champ est obligatoire."),
-    })
-    .required();
 
   const {
     register,
@@ -51,40 +34,28 @@ export default function RegisterForm({ className }) {
 
   async function onSubmit(data) {
     try {
-      console.log("Données du formulaire:", data); // Debug 1
-      console.log("Envoi de la requête d'inscription..."); // Debug 2
-
       const response = await axios.post(`${backendURL}/auth/register`, data);
 
-      console.log("Réponse reçue:", response); // Debug 3
-      console.log("Statut de la réponse:", response.status); // Debug 4
+      // if (response.status === 201) {
+      //   Cookies.set("token", response.data.access_token);
 
-      if (response.status === 200 || response.status === 201) {
-        Cookies.set("token", response.data.access_token);
+      //   console.log(response.data);
 
-        console.log("Cookie créé:", response.data.access_token); // Debug 5
+      //   setIsLogged(true);
 
-        setIsLogged(true);
-        console.log("Est connecté:", true); // Debug 6
+      //   const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
+      //     headers: {
+      //       Authorization: `Bearer ${response.data.access_token}`,
+      //     },
+      //   });
 
-        const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
-          headers: {
-            Authorization: `Bearer ${response.data.access_token}`,
-          },
-        });
+      // setUserInfo(profileResponse.data);
 
-        setUserInfo(profileResponse.data);
-        console.log(
-          "Informations de l'utilisateur mises à jour:",
-          profileResponse.data,
-        ); // Debug 7
-
+      
+        console.log(modalContent);
         closeModal();
-        console.log("Fermeture de la modale"); // Debug 8
-
-        console.log("Redirection vers le profil..."); // Debug 9
-        navigate("/profile");
-      }
+        setModalContent(!modalContent);
+      
     } catch (error) {
       console.error("Erreur d'inscription:", error); // Debug 10
     }

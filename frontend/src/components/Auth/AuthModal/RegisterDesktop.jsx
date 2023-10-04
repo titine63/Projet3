@@ -5,7 +5,8 @@ import RegisterForm from "../AuthForms/RegisterForm";
 
 export default function RegisterDeskop() {
   // Importer les états et fonctions depuis le contexte global
-  const { closeModal, handleModalContent } = useContext(GlobalContext);
+  const { closeModal, handleModalContent, setModalContent, modalContent } =
+    useContext(GlobalContext);
 
   return (
     <>
@@ -55,7 +56,11 @@ export default function RegisterDeskop() {
             </p>
           </div>
           {/* Formulaire d'inscription */}
-          <RegisterForm className="form flex w-[90%] flex-col items-center gap-6 self-start" />
+          <RegisterForm
+            modalContent={modalContent}
+            setModalContent={setModalContent}
+            className="form flex w-[90%] flex-col items-center gap-6 self-start"
+          />
         </div>
       </div>
     </>

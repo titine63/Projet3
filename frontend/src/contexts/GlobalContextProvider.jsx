@@ -46,6 +46,7 @@ export function GlobalContextProvider({ children }) {
       setShowAuthModal,
       closeModal,
       modalContent,
+      setModalContent,
       handleModalContent,
       openModalOnLogin,
       openModalOnRegister,

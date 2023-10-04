@@ -55,6 +55,12 @@ export default function Profile() {
     return <Navigate to="/" replace />;
   }
 
+  // Nouvelle fonction pour gérer le succès de la suppression
+  function handleSuccessfulDeletion() {
+    handleCloseDeleteAccountModal();
+    setShowConfirmationModal(true);
+  }
+
   // Fonction pour formater la date au format "mois en lettres et année"
   function formatMemberSince(createdAt) {
     if (createdAt) {
@@ -76,10 +82,8 @@ export default function Profile() {
       {/* Appel du composant ModalDeleteAccount avec les props nécessaires */}
       <ModalDeleteAccount
         isOpen={showDeleteAccountModal}
-        onClose={() => {
-          handleCloseDeleteAccountModal();
-          setShowConfirmationModal(true); // Afficher la modale de confirmation lors de la fermeture
-        }}
+        onClose={handleCloseDeleteAccountModal} // Uniquement fermer la modale si "Annuler" est cliqué
+        onSuccessfulDeletion={handleSuccessfulDeletion} // Nouveau prop pour gérer le succès
         backendURL={import.meta.env.VITE_BACKEND_URL}
         userId={userInfo ? userInfo.id : null}
         setIsLogged={setIsLogged} // Passez cette fonction comme prop
