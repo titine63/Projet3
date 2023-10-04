@@ -10,6 +10,7 @@ export class CreateUser1695733141210 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0`);
     await queryRunner.query(
       `DROP INDEX \`IDX_c18dc5127c28389fb4ca1d8fb3\` ON \`users\``,
     );
