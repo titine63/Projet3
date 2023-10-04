@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class SeedDB1695823881556 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`INSERT INTO \`users\`(pseudo, email, password, picture) VALUES ('jesse', 'vallantjesse@live.com', 'rigoulet', 'https://media.licdn.com/dms/image/D4E35AQGHNfoiSBc2pw/profile-framedphoto-shrink_800_800/0/1673628490374?e=1697014800&v=beta&t=hZVdV1KG6Av3oPScJRFSLtOlWcnHjsZdeddxW0xbYwM'),
-        ('khaled', 'khaled.mofleh707@gmail.com', 'mofleh','https://media.licdn.com/dms/image/D4D35AQEgI6tYQzht_Q/profile-framedphoto-shrink_800_800/0/1688029042524?e=1697014800&v=beta&t=wv0k2oi0aJ5Un4lr_bMit90b1Z2TKdJk42D-LP-22tA'),
-        ('sandrine', 'sblanchonnet@yahoo.fr', 'blanchonnet', 'https://media.licdn.com/dms/image/C5603AQEGXsrlhOuXSQ/profile-displayphoto-shrink_800_800/0/1517338552117?e=1701907200&v=beta&t=AKlUi3ecsw6zwcRDlLfoLlOfqcmci5hM1IiX8Wssbys');
+    await queryRunner.query(`INSERT INTO \`users\`(pseudo, email, password, picture) VALUES ('jesse', 'vallantjesse@live.com', '1e95745641dcf430c74ed81201c29605ca308a527e86e72a946e0d362cfd71ab', 'https://media.licdn.com/dms/image/D4E35AQGHNfoiSBc2pw/profile-framedphoto-shrink_800_800/0/1673628490374?e=1697014800&v=beta&t=hZVdV1KG6Av3oPScJRFSLtOlWcnHjsZdeddxW0xbYwM'),
+        ('khaled', 'khaled.mofleh707@gmail.com', 'f76ac55759dff7abb22f8a44cd1576b96c94af2ca29ab7c3c8fe6be480614881','https://media.licdn.com/dms/image/D4D35AQEgI6tYQzht_Q/profile-framedphoto-shrink_800_800/0/1688029042524?e=1697014800&v=beta&t=wv0k2oi0aJ5Un4lr_bMit90b1Z2TKdJk42D-LP-22tA'),
+        ('sandrine', 'sblanchonnet@yahoo.fr', '3c6856493101ffd766079b5110b646925e8cb86ea7d007237e15fdac352f731b', 'https://media.licdn.com/dms/image/C5603AQEGXsrlhOuXSQ/profile-displayphoto-shrink_800_800/0/1517338552117?e=1701907200&v=beta&t=AKlUi3ecsw6zwcRDlLfoLlOfqcmci5hM1IiX8Wssbys');
         `);
 
     await queryRunner.query(`INSERT INTO \`product\` (title, description, price, size, clothing_type, brand, color, category, state, userId) VALUES ('Jean', 'Un classique du dressing', 32.86, 'XL', 'Jean', 'Zara', 'Gris', 'Femme', 'Acceptable', 3),
