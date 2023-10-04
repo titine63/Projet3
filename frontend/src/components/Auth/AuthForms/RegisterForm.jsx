@@ -15,9 +15,10 @@ import Cookies from "js-cookie"; // Ajout de l'importation de js-cookie
 
 export default function RegisterForm({ className }) {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const { setIsLogged, closeModal } = useContext(GlobalContext); // Ajout de closeModal
+  const { setIsLogged, closeModal, setUserInfo } = useContext(GlobalContext); // Ajout de closeModal
   //const [shouldRedirect, setShouldRedirect] = useState(false);
   let navigate = useNavigate();
+
   const schema = yup
     .object({
       pseudo: yup.string().required("Ce champ est obligatoire."),
@@ -50,18 +51,42 @@ export default function RegisterForm({ className }) {
 
   async function onSubmit(data) {
     try {
+      console.log("Données du formulaire:", data); // Debug 1
+      console.log("Envoi de la requête d'inscription..."); // Debug 2
+
       const response = await axios.post(`${backendURL}/auth/register`, data);
-      console.log("Status de la réponse:", response.status); // Ajout du console.log ici
+
+      console.log("Réponse reçue:", response); // Debug 3
+      console.log("Statut de la réponse:", response.status); // Debug 4
+
       if (response.status === 200 || response.status === 201) {
-        // Votre code pour gérer l'inscription réussie
-        // Stockage du token JWT dans un cookie
         Cookies.set("token", response.data.access_token);
+
+        console.log("Cookie créé:", response.data.access_token); // Debug 5
+
         setIsLogged(true);
+        console.log("Est connecté:", true); // Debug 6
+
+        const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
+          headers: {
+            Authorization: `Bearer ${response.data.access_token}`,
+          },
+        });
+
+        setUserInfo(profileResponse.data);
+        console.log(
+          "Informations de l'utilisateur mises à jour:",
+          profileResponse.data,
+        ); // Debug 7
+
         closeModal();
+        console.log("Fermeture de la modale"); // Debug 8
+
+        console.log("Redirection vers le profil..."); // Debug 9
         navigate("/profile");
       }
     } catch (error) {
-      console.error("Erreur d'inscription:", error);
+      console.error("Erreur d'inscription:", error); // Debug 10
     }
   }
 

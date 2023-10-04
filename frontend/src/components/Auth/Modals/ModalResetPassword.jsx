@@ -16,21 +16,26 @@ function ModalResetPassword({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="w-1/3 rounded-lg bg-white p-8 shadow-lg flex flex-col">
+      <div className="flex w-1/3 flex-col rounded-lg bg-white p-8 shadow-lg">
         <p className="mb-4 text-center">Réinitialisation du mot de passe.</p>
         {/* Ajout du formulaire de réinitialisation du mot de passe ici */}
-        <form onSubmit={handleSubmit} className="flex flex-col flex-grow">
-          <label htmlFor="email" className="mb-2">Email :</label>
+        <form onSubmit={handleSubmit} className="flex flex-grow flex-col">
+          <label htmlFor="email" className="mb-2">
+            Entrez votre adresse email :
+          </label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border rounded w-full mb-2 px-3 py-2"
+            className="mb-2 w-full rounded border px-3 py-2"
           />
-          <div className="flex justify-between items-end mt-auto">
-            <button type="submit" className="rounded bg-orange-500 px-4 py-2 font-bold text-white hover:bg-orange-700">
-              Envoyer le lien de réinitialisation
+          <div className="mt-auto flex items-end justify-between">
+            <button
+              type="submit"
+              className="rounded bg-orange-500 px-4 py-2 font-bold text-white hover:bg-orange-700"
+            >
+              Demander un nouveau mot de passe
             </button>
             <button
               onClick={onClose}

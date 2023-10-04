@@ -5,15 +5,36 @@ import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { TiStarFullOutline } from "react-icons/ti";
 import ModalResetPassword from "./../../components/Auth/Modals/ModalResetPassword";
+import ModalDeleteAccount from "./../../components/Auth/Modals/ModalDeleteAccount";
 
 export default function Profile() {
   // Utilisation du contexte global pour obtenir des méthodes et des états
   const { setIsLogged, closeModal, userInfo } = useContext(GlobalContext);
   // État local pour gérer la redirection
   const [shouldRedirect, setShouldRedirect] = useState(false);
-
+  // État local pour gérer la réinitialisation du mot de passe
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
 
+  // État pour contrôler la visibilité de la modale de suppression de compte
+  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
+
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false); // Nouvel état
+
+  // Fonction pour ouvrir la modale de suppression de compte
+  function handleOpenDeleteAccountModal() {
+    setShowDeleteAccountModal(true);
+  }
+
+  // Fonction pour fermer la modale de suppression de compte
+  function handleCloseDeleteAccountModal() {
+    setShowDeleteAccountModal(false);
+  }
+
+  // Nouvelle fonction pour gérer la fermeture de la modale de confirmation
+  function handleCloseConfirmationModal() {
+    setShowConfirmationModal(false);
+    handleLogout(); // Déconnecter l'utilisateur et rediriger vers l'accueil
+  }
   // Fonction pour gérer la déconnexion de l'utilisateur
   function handleLogout() {
     // Suppression du token JWT du cookie
@@ -47,10 +68,41 @@ export default function Profile() {
 
   return (
     <main className="main flex h-screen">
+      {/* Appel du composant ModalResetPassword avec les props nécessaires */}
       <ModalResetPassword
         isOpen={showResetPasswordModal}
         onClose={() => setShowResetPasswordModal(false)}
       />
+      {/* Appel du composant ModalDeleteAccount avec les props nécessaires */}
+      <ModalDeleteAccount
+        isOpen={showDeleteAccountModal}
+        onClose={() => {
+          handleCloseDeleteAccountModal();
+          setShowConfirmationModal(true); // Afficher la modale de confirmation lors de la fermeture
+        }}
+        backendURL={import.meta.env.VITE_BACKEND_URL}
+        userId={userInfo ? userInfo.id : null}
+        setIsLogged={setIsLogged} // Passez cette fonction comme prop
+        setShouldRedirect={setShouldRedirect} // Passez cette fonction comme prop
+      />
+
+      {/* Nouvelle modale de confirmation */}
+      {showConfirmationModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="w-1/3 rounded-lg bg-white p-8 shadow-lg">
+            <p className="mb-4 text-center">
+              Votre compte a bien été supprimé ! Nous espérons vous revoir
+              bientôt !
+            </p>
+            <button
+              className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+              onClick={handleCloseConfirmationModal}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Partie gauche pour les informations de profil */}
       <div className="flex w-1/4 flex-col justify-between bg-[#FCE3D7]">
@@ -112,7 +164,10 @@ export default function Profile() {
             >
               Modifier mon mot de passe
             </button>
-            <button className="text-black focus:outline-none">
+            <button
+              className="text-black focus:outline-none"
+              onClick={handleOpenDeleteAccountModal}
+            >
               Supprimer mon compte
             </button>
           </div>
