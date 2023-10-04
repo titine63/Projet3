@@ -194,6 +194,35 @@
   @apply bg-[#ec5a13] px-3 py-1 text-center text-white md:text-2xl;
 }
 
+/******************************************************************** .modal-filter ***************************************************
+  */
+
+.filter-modal {
+  @apply w-[80%] max-w-[400px] rounded-lg bg-[#fce3d7] p-5;
+  box-shadow: 0px 0px 10px #ec5a13;
+}
+
+.filter-modal-content input[type="number"] {
+  @apply w-[75%] border-[#ec5a13];
+}
+.price-filter {
+  @apply flex;
+}
+
+.filter-modal-content select {
+  @apply w-[88%] border-[#ec5a13] p-2;
+}
+
+.filter-modal-content h3 {
+  @apply mb-4 text-2xl;
+}
+.not-found {
+  @apply m-auto text-center text-2xl font-semibold text-[#ec5a13] md:text-3xl;
+}
+
+/******************************************************************** .modal-filter ***************************************************
+  */
+
 /* Login.jsx & Register.jsx => form, input-auth, button auth */
 .form {
   @apply flex flex-col;
