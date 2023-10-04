@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class SeedDB1695823881556 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`INSERT INTO \`users\`(pseudo, email, password) VALUES ('jesse', 'vallantjesse@live.com', 'rigoulet'),
-        ('khaled', 'khaled.mofleh707@gmail.com', 'mofleh'),
-        ('sandrine', 'sblanchonnet@yahoo.fr', 'blanchonnet');
+    await queryRunner.query(`INSERT INTO \`users\`(pseudo, email, password) VALUES ('jesse', 'vallantjesse@live.com', '1e95745641dcf430c74ed81201c29605ca308a527e86e72a946e0d362cfd71ab'),
+        ('khaled', 'khaled.mofleh707@gmail.com', 'f76ac55759dff7abb22f8a44cd1576b96c94af2ca29ab7c3c8fe6be480614881'),
+        ('sandrine', 'sblanchonnet@yahoo.fr', '3c6856493101ffd766079b5110b646925e8cb86ea7d007237e15fdac352f731b');
         `);
 
     await queryRunner.query(`INSERT INTO \`product\` (title, description, price, size, clothing_type, brand, color, category, state, userId) VALUES ('Jean', 'Un classique du dressing', 32.86, 'XL', 'Jean', 'Zara', 'Gris', 'Femme', 'Acceptable', 3),
@@ -55,6 +55,8 @@ export class SeedDB1695823881556 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0;`);
+
     await queryRunner.query(`DELETE FROM \`product\``);
 
     await queryRunner.query(`DELETE FROM \`users\``);
