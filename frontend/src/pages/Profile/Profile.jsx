@@ -59,9 +59,9 @@ export default function Profile() {
           {/* Photo de profil */}
           <img
             src={
-              userInfo && userInfo.picture
+              userInfo.picture
                 ? userInfo.picture
-                : "https://placekitten.com/g/200/300"
+                : "../../../public/images/Ellipse 1.png"
             }
             alt="Profil"
             className="mb-4 h-[159.11px] w-[155px] rounded-full"
@@ -79,6 +79,7 @@ export default function Profile() {
         {/* Conteneur pour la note, les étoiles et membre depuis */}
         <div className="mt-0 flex flex-col items-center">
           {/* Ma note et étoiles */}
+          <p className="mb-2">Ma note : </p>
           <div
             className="mb-2 flex"
             style={{ width: "192.5px", height: "33px" }}
@@ -92,7 +93,6 @@ export default function Profile() {
               />
             ))}
           </div>
-          <p className="mb-2">Ma note : 5</p>
 
           {/* Membre depuis */}
           <p>
