@@ -34,6 +34,8 @@ export class ProductService {
     const orders = await this.orderRepository.find({
       where: { userId: userId },
     });
+    console.log('orders :>> ', orders);
+    // Ensuite, récupérez les IDs de commande pour le userId donné
     const orderIds = orders.map((order) => order.id);
 
     // Ensuite, récupérez les produits associés à ces IDs de commande

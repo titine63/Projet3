@@ -149,7 +149,7 @@ export default function Profile() {
         </div>
 
         {/* 4ème conteneur : Espace pour les cartes d'historique de commande */}
-        <div className="border p-4">
+        <div className="border p-4 flex flex-wrap gap-4">
         <AdsByUser userId={userInfo.id} route={"product/order/user"}/>
           {/* Votre contenu ici, comme les cartes d'historique de commande */}
         </div>
