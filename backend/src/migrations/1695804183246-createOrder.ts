@@ -13,18 +13,28 @@ export class CreateOrder1695804183246 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE \`product\` ADD CONSTRAINT \`FK_329b8ae12068b23da547d3b4798\` FOREIGN KEY (\`userId\`) REFERENCES \`users\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
+    await queryRunner.query(`ALTER TABLE \`product\` ADD \`orderId\` int NULL`);
+
+    await queryRunner.query(
+      `ALTER TABLE \`product\` ADD CONSTRAINT \`FK_87ffe09e725a6e79f87dd6c0b69\` FOREIGN KEY (\`orderId\`) REFERENCES \`order\`(\`id\`) ON DELETE NO ACTION ON UPDATE CASCADE`,
+    );
+
     await queryRunner.query(
       `ALTER TABLE \`order\` ADD CONSTRAINT \`FK_caabe91507b3379c7ba73637b84\` FOREIGN KEY (\`userId\`) REFERENCES \`users\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    // await queryRunner.query(
+    //   `ALTER TABLE \`order\` DROP FOREIGN KEY \`FK_caabe91507b3379c7ba73637b84\``,
+    // );
+    // await queryRunner.query(
+    //   `ALTER TABLE \`product\` DROP FOREIGN KEY \`FK_329b8ae12068b23da547d3b4798\``,
+    // );
     await queryRunner.query(
-      `ALTER TABLE \`order\` DROP FOREIGN KEY \`FK_caabe91507b3379c7ba73637b84\``,
+      `ALTER TABLE \`product\` DROP FOREIGN KEY \`FK_87ffe09e725a6e79f87dd6c0b69\``,
     );
-    await queryRunner.query(
-      `ALTER TABLE \`product\` DROP FOREIGN KEY \`FK_329b8ae12068b23da547d3b4798\``,
-    );
+
     await queryRunner.query(`DROP TABLE \`order\``);
     await queryRunner.query(`DROP TABLE \`product\``);
   }

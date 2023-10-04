@@ -1,18 +1,20 @@
-import { Category } from './entities/product.entity';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Like, MoreThan, Repository } from 'typeorm';
-import { Product } from './entities/product.entity';
+import { Repository, In } from 'typeorm';
+import { Product, Category } from './entities/product.entity';
+import { Order } from './../order/entities/order.entity';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
+    @InjectRepository(Order)
+    private orderRepository: Repository<Order>,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -23,14 +25,30 @@ export class ProductService {
     return await this.productRepository.find();
   }
 
+  async getProductsByUserId(userId: number): Promise<Product[]> {
+    return await this.productRepository.find({ where: { userId: userId } });
+  }
+
+  async getProductsByOrderUserId(userId: number): Promise<Product[]> {
+    // D'abord, récupérez les IDs de commande pour le userId donné
+    const orders = await this.orderRepository.find({
+      where: { userId: userId },
+    });
+    const orderIds = orders.map((order) => order.id);
+
+    // Ensuite, récupérez les produits associés à ces IDs de commande
+    const products = await this.productRepository.find({
+      where: { orderId: In(orderIds) },
+    });
+
+    return products;
+  }
+
   async filterProductWithQuery(filter: any): Promise<Product[]> {
-    const queryBuilder = this.productRepository.createQueryBuilder('product'); // méthode pour créer un constructeur de requête SQL pour l'entité Product
+    const queryBuilder = this.productRepository.createQueryBuilder('product');
 
     if (filter.clothing_type) {
-      //condition sera ajoutée en tant que condition supplémentaire à celles déjà présentes dans la requête.
-      //le condition est : filtrer le resultat pour que le type de vêtement soit égale à celle qu'on a recu de la requête
       queryBuilder.andWhere('product.clothing_type = :clothing_type', {
-        //  un objet de paramètres pour associer :clothing_type à la valeur de filter.clothing_type
         clothing_type: filter.clothing_type,
       });
     }
@@ -38,6 +56,19 @@ export class ProductService {
     if (filter.color) {
       queryBuilder.andWhere('product.color = :color', { color: filter.color });
     }
+
+    if (filter.minPrice) {
+      queryBuilder.andWhere('product.price >= :minPrice', {
+        minPrice: filter.minPrice,
+      });
+    }
+
+    if (filter.maxPrice) {
+      queryBuilder.andWhere('product.price <= :maxPrice', {
+        maxPrice: filter.maxPrice,
+      });
+    }
+
     if (filter.category) {
       queryBuilder.andWhere('product.category = :category', {
         category: filter.category,
