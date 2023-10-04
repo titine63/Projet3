@@ -28,6 +28,16 @@ export class ProductController {
     return this.productService.getProducts();
   }
 
+  @Get('user/:userId')
+  getProductsByUserId(@Param('userId') userId: number) {
+    return this.productService.getProductsByUserId(userId);
+  }
+
+  @Get('order/user/:userId')
+  getProductsByOrderUserId(@Param('userId') userId: number) {
+    return this.productService.getProductsByOrderUserId(userId);
+  }
+
   @Get('filter')
   //NestJS extrait automatiquement les paramètres de l'URL et les place dans un objet filter
   async filterProductWithQuery(@Query() filter: any) {

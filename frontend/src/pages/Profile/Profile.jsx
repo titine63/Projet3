@@ -5,11 +5,14 @@ import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { TiStarFullOutline } from "react-icons/ti";
 import ModalResetPassword from "./../../components/Auth/Modals/ModalResetPassword";
+import AdsByUser from "../../components/AdsByUser/AdsByUser";
 
 export default function Profile() {
   // Utilisation du contexte global pour obtenir des méthodes et des états
   const { setIsLogged, closeModal, userInfo } = useContext(GlobalContext);
   // État local pour gérer la redirection
+  console.log('userInfo :>> ', userInfo);
+
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
@@ -59,7 +62,7 @@ export default function Profile() {
           {/* Photo de profil */}
           <img
             src={
-              userInfo.picture
+            userInfo &&  userInfo.picture
                 ? userInfo.picture
                 : "../../../public/images/Ellipse 1.png"
             }
@@ -135,8 +138,9 @@ export default function Profile() {
         </div>
 
         {/* 2ème conteneur : Espace pour les cartes d'annonces */}
-        <div className="mb-4 border p-4">
+        <div className="mb-4 border p-4 flex flex-wrap gap-4">
           {/* Votre contenu ici, comme les cartes d'annonces */}
+          <AdsByUser userId={userInfo.id} route={"product/user"}/>
         </div>
 
         {/* 3ème conteneur : Titre pour l'historique de commandes */}
@@ -146,6 +150,7 @@ export default function Profile() {
 
         {/* 4ème conteneur : Espace pour les cartes d'historique de commande */}
         <div className="border p-4">
+        <AdsByUser userId={userInfo.id} route={"product/order/user"}/>
           {/* Votre contenu ici, comme les cartes d'historique de commande */}
         </div>
       </div>
