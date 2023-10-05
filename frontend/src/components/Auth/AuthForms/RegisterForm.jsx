@@ -1,43 +1,23 @@
 //RegisterForm.jsx
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
-import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
+import { useForm } from "react-hook-form";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { Link } from "react-router-dom";
+import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
+
 import axios from "axios";
-import Cookies from "js-cookie"; // Ajout de l'importation de js-cookie
+
+import { schema } from "../../../utils/const";
+
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function RegisterForm({ className }) {
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const { setIsLogged, closeModal } = useContext(GlobalContext); // Ajout de closeModal
-  //const [shouldRedirect, setShouldRedirect] = useState(false);
-  let navigate = useNavigate();
-  const schema = yup
-    .object({
-      pseudo: yup.string().required("Ce champ est obligatoire."),
-      email: yup
-        .string()
-        .required("Ce champ est obligatoire.")
-        .email("L'email est incorrect."),
-      password: yup
-        .string()
-        .min(8, "Au minimum au moins 8 caractères.")
-        .required("Ce champ est obligatoire."),
-      confirmpassword: yup
-        .string()
-        .oneOf(
-          [yup.ref("password"), null],
-          "Les mots de passe ne correspondent pas.",
-        )
-        .required("Ce champ est obligatoire."),
-    })
-    .required();
+  const { closeModal, openModalOnLogin } = useContext(GlobalContext); // Ajout de closeModal
 
   const {
     register,
@@ -51,14 +31,10 @@ export default function RegisterForm({ className }) {
   async function onSubmit(data) {
     try {
       const response = await axios.post(`${backendURL}/auth/register`, data);
-      console.log("Status de la réponse:", response.status); // Ajout du console.log ici
-      if (response.status === 200 || response.status === 201) {
-        // Votre code pour gérer l'inscription réussie
-        // Stockage du token JWT dans un cookie
-        Cookies.set("token", response.data.access_token);
-        setIsLogged(true);
+
+      if (response.status === 201) {
         closeModal();
-        navigate("/profile");
+        openModalOnLogin();
       }
     } catch (error) {
       console.error("Erreur d'inscription:", error);
@@ -123,6 +99,7 @@ export default function RegisterForm({ className }) {
           <span className="error-span">{errors.confirmpassword.message}</span>
         )}
       </div>
+
       <button type="submit" className="button-auth">
         Créer un compte
       </button>

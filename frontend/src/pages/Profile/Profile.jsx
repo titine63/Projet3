@@ -5,18 +5,39 @@ import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { TiStarFullOutline } from "react-icons/ti";
 import ModalResetPassword from "./../../components/Auth/Modals/ModalResetPassword";
+import ModalDeleteAccount from "./../../components/Auth/Modals/ModalDeleteAccount";
 import AdsByUser from "../../components/AdsByUser/AdsByUser";
 
 export default function Profile() {
   // Utilisation du contexte global pour obtenir des méthodes et des états
   const { setIsLogged, closeModal, userInfo } = useContext(GlobalContext);
   // État local pour gérer la redirection
-  console.log('userInfo :>> ', userInfo);
+  console.log("userInfo :>> ", userInfo);
 
   const [shouldRedirect, setShouldRedirect] = useState(false);
-
+  // État local pour gérer la réinitialisation du mot de passe
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
 
+  // État pour contrôler la visibilité de la modale de suppression de compte
+  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
+
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false); // Nouvel état
+
+  // Fonction pour ouvrir la modale de suppression de compte
+  function handleOpenDeleteAccountModal() {
+    setShowDeleteAccountModal(true);
+  }
+
+  // Fonction pour fermer la modale de suppression de compte
+  function handleCloseDeleteAccountModal() {
+    setShowDeleteAccountModal(false);
+  }
+
+  // Nouvelle fonction pour gérer la fermeture de la modale de confirmation
+  function handleCloseConfirmationModal() {
+    setShowConfirmationModal(false);
+    handleLogout(); // Déconnecter l'utilisateur et rediriger vers l'accueil
+  }
   // Fonction pour gérer la déconnexion de l'utilisateur
   function handleLogout() {
     // Suppression du token JWT du cookie
@@ -37,6 +58,12 @@ export default function Profile() {
     return <Navigate to="/" replace />;
   }
 
+  // Nouvelle fonction pour gérer le succès de la suppression
+  function handleSuccessfulDeletion() {
+    handleCloseDeleteAccountModal();
+    setShowConfirmationModal(true);
+  }
+
   // Fonction pour formater la date au format "mois en lettres et année"
   function formatMemberSince(createdAt) {
     if (createdAt) {
@@ -50,10 +77,39 @@ export default function Profile() {
 
   return (
     <main className="main flex h-screen">
+      {/* Appel du composant ModalResetPassword avec les props nécessaires */}
       <ModalResetPassword
         isOpen={showResetPasswordModal}
         onClose={() => setShowResetPasswordModal(false)}
       />
+      {/* Appel du composant ModalDeleteAccount avec les props nécessaires */}
+      <ModalDeleteAccount
+        isOpen={showDeleteAccountModal}
+        onClose={handleCloseDeleteAccountModal} // Uniquement fermer la modale si "Annuler" est cliqué
+        onSuccessfulDeletion={handleSuccessfulDeletion} // Nouveau prop pour gérer le succès
+        backendURL={import.meta.env.VITE_BACKEND_URL}
+        userId={userInfo ? userInfo.id : null}
+        setIsLogged={setIsLogged} // Passez cette fonction comme prop
+        setShouldRedirect={setShouldRedirect} // Passez cette fonction comme prop
+      />
+
+      {/* Nouvelle modale de confirmation */}
+      {showConfirmationModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="w-1/3 rounded-lg bg-white p-8 shadow-lg">
+            <p className="mb-4 text-center">
+              Votre compte a bien été supprimé ! Nous espérons vous revoir
+              bientôt !
+            </p>
+            <button
+              className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+              onClick={handleCloseConfirmationModal}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Partie gauche pour les informations de profil */}
       <div className="flex w-1/4 flex-col justify-between bg-[#FCE3D7]">
@@ -62,7 +118,7 @@ export default function Profile() {
           {/* Photo de profil */}
           <img
             src={
-            userInfo &&  userInfo.picture
+              userInfo && userInfo.picture
                 ? userInfo.picture
                 : "../../../public/images/Ellipse 1.png"
             }
@@ -115,7 +171,10 @@ export default function Profile() {
             >
               Modifier mon mot de passe
             </button>
-            <button className="text-black focus:outline-none">
+            <button
+              className="text-black focus:outline-none"
+              onClick={handleOpenDeleteAccountModal}
+            >
               Supprimer mon compte
             </button>
           </div>
@@ -138,9 +197,9 @@ export default function Profile() {
         </div>
 
         {/* 2ème conteneur : Espace pour les cartes d'annonces */}
-        <div className="mb-4 border p-4 flex flex-wrap gap-4">
+        <div className="mb-4 flex flex-wrap gap-4 border p-4">
           {/* Votre contenu ici, comme les cartes d'annonces */}
-          <AdsByUser userId={userInfo.id} route={"product/user"}/>
+          <AdsByUser userId={userInfo.id} route={"product/user"} />
         </div>
 
         {/* 3ème conteneur : Titre pour l'historique de commandes */}
@@ -149,8 +208,8 @@ export default function Profile() {
         </div>
 
         {/* 4ème conteneur : Espace pour les cartes d'historique de commande */}
-        <div className="border p-4 flex flex-wrap gap-4">
-        <AdsByUser userId={userInfo.id} route={"product/order/user"}/>
+        <div className="flex flex-wrap gap-4 border p-4">
+          <AdsByUser userId={userInfo.id} route={"product/order/user"} />
           {/* Votre contenu ici, comme les cartes d'historique de commande */}
         </div>
       </div>

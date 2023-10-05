@@ -1,6 +1,6 @@
 //GlobaContextProvider.jsx
 /* eslint-disable react/prop-types */
-import { createContext, useState, useMemo } from "react";
+import { createContext, useState, useMemo, useCallback } from "react";
 
 // Création du contexte global de l'application
 export const GlobalContext = createContext();
@@ -16,9 +16,9 @@ export function GlobalContextProvider({ children }) {
   const [userInfo, setUserInfo] = useState(null); // Nouvel état pour les informations de l'utilisateur
 
   // Change le contenu de la modale
-  function handleModalContent() {
+  const handleModalContent = useCallback(() => {
     setModalContent(!modalContent);
-  }
+  }, [modalContent]); // modalContent est une dépendance
 
   // Ferme la modale
   function closeModal() {
@@ -46,14 +46,15 @@ export function GlobalContextProvider({ children }) {
       setShowAuthModal,
       closeModal,
       modalContent,
+      setModalContent,
       handleModalContent,
       openModalOnLogin,
       openModalOnRegister,
       userInfo,
-      setUserInfo, // Ajout de setUserInfo dans le contexte
+      setUserInfo,
     }),
     // les valeurs du tableau de dépendances à surveiller
-    [isLogged, showAuthModal, modalContent],
+    [isLogged, showAuthModal, modalContent, handleModalContent, userInfo],
   );
 
   return (
