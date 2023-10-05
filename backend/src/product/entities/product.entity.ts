@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from './../../users/user.entity/user.entity';
+import { Order } from './../../order/entities/order.entity';
 
 export enum Category {
   MEN = 'Homme',
@@ -62,6 +63,16 @@ export class Product {
 
   @Column()
   userId: number;
+
+  @ManyToOne(() => Order, (order) => order.product, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinColumn({ name: 'orderId' })
+  order: Order;
+
+  @Column({ nullable: true })
+  orderId: number;
 
   @CreateDateColumn({
     type: 'timestamp',
