@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { User } from './../../users/user.entity/user.entity';
 import { Shipping } from './../../shipping/entities/shipping.entity';
+import { Product } from './../../product/entities/product.entity';
 
 @Entity()
 export class Order {
@@ -38,8 +40,11 @@ export class Order {
   @JoinColumn({ name: 'shippingId' })
   shipping: Shipping;
 
-  @Column()
-  shippingId: number;
+  @OneToMany(() => Product, (product) => product.order, {
+    cascade: false,
+    nullable: true,
+  })
+  product: Product[];
 
   @CreateDateColumn({
     type: 'timestamp',

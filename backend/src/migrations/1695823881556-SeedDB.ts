@@ -52,10 +52,52 @@ export class SeedDB1695823881556 implements MigrationInterface {
         ('delivered', 'stripe', 2, 8),
         ('pending', 'paypal', 3, 9),
         ('paid', 'stripe', 1, 10);`);
+
+    await queryRunner.query(`UPDATE \`product\` SET orderId = 1 WHERE id = 3;`);
+    await queryRunner.query(`UPDATE \`product\` SET orderId = 2 WHERE id = 1;`);
+    await queryRunner.query(`UPDATE \`product\` SET orderId = 3 WHERE id = 2;`);
+    await queryRunner.query(`UPDATE \`product\` SET orderId = 4 WHERE id = 5;`);
+    await queryRunner.query(`UPDATE \`product\` SET orderId = 5 WHERE id = 6;`);
+    await queryRunner.query(`UPDATE \`product\` SET orderId = 6 WHERE id = 7;`);
+    await queryRunner.query(`UPDATE \`product\` SET orderId = 7 WHERE id = 8;`);
+    await queryRunner.query(`UPDATE \`product\` SET orderId = 8 WHERE id = 9;`);
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 9 WHERE id = 10;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 10 WHERE id = 11;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 1 WHERE id = 12;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 2 WHERE id = 13;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 3 WHERE id = 14;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 4 WHERE id = 15;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 5 WHERE id = 16;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 6 WHERE id = 17;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 7 WHERE id = 18;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 8 WHERE id = 19;`,
+    );
+    await queryRunner.query(
+      `UPDATE \`product\` SET orderId = 9 WHERE id = 20;`,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0;`);
+    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0`);
 
     await queryRunner.query(`DELETE FROM \`product\``);
 
