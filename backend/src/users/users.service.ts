@@ -37,8 +37,12 @@ export class UsersService {
   }
 
   // Supprimer un utilisateur
-  async deleteUser(user: User): Promise<void> {
-    await this.usersRepository.remove(user);
+  async deleteUser(id: number): Promise<void> {
+    const user = await this.usersRepository.findOne({ where: { id: id } });
+
+    if (user) {
+      await this.usersRepository.remove(user);
+    }
   }
 
   // Modifier un utilisateur existant
