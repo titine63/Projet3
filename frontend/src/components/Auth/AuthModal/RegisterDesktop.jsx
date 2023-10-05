@@ -1,3 +1,4 @@
+//RegisterDesktop.jsx
 /* eslint-disable react/no-unescaped-entities */
 import { useContext } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
@@ -5,8 +6,7 @@ import RegisterForm from "../AuthForms/RegisterForm";
 
 export default function RegisterDeskop() {
   // Importer les états et fonctions depuis le contexte global
-  const { closeModal, handleModalContent, setModalContent, modalContent } =
-    useContext(GlobalContext);
+  const { closeModal, handleModalContent } = useContext(GlobalContext);
 
   return (
     <>
@@ -56,11 +56,7 @@ export default function RegisterDeskop() {
             </p>
           </div>
           {/* Formulaire d'inscription */}
-          <RegisterForm
-            modalContent={modalContent}
-            setModalContent={setModalContent}
-            className="form flex w-[90%] flex-col items-center gap-6 self-start"
-          />
+          <RegisterForm className="form flex w-[90%] flex-col items-center gap-6 self-start" />
         </div>
       </div>
     </>

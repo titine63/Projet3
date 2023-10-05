@@ -1,27 +1,23 @@
 //RegisterForm.jsx
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
-import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
+import { useForm } from "react-hook-form";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
 
 import axios from "axios";
 
 import { schema } from "../../../utils/const";
 
-export default function RegisterForm({
-  className,
-  setModalContent,
-  modalContent,
-}) {
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const { closeModal } = useContext(GlobalContext); // Ajout de closeModal
-  //const [shouldRedirect, setShouldRedirect] = useState(false);
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+export default function RegisterForm({ className }) {
+  const { closeModal, openModalOnLogin } = useContext(GlobalContext); // Ajout de closeModal
 
   const {
     register,
@@ -36,28 +32,12 @@ export default function RegisterForm({
     try {
       const response = await axios.post(`${backendURL}/auth/register`, data);
 
-      // if (response.status === 201) {
-      //   Cookies.set("token", response.data.access_token);
-
-      //   console.log(response.data);
-
-      //   setIsLogged(true);
-
-      //   const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
-      //     headers: {
-      //       Authorization: `Bearer ${response.data.access_token}`,
-      //     },
-      //   });
-
-      // setUserInfo(profileResponse.data);
-
-      
-        console.log(modalContent);
+      if (response.status === 201) {
         closeModal();
-        setModalContent(!modalContent);
-      
+        openModalOnLogin();
+      }
     } catch (error) {
-      console.error("Erreur d'inscription:", error); // Debug 10
+      console.error("Erreur d'inscription:", error);
     }
   }
 
@@ -119,6 +99,7 @@ export default function RegisterForm({
           <span className="error-span">{errors.confirmpassword.message}</span>
         )}
       </div>
+
       <button type="submit" className="button-auth">
         Créer un compte
       </button>
