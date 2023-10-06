@@ -21,6 +21,8 @@ export default function Profile() {
   const [previewURL, setPreviewURL] = useState(null);
 
   // État local pour gérer la redirection
+  console.log("userInfo :>> ", userInfo);
+
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);

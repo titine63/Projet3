@@ -97,7 +97,7 @@ export class SeedDB1695823881556 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0;`);
+    await queryRunner.query(`SET FOREIGN_KEY_CHECKS=0`);
 
     await queryRunner.query(`DELETE FROM \`product\``);
 
