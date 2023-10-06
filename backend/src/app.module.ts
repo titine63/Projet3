@@ -11,6 +11,7 @@ import { OrderModule } from './order/order.module';
 import { ShippingModule } from './shipping/shipping.module';
 import { ProductModule } from './product/product.module';
 import { StaticModule } from 'static.module';
+import { PictureModule } from './picture/picture.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { StaticModule } from 'static.module';
     OrderModule,
     ShippingModule,
     StaticModule,
+    PictureModule,
   ],
   controllers: [AppController],
   providers: [AppService],

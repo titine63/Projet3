@@ -6,13 +6,21 @@ import Cookies from "js-cookie";
 import { TiStarFullOutline } from "react-icons/ti";
 import ModalResetPassword from "./../../components/Auth/Modals/ModalResetPassword";
 import AdsByUser from "../../components/AdsByUser/AdsByUser";
+import axios from "axios";
 
 export default function Profile() {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Utilisation du contexte global pour obtenir des méthodes et des états
   const { setIsLogged, closeModal, userInfo } = useContext(GlobalContext);
-  // État local pour gérer la redirection
-  console.log('userInfo :>> ', userInfo);
+  console.log("userInfo :>> ", userInfo);
 
+  // État local pour gérer la photo de profil
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // État local pour gérer l'aperçu de la photo de profil
+  const [previewURL, setPreviewURL] = useState(null);
+
+  // État local pour gérer la redirection
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
@@ -35,6 +43,30 @@ export default function Profile() {
   // Rediriger si l'utilisateur doit être déconnecté
   if (shouldRedirect) {
     return <Navigate to="/" replace />;
+  }
+
+  // Fonction pour gérer le changement de fichier
+  function handleFileChange(event) {
+    setSelectedFile(event.target.files[0]);
+    const url = URL.createObjectURL(event.target.files[0]);
+    setPreviewURL(url);
+  }
+  console.log("previewURL :>> ", previewURL);
+  // Fonction pour gérer l'envoi du fichier
+  function uploadFile() {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    axios
+      .put(`${backendUrl}/users/upload/${userInfo.id}`, formData)
+      .then((response) => {
+        console.log("reponse upload", response.data);
+        alert("Photo mise à jour avec succès!");
+      })
+      .catch((error) => {
+        console.error("Error uploading file:", error);
+        alert("Erreur lors de la mise à jour de la photo.");
+      });
   }
 
   // Fonction pour formater la date au format "mois en lettres et année"
@@ -60,15 +92,63 @@ export default function Profile() {
         {/* Conteneur pour la photo, le pseudo et l'email */}
         <div className="mt-12 flex flex-col items-center">
           {/* Photo de profil */}
-          <img
-            src={
-            userInfo &&  userInfo.picture
-                ? userInfo.picture
-                : "../../../public/images/Ellipse 1.png"
-            }
-            alt="Profil"
-            className="mb-4 h-[159.11px] w-[155px] rounded-full"
+
+          <input
+            type="file"
+            id="fileInput"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
           />
+          {previewURL ? (
+            <img
+              src={previewURL}
+              alt="Profile Preview"
+              className="mb-4 h-[159.11px] w-[155px] cursor-pointer rounded-full"
+            />
+          ) : (
+            <img
+              src={
+                userInfo?.picture
+                  ? userInfo.picture
+                  : "../../../public/images/Ellipse 1.png"
+              }
+              alt="Profil picture"
+              onClick={() => document.getElementById("fileInput").click()}
+              className="mb-4 h-[159.11px] w-[155px] cursor-pointer rounded-full"
+            />
+          )}
+
+          {selectedFile && (
+            <div className="flex flex-col">
+              <button
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "#007bff",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                }}
+                onClick={uploadFile}
+              >
+                Mettre à jour la photo
+              </button>
+              <button
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "red",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                }}
+                onClick={() => {
+                  setSelectedFile(null);
+                  setPreviewURL(null);
+                }}
+              >
+                Annuler
+              </button>
+            </div>
+          )}
 
           {/* Pseudo et Email */}
           <h2 className="mb-2 text-xl font-bold">
@@ -138,9 +218,9 @@ export default function Profile() {
         </div>
 
         {/* 2ème conteneur : Espace pour les cartes d'annonces */}
-        <div className="mb-4 border p-4 flex flex-wrap gap-4">
+        <div className="mb-4 flex flex-wrap gap-4 border p-4">
           {/* Votre contenu ici, comme les cartes d'annonces */}
-          <AdsByUser userId={userInfo.id} route={"product/user"}/>
+          <AdsByUser userId={userInfo.id} route={"product/user"} />
         </div>
 
         {/* 3ème conteneur : Titre pour l'historique de commandes */}
@@ -149,8 +229,8 @@ export default function Profile() {
         </div>
 
         {/* 4ème conteneur : Espace pour les cartes d'historique de commande */}
-        <div className="border p-4 flex flex-wrap gap-4">
-        <AdsByUser userId={userInfo.id} route={"product/order/user"}/>
+        <div className="flex flex-wrap gap-4 border p-4">
+          <AdsByUser userId={userInfo.id} route={"product/order/user"} />
           {/* Votre contenu ici, comme les cartes d'historique de commande */}
         </div>
       </div>

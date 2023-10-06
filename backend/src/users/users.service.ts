@@ -12,6 +12,10 @@ export class UsersService {
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
+  async updatedUserPicture(id: number, picture: string) {
+    return await this.usersRepository.update(id, { picture: picture });
+  }
+
   // Récupérer tous les utilisateurs
   async getUsers(): Promise<User[]> {
     return await this.usersRepository.find();

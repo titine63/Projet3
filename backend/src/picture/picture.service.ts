@@ -25,11 +25,23 @@ export class PictureService {
     return await this.pictureRepository.save(newPicture);
   }
 
+  async findAll(): Promise<Picture[]> {
+    return await this.pictureRepository.find();
+  }
+
+  async findOne(id: number): Promise<Picture> {
+    return await this.pictureRepository.findOne({ where: { id: id } });
+  }
+
   async findByProduct(productId: number): Promise<Picture[]> {
     return await this.pictureRepository.find({ where: { productId } });
   }
 
   async updatePic(productId: number, updatePictureDto: UpdatePictureDto) {
     return await this.pictureRepository.update(productId, updatePictureDto);
+  }
+
+  async removePic(productId: number) {
+    return await this.pictureRepository.delete(productId);
   }
 }
