@@ -39,6 +39,12 @@ export class AuthService {
       return {
         expires_in: 3600,
         access_token: accessToken,
+        user: {
+          id: userData.id,
+          email: userData.email,
+          pseudo: userData.pseudo,
+          picture: userData.picture,
+        },
       };
     });
   }
