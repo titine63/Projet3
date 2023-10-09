@@ -1,8 +1,9 @@
-//RegisterForm.jsx
+// RegisterForm.jsx
+
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext } from "react";
+import { useContext } from "react"; // Ajout de useState
 import { useForm } from "react-hook-form";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
@@ -17,7 +18,7 @@ import { schema } from "../../../utils/const";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function RegisterForm({ className }) {
-  const { closeModal, openModalOnLogin } = useContext(GlobalContext); // Ajout de closeModal
+  const { closeModal, openModalOnLogin, showToast } = useContext(GlobalContext); // Ajout de showToast
 
   const {
     register,
@@ -35,6 +36,11 @@ export default function RegisterForm({ className }) {
       if (response.status === 201) {
         closeModal();
         openModalOnLogin();
+
+        // Utilisation de la méthode showToast du contexte global
+        showToast(
+          "Inscription réussie ! Vous pouvez maintenant vous connecter.",
+        );
       }
     } catch (error) {
       console.error("Erreur d'inscription:", error);
