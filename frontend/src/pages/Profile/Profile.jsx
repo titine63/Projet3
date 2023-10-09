@@ -10,10 +10,12 @@ import axios from "axios";
 
 export default function Profile() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  // Utilisation du contexte global pour obtenir des méthodes et des états
-  const { setIsLogged, closeModal, userInfo } = useContext(GlobalContext);
-  console.log("userInfo :>> ", userInfo);
 
+  // Utilisation du contexte global pour obtenir des méthodes et des états
+  const { setIsLogged, isLogged, closeModal } = useContext(GlobalContext);
+  console.log("isLogged :>> ", isLogged);
+
+  console.log("Cookies.get('user.id') :>> ", Cookies.get("user.id"));
   // État local pour gérer la photo de profil
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -21,11 +23,42 @@ export default function Profile() {
   const [previewURL, setPreviewURL] = useState(null);
 
   // État local pour gérer la redirection
-  console.log("userInfo :>> ", userInfo);
-
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
+
+  const userId = Cookies.get("user.id");
+  const userPicture = Cookies.get("user.picture");
+  const userPseudo = Cookies.get("user.pseudo");
+  const userEmail = Cookies.get("user.email");
+  const userCreatedAt = Cookies.get("user.createdAt");
+  // useEffect(() => {
+  //   // Vérifiez si le cookie "token" est présent
+  //   const token = Cookies.get("token");
+  //   console.log("token :>> ", token);
+  //   console.log("object :>> HELLO");
+
+  //   if (token) {
+  //     // Si le cookie est présent, récupérez les informations de l'utilisateur
+  //     axios
+  //       .get(`${backendUrl}/auth/profile`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         // Mettez à jour l'état userInfo avec les données récupérées
+  //         setUserInfo(response.data);
+  //         console.log("response.data :>> ", response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error(
+  //           "Erreur lors de la récupération du profil de l'utilisateur:",
+  //           error,
+  //         );
+  //       });
+  //   }
+  // }, []);
 
   // Fonction pour gérer la déconnexion de l'utilisateur
   function handleLogout() {
@@ -41,7 +74,9 @@ export default function Profile() {
     // Rediriger l'utilisateur vers la page d'accueil
     setShouldRedirect(true);
   }
-
+  if (!isLogged) {
+    return <Navigate to="/login" />;
+  }
   // Rediriger si l'utilisateur doit être déconnecté
   if (shouldRedirect) {
     return <Navigate to="/" replace />;
@@ -60,10 +95,13 @@ export default function Profile() {
     formData.append("file", selectedFile);
 
     axios
-      .put(`${backendUrl}/users/upload/${userInfo.id}`, formData)
+      .put(`${backendUrl}/users/upload/${userId}`, formData)
       .then((response) => {
         console.log("reponse upload", response.data);
         alert("Photo mise à jour avec succès!");
+        console.log("response.data :>> ", response.data);
+        setSelectedFile(null);
+        setPreviewURL(null);
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
@@ -110,9 +148,9 @@ export default function Profile() {
           ) : (
             <img
               src={
-                userInfo?.picture
-                  ? userInfo.picture
-                  : "../../../public/images/Ellipse 1.png"
+                userPicture && userPicture !== "null"
+                  ? `${backendUrl}/${userPicture}`
+                  : '"../../../public/images/Ellipse 1.png"'
               }
               alt="Profil picture"
               onClick={() => document.getElementById("fileInput").click()}
@@ -154,10 +192,10 @@ export default function Profile() {
 
           {/* Pseudo et Email */}
           <h2 className="mb-2 text-xl font-bold">
-            {userInfo ? userInfo.pseudo : "Chargement..."}
+            {userPseudo ? userPseudo : "Chargement..."}
           </h2>
           <h2 className="mb-2 text-xl font-bold text-gray-600">
-            {userInfo ? userInfo.email : "Chargement..."}
+            {userEmail ? userEmail : "Chargement..."}
           </h2>
         </div>
 
@@ -182,7 +220,7 @@ export default function Profile() {
           {/* Membre depuis */}
           <p>
             Membre depuis :{" "}
-            {userInfo ? formatMemberSince(userInfo.createdAt) : "Chargement..."}
+            {userCreatedAt ? formatMemberSince(userCreatedAt) : "Chargement..."}
           </p>
         </div>
 
@@ -222,7 +260,7 @@ export default function Profile() {
         {/* 2ème conteneur : Espace pour les cartes d'annonces */}
         <div className="mb-4 flex flex-wrap gap-4 border p-4">
           {/* Votre contenu ici, comme les cartes d'annonces */}
-          <AdsByUser userId={userInfo.id} route={"product/user"} />
+          <AdsByUser userId={userId ? userId : null} route={"product/user"} />
         </div>
 
         {/* 3ème conteneur : Titre pour l'historique de commandes */}
@@ -232,7 +270,10 @@ export default function Profile() {
 
         {/* 4ème conteneur : Espace pour les cartes d'historique de commande */}
         <div className="flex flex-wrap gap-4 border p-4">
-          <AdsByUser userId={userInfo.id} route={"product/order/user"} />
+          <AdsByUser
+            userId={userId ? userId : null}
+            route={"product/order/user"}
+          />
           {/* Votre contenu ici, comme les cartes d'historique de commande */}
         </div>
       </div>

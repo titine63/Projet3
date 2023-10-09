@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:backend": "cd backend && npm run start",
+    "start:backend": "cd backend && npm run start:dev",
     "start:frontend": "cd frontend && npm run dev",
-    "copyfiles": "cd backend && copyfiles -u 1 uploads/**/* dist/uploads",
+    "copyfiles": "cd backend && npx copyfiles -u 1 uploads/**/* dist/uploads",
     "start:both": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",

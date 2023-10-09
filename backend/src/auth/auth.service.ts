@@ -44,6 +44,7 @@ export class AuthService {
           email: userData.email,
           pseudo: userData.pseudo,
           picture: userData.picture,
+          createdAt: userData.createdAt,
         },
       };
     });
