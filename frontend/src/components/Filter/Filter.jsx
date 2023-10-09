@@ -73,10 +73,10 @@ export default function FilterModal({
             value={filterParams.clothing_type}
             onChange={handleChange}
           >
-            <option value="T-shert">T-shert</option>
+            <option value="T-shirt">T-shirt</option>
             <option value="Pantalon">Pantalon</option>
             <option value="Jean">Jean</option>
-            <option value="Rob">Rob</option>
+            <option value="Robe">Robe</option>
             <option value="Short">Short</option>
             <option value="Sous-vêtement">Sous-vêtement</option>
           </select>
@@ -132,8 +132,8 @@ export default function FilterModal({
           >
             <option value="Neuf">Neuf</option>
             <option value="Très bon état">Très bon état</option>
-            <option value="bon état">bon état</option>
-            <option value="Satisfaisnt">Satisfaisnt</option>
+            <option value="Bon état">Bon état</option>
+            <option value="Satisfaisant">Satisfaisant</option>
           </select>
         </label>
 
@@ -148,8 +148,8 @@ export default function FilterModal({
             value={filterParams.color}
             onChange={handleChange}
           >
-            <option value="rouge">Rouge</option>
-            <option value="orange">Orange</option>
+            <option value="rouge">rouge</option>
+            <option value="orange">orange</option>
             <option value="gris">gris</option>
             <option value="noir">noir</option>
             <option value="bleu">bleu</option>

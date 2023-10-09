@@ -1,8 +1,8 @@
 //GlobaContextProvider.jsx
 /* eslint-disable react/prop-types */
-// import axios from "axios";
-// import Cookies from "js-cookie";
-import { createContext, useState, useMemo } from "react";
+import { createContext, useState, useMemo, useCallback } from "react";
+
+import { Toast } from "../utils/Toast"; // Import du composant Toast
 
 // Création du contexte global de l'application
 export const GlobalContext = createContext();
@@ -19,38 +19,13 @@ export function GlobalContextProvider({ children }) {
 
   const [userInfo, setUserInfo] = useState(null); // Nouvel état pour les informations de l'utilisateur
 
-  // useEffect(() => {
-  //   // Vérifiez si le cookie "token" est présent
-  //   const token = Cookies.get("token");
-  //   console.log("token :>> ", token);
-  //   console.log("object :>> HELLO");
-
-  //   if (token) {
-  //     // Si le cookie est présent, récupérez les informations de l'utilisateur
-  //     axios
-  //       .get(`${backendURL}/auth/profile`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       .then((response) => {
-  //         // Mettez à jour l'état userInfo avec les données récupérées
-  //         setUserInfo(response.data);
-  //         console.log("response.data :>> ", response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error(
-  //           "Erreur lors de la récupération du profil de l'utilisateur:",
-  //           error,
-  //         );
-  //       });
-  //   }
-  // }, []);
+  const [isToastVisible, setToastVisibility] = useState(false); // État du toast
+  const [toastMessage, setToastMessage] = useState(""); // Message du toast
 
   // Change le contenu de la modale
-  function handleModalContent() {
+  const handleModalContent = useCallback(() => {
     setModalContent(!modalContent);
-  }
+  }, [modalContent]); // modalContent est une dépendance
 
   // Ferme la modale
   function closeModal() {
@@ -69,6 +44,18 @@ export function GlobalContextProvider({ children }) {
     setModalContent(false);
   }
 
+  // Fonction pour afficher un toast
+  function showToast(message) {
+    // Votre logique pour afficher le toast ici
+    setToastMessage(message);
+    setToastVisibility(true);
+
+    // Cacher le toast après quelques secondes
+    setTimeout(() => {
+      setToastVisibility(false);
+    }, 10000); // 3 secondes
+  }
+
   // useMemo permet de ne pas recréer la valeur du contexte à chaque fois que le composant est rendu
   const value = useMemo(
     () => ({
@@ -78,18 +65,30 @@ export function GlobalContextProvider({ children }) {
       setShowAuthModal,
       closeModal,
       modalContent,
+      setModalContent,
       handleModalContent,
       openModalOnLogin,
       openModalOnRegister,
       userInfo,
-      setUserInfo, // Ajout de setUserInfo dans le contexte
+      setUserInfo,
+      isToastVisible, // Ajout de l'état du toast
+      showToast, // Ajout de la fonction pour afficher le toast
     }),
     // les valeurs du tableau de dépendances à surveiller
-    [isLogged, showAuthModal, modalContent, userInfo],
+    [
+      isLogged,
+      showAuthModal,
+      modalContent,
+      handleModalContent,
+      userInfo,
+      isToastVisible,
+    ],
   );
 
   return (
-    // On passe la valeur du contexte à tous les composants enfants
-    <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
+    <GlobalContext.Provider value={value}>
+      <Toast show={isToastVisible} message={toastMessage} />
+      {children}
+    </GlobalContext.Provider>
   );
 }

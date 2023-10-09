@@ -16,6 +16,7 @@ import { UsersService } from './users.service';
 import { User } from './user.entity/user.entity';
 import { Express } from 'express';
 import * as path from 'path';
+import { ParseIntPipe } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -71,8 +72,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  deleteUser(@Param() params) {
-    this.service.deleteUser(params.id);
+  deleteUser(@Param('id', ParseIntPipe) id: number) {
+    this.service.deleteUser(id);
     return;
   }
 }

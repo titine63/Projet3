@@ -7,7 +7,7 @@ import {
   Get,
   UseGuards,
   Request,
-} from '@nestjs/common'; // Ajoutez Res à vos imports
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User } from '../users/user.entity/user.entity';
 import { Response } from 'express';
