@@ -220,6 +220,10 @@
   @apply m-auto text-center text-2xl font-semibold text-[#ec5a13] md:text-3xl;
 }
 
+.modal {
+  @apply flex flex-col justify-center text-center text-lg lg:text-2xl;
+}
+
 /******************************************************************** .modal-filter ***************************************************
   */
 
