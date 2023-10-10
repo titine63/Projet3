@@ -143,8 +143,8 @@ export default function FilterModal({
             <option value="">Sélectionnez une option...</option>
             <option value="Neuf">Neuf</option>
             <option value="Très bon état">Très bon état</option>
-            <option value="bon état">bon état</option>
-            <option value="Satisfaisnt">Satisfaisnt</option>
+            <option value="Bon état">Bon état</option>
+            <option value="Satisfaisant">Satisfaisant</option>
           </select>
         </label>
 

@@ -12,7 +12,7 @@ export default function Profile() {
   // Utilisation du contexte global pour obtenir des méthodes et des états
   const { setIsLogged, closeModal, userInfo } = useContext(GlobalContext);
   // État local pour gérer la redirection
-  console.log("userInfo :>> ", userInfo);
+  // console.log("userInfo :>> ", userInfo);
 
   const [shouldRedirect, setShouldRedirect] = useState(false);
   // État local pour gérer la réinitialisation du mot de passe
@@ -89,8 +89,8 @@ export default function Profile() {
         onSuccessfulDeletion={handleSuccessfulDeletion} // Nouveau prop pour gérer le succès
         backendURL={import.meta.env.VITE_BACKEND_URL}
         userId={userInfo ? userInfo.id : null}
-        setIsLogged={setIsLogged} // Passez cette fonction comme prop
-        setShouldRedirect={setShouldRedirect} // Passez cette fonction comme prop
+        setIsLogged={setIsLogged} // Passer cette fonction comme prop
+        setShouldRedirect={setShouldRedirect} // Passer cette fonction comme prop
       />
 
       {/* Nouvelle modale de confirmation */}
