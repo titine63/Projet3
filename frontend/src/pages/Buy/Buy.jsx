@@ -112,12 +112,11 @@ export default function Buy() {
 
         {filtredProducts && filtredProducts.length === 0 ? (
           <h2 className="not-found">
-          Désolé ! Aucun produit de correspond à votre recherche ... 
+            Désolé ! Aucun produit de correspond à votre recherche ...
           </h2>
         ) : null}
 
         <div className="tend-imgs">
-
           {filtredProducts && filtredProducts.length != 0
             ? filtredProducts.map((product) => {
                 return (
