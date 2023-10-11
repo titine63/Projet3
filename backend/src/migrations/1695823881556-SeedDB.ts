@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class SeedDB1695823881556 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`INSERT INTO \`users\`(pseudo, email, password, picture) VALUES ('jesse', 'vallantjesse@live.com', '1e95745641dcf430c74ed81201c29605ca308a527e86e72a946e0d362cfd71ab', 'uploads/khaledmo1696616185195.jpeg'),
-        ('khaled', 'khaled.mofleh707@gmail.com', 'f76ac55759dff7abb22f8a44cd1576b96c94af2ca29ab7c3c8fe6be480614881','uploads/jesse-vallant1696616134882.jpeg'),
-        ('sandrine', 'sblanchonnet@yahoo.fr', '3c6856493101ffd766079b5110b646925e8cb86ea7d007237e15fdac352f731b', 'uploads/sandrine1696589246371.jpeg');
+    await queryRunner.query(`INSERT INTO \`users\`(pseudo, email, password, picture) VALUES ('jesse', 'vallantjesse@live.com', '1e95745641dcf430c74ed81201c29605ca308a527e86e72a946e0d362cfd71ab', 'uploads/khaledmo.jpeg'),
+        ('khaled', 'khaled.mofleh707@gmail.com', 'f76ac55759dff7abb22f8a44cd1576b96c94af2ca29ab7c3c8fe6be480614881','uploads/jesse-vallant.jpeg'),
+        ('sandrine', 'sblanchonnet@yahoo.fr', '3c6856493101ffd766079b5110b646925e8cb86ea7d007237e15fdac352f731b', 'uploads/sandrine.jpeg');
         `);
 
     await queryRunner.query(`INSERT INTO \`product\` (title, description, price, size, clothing_type, brand, color, category, state, userId) VALUES ('Jean', 'Un classique du dressing', 32.86, 'XL', 'Jean', 'Zara', 'Gris', 'Femme', 'Acceptable', 3),
