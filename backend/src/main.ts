@@ -14,7 +14,8 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   const cors = process.env.FRONTEND_URL || 'http://localhost:5173/';
   app.use(cookieParser());
-  app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
+  // Servez le contenu statique du dossier uploads
+  app.use('/uploads', express.static(join(process.cwd(), 'uploads')));
 
   // Activer CORS
 

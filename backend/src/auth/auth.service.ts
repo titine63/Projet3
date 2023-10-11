@@ -52,7 +52,7 @@ export class AuthService {
 
   public async register(user: User): Promise<any> {
     user.password = this.hash(user.password);
-    console.log(user)
+    console.log(user);
     return this.usersService.saveUser(user);
   }
 

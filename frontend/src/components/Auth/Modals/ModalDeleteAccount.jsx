@@ -20,7 +20,7 @@ function ModalDeleteAccount({
   async function handleDeleteAccount() {
     try {
       await axios.delete(`${backendURL}/users/${userId}`);
-      onSuccessfulDeletion();  // Appelez cette fonction en cas de succès
+      onSuccessfulDeletion(); // Appelez cette fonction en cas de succès
       onClose();
 
       // Supprimer les cookies et mettre à jour l'état global
@@ -73,6 +73,7 @@ ModalDeleteAccount.propTypes = {
   userId: PropTypes.number.isRequired,
   setIsLogged: PropTypes.func.isRequired,
   setShouldRedirect: PropTypes.func.isRequired,
+  onSuccessfulDeletion: PropTypes.func.isRequired,
 };
 
 export default ModalDeleteAccount;

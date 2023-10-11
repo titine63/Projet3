@@ -40,9 +40,6 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
     @Param('id') id: string,
   ) {
-    console.log(file);
-    console.log('dirname :>> ', __dirname);
-    console.log('id :>> ', id);
     // Obtenez le chemin d'accès relatif du fichier. Si votre base de données et votre serveur de fichiers sont sur la même machine, vous pouvez simplement stocker le chemin d'accès relatif.
     const picture = path.join('uploads', file.filename);
 

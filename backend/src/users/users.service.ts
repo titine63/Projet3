@@ -13,7 +13,11 @@ export class UsersService {
   ) {}
 
   async updatedUserPicture(id: number, picture: string) {
-    return await this.usersRepository.update(id, { picture: picture });
+    await this.usersRepository.update(id, { picture: picture });
+    return await this.usersRepository.findOne({
+      select: ['picture'],
+      where: { id: id },
+    });
   }
 
   // Récupérer tous les utilisateurs
