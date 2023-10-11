@@ -1,8 +1,8 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 
 export default function Sell() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -11,6 +11,7 @@ export default function Sell() {
   const backURL = `${backendURL}/product`;
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
+  const { userInfo } = useContext(GlobalContext);
 
   const [createdProductId, setCreatedProductId] = useState(null);
 
@@ -24,7 +25,7 @@ export default function Sell() {
     clothing_type: "",
     size: "",
     state: "",
-    userId: 1,
+    userId: userInfo.id,
   });
 
   const handleFileSelect = (e) => {
@@ -232,7 +233,7 @@ export default function Sell() {
                 Voir l'annonce
               </button>
               <button className="btn-user" onClick={() => handleAddProduct()}>
-                Déponsez une autre annonce
+                Déposez une autre annonce
               </button>
             </div>
           </div>
