@@ -54,18 +54,6 @@ export default function LoginForm({ className }) {
         Cookies.set("user.pseudo", response.data.user.pseudo);
         Cookies.set("user.picture", response.data.user.picture);
         Cookies.set("user.createdAt", response.data.user.createdAt);
-        Cookies.set("user", response.data.user);
-        const userData = {
-          id: response.data.user.id,
-          email: response.data.user.email,
-          pseudo: response.data.user.pseudo,
-          picture: response.data.user.picture,
-          createdAt: response.data.user.createdAt,
-        };
-
-        const serialisedUserData = JSON.stringify(userData);
-        Cookies.set("userData", serialisedUserData);
-
         setIsLogged(true);
 
         const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
