@@ -39,13 +39,20 @@ export class AuthService {
       return {
         expires_in: 3600,
         access_token: accessToken,
+        user: {
+          id: userData.id,
+          email: userData.email,
+          pseudo: userData.pseudo,
+          picture: userData.picture,
+          createdAt: userData.createdAt,
+        },
       };
     });
   }
 
   public async register(user: User): Promise<any> {
     user.password = this.hash(user.password);
-    console.log(user)
+    console.log(user);
     return this.usersService.saveUser(user);
   }
 

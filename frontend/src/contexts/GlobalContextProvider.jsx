@@ -9,12 +9,14 @@ export const GlobalContext = createContext();
 
 // Création du composant GlobalContextProvider
 export function GlobalContextProvider({ children }) {
+  // const backendURL = import.meta.env.VITE_BACKEND_URL;
   // État pour savoir si l'utilisateur est connecté ou non
   const [isLogged, setIsLogged] = useState(false);
   // État pour savoir si la modale est ouverte ou non
   const [showAuthModal, setShowAuthModal] = useState(false);
   // État pour savoir si la modale est sur login ou register (true = login, false = register)
   const [modalContent, setModalContent] = useState(true);
+
   const [userInfo, setUserInfo] = useState(null); // Nouvel état pour les informations de l'utilisateur
 
   const [isToastVisible, setToastVisibility] = useState(false); // État du toast

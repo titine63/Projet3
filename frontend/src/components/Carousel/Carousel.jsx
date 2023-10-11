@@ -23,7 +23,7 @@ export default function Carousel({ children }) {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setId((prevId) => (prevId + 1) % length);
-    }, 15000); // Change slide every 15 seconds
+    }, 7000); // Change slide every 7 seconds
 
     return () => clearInterval(intervalId); // Clean up the interval on component unmount
   }, [length]);

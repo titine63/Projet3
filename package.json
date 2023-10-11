@@ -6,6 +6,7 @@
   "scripts": {
     "start:backend": "cd backend && npm run start:dev",
     "start:frontend": "cd frontend && npm run dev",
+    "copyfiles": "cd backend && npx copyfiles -u 1 uploads/**/* dist/uploads",
     "start:both": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
@@ -23,7 +24,6 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.0.4",
-    "dotenv": "^16.3.1",
-    "react-router-dom": "^6.16.0"
+    "dotenv": "^16.3.1"
   }
 }
