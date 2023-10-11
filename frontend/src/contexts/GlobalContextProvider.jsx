@@ -1,7 +1,13 @@
 //GlobaContextProvider.jsx
 /* eslint-disable react/prop-types */
-import { createContext, useState, useMemo, useCallback } from "react";
-
+import {
+  createContext,
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from "react";
+import Cookies from "js-cookie";
 import { Toast } from "../utils/Toast"; // Import du composant Toast
 
 // Création du contexte global de l'application
@@ -9,15 +15,28 @@ export const GlobalContext = createContext();
 
 // Création du composant GlobalContextProvider
 export function GlobalContextProvider({ children }) {
-  // const backendURL = import.meta.env.VITE_BACKEND_URL;
   // État pour savoir si l'utilisateur est connecté ou non
-  const [isLogged, setIsLogged] = useState(false);
+  const initialIsLogged = !!Cookies.get("token");
+  const [isLogged, setIsLogged] = useState(initialIsLogged);
+
+  // Etat pour les informations de l'utilisateur
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    if (Cookies.get("userData")) {
+      const serializedUserData = Cookies.get("userData");
+      // Désérialisez la chaîne pour obtenir l'objet original
+      const userData = JSON.parse(serializedUserData);
+      setUserInfo(userData);
+      console.log("Cookies.get(userData) :>> ", Cookies.get("userData"));
+    }
+  }, []); // Le tableau de dépendances vide signifie que cet effet ne sera exécuté qu'une fois, au montage du composant
+  console.log("userInfo :>> ", userInfo);
+
   // État pour savoir si la modale est ouverte ou non
   const [showAuthModal, setShowAuthModal] = useState(false);
   // État pour savoir si la modale est sur login ou register (true = login, false = register)
   const [modalContent, setModalContent] = useState(true);
-
-  const [userInfo, setUserInfo] = useState(null); // Nouvel état pour les informations de l'utilisateur
 
   const [isToastVisible, setToastVisibility] = useState(false); // État du toast
   const [toastMessage, setToastMessage] = useState(""); // Message du toast
