@@ -10,17 +10,19 @@ import AdsByUser from "../../components/AdsByUser/AdsByUser";
 import axios from "axios";
 
 export default function Profile() {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
   // Utilisation du contexte global pour obtenir des méthodes et des états
-  const { setIsLogged, closeModal } = useContext(GlobalContext);
+  const { setIsLogged, closeModal, isLogged } = useContext(GlobalContext);
+
+  // Récupération de l'URL du backend depuis les variables d'environnement
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log("isLogged :>> ", isLogged);
   // État local pour gérer si un fichier est sélectionné
   const [selectedFile, setSelectedFile] = useState(null);
   // État local pour gérer l'URL de prévisualisation
   const [previewURL, setPreviewURL] = useState(null);
   // État local pour gérer la redirection
   const [shouldRedirect, setShouldRedirect] = useState(false);
-
+  console.log("Cookies.get(user) :>> ", Cookies.get());
   const userId = Cookies.get("user.id");
   console.log("userId :>> ", userId);
   const [userPicture, setUserPicture] = useState(Cookies.get("user.picture"));
