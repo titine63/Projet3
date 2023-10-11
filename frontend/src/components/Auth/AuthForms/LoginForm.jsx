@@ -68,13 +68,13 @@ export default function LoginForm({ className }) {
 
         setIsLogged(true);
 
-        // const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
-        //   headers: {
-        //     Authorization: `Bearer ${response.data.access_token}`,
-        //   },
-        // });
+        const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
+          headers: {
+            Authorization: `Bearer ${response.data.access_token}`,
+          },
+        });
 
-        // setUserInfo(profileResponse.data);
+        setUserInfo(profileResponse.data);
         closeModal();
         navigate("/profile");
       }
