@@ -151,7 +151,7 @@ export default function FilterModal({
         <label>
           <div className="relative my-4">
             <IoIosColorPalette className="absolute top-1 text-xl text-[#ec5a13]" />
-            <span className="criterias">Coleur</span>
+            <span className="criterias">Couleur</span>
           </div>
 
           <select

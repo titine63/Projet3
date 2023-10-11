@@ -1,8 +1,8 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 
 export default function Sell() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -11,6 +11,7 @@ export default function Sell() {
   const backURL = `${backendURL}/product`;
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
+  const { userInfo } = useContext(GlobalContext);
 
   const [createdProductId, setCreatedProductId] = useState(null);
 
@@ -24,7 +25,7 @@ export default function Sell() {
     clothing_type: "",
     size: "",
     state: "",
-    userId: 1,
+    userId: userInfo.id,
   });
 
   const handleFileSelect = (e) => {
@@ -83,7 +84,6 @@ export default function Sell() {
           * Des informations obligatoires
         </h2>
       </div>
-
       <div className="command lg:flex lg:w-3/4 lg:flex-col lg:justify-center lg:bg-white">
         <div className="upload-photo mt-10">
           {!selectedFile && <h2>Sélectionnez une image pour votre commande</h2>}
@@ -224,7 +224,7 @@ export default function Sell() {
         </form>
       </div>
       {modalVisible && (
-        <div className="modal bg-[#fce3d7] ">
+        <div className="fixed left-1/2 top-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 flex-col justify-center bg-[#fce3d7] p-12 text-center text-lg lg:text-2xl ">
           <div className="modal-content">
             <p className="mb-14">{successMessage}</p>
             <div className="flex flex-col gap-5 lg:flex-row lg:justify-around">
@@ -232,9 +232,14 @@ export default function Sell() {
                 Voir l'annonce
               </button>
               <button className="btn-user" onClick={() => handleAddProduct()}>
-                Déponsez une autre annonce
+                Déposez une autre annonce
               </button>
             </div>
+            <img
+              src="./../../../public/images/ink.png"
+              alt="lnk"
+              className="fixed bottom-0 right-0"
+            />
           </div>
         </div>
       )}
