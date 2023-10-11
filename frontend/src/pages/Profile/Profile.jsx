@@ -7,31 +7,38 @@ import { TiStarFullOutline } from "react-icons/ti";
 import ModalResetPassword from "./../../components/Auth/Modals/ModalResetPassword";
 import ModalDeleteAccount from "./../../components/Auth/Modals/ModalDeleteAccount";
 import AdsByUser from "../../components/AdsByUser/AdsByUser";
+import axios from "axios";
 
 export default function Profile() {
-  // Utilisation du contexte global pour obtenir des méthodes et des états
-  const { setIsLogged, closeModal, userInfo } = useContext(GlobalContext);
-  // État local pour gérer la redirection
-  // console.log("userInfo :>> ", userInfo);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+  // Utilisation du contexte global pour obtenir des méthodes et des états
+  const { setIsLogged, closeModal } = useContext(GlobalContext);
+  // État local pour gérer si un fichier est sélectionné
+  const [selectedFile, setSelectedFile] = useState(null);
+  // État local pour gérer l'URL de prévisualisation
+  const [previewURL, setPreviewURL] = useState(null);
+  // État local pour gérer la redirection
   const [shouldRedirect, setShouldRedirect] = useState(false);
+
+  const userId = Cookies.get("user.id");
+  console.log("userId :>> ", userId);
+  const [userPicture, setUserPicture] = useState(Cookies.get("user.picture"));
+  console.log("userPicture  :>> ", userPicture);
+  const userPseudo = Cookies.get("user.pseudo");
+  console.log("userPseudo :>> ", userPseudo);
+  const userEmail = Cookies.get("user.email");
+  console.log("userEmail :>> ", userEmail);
+  const userCreatedAt = Cookies.get("user.createdAt");
+  console.log("userCreatedAt :>> ", userCreatedAt);
+  const token = Cookies.get("token");
+  console.log("token :>> ", token);
   // État local pour gérer la réinitialisation du mot de passe
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
-
-  // État pour contrôler la visibilité de la modale de suppression de compte
+  // État local pour gérer la suppression du compte
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
-
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false); // Nouvel état
-
-  // Fonction pour ouvrir la modale de suppression de compte
-  function handleOpenDeleteAccountModal() {
-    setShowDeleteAccountModal(true);
-  }
-
-  // Fonction pour fermer la modale de suppression de compte
-  function handleCloseDeleteAccountModal() {
-    setShowDeleteAccountModal(false);
-  }
+  // Nouvel état local pour gérer la confirmation de la suppression
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   // Nouvelle fonction pour gérer la fermeture de la modale de confirmation
   function handleCloseConfirmationModal() {
@@ -42,25 +49,50 @@ export default function Profile() {
   function handleLogout() {
     // Suppression du token JWT du cookie
     Cookies.remove("token");
-
-    // Mettre à jour l'état pour déconnecter l'utilisateur
     setIsLogged(false);
-
-    // Fermer le modal si ouvert
     closeModal();
-
-    // Rediriger l'utilisateur vers la page d'accueil
     setShouldRedirect(true);
   }
-
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
   // Rediriger si l'utilisateur doit être déconnecté
   if (shouldRedirect) {
     return <Navigate to="/" replace />;
   }
 
+  // Fonction pour gérer le changement de fichier
+  function handleFileChange(event) {
+    setSelectedFile(event.target.files[0]);
+    const url = URL.createObjectURL(event.target.files[0]);
+    setPreviewURL(url);
+  }
+  console.log("previewURL :>> ", previewURL);
+  // Fonction pour gérer l'envoi du fichier
+  function uploadFile() {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    axios
+      .put(`${backendUrl}/users/upload/${userId}`, formData)
+      .then((response) => {
+        console.log("reponse upload", response.data);
+        alert("Photo mise à jour avec succès!");
+        if (response.data.picture) {
+          setUserPicture(response.data.picture);
+        }
+        setSelectedFile(null);
+        setPreviewURL(null);
+      })
+      .catch((error) => {
+        console.error("Error uploading file:", error);
+        alert("Erreur lors de la mise à jour de la photo.");
+      });
+  }
+
   // Nouvelle fonction pour gérer le succès de la suppression
   function handleSuccessfulDeletion() {
-    handleCloseDeleteAccountModal();
+    setShowDeleteAccountModal(false);
     setShowConfirmationModal(true);
   }
 
@@ -70,8 +102,6 @@ export default function Profile() {
       const date = new Date(createdAt);
       const options = { year: "numeric", month: "long" };
       return new Intl.DateTimeFormat("fr-FR", options).format(date);
-    } else {
-      return "Chargement...";
     }
   }
 
@@ -85,10 +115,10 @@ export default function Profile() {
       {/* Appel du composant ModalDeleteAccount avec les props nécessaires */}
       <ModalDeleteAccount
         isOpen={showDeleteAccountModal}
-        onClose={handleCloseDeleteAccountModal} // Uniquement fermer la modale si "Annuler" est cliqué
+        onClose={() => setShowDeleteAccountModal(false)} // Uniquement fermer la modale si "Annuler" est cliqué
         onSuccessfulDeletion={handleSuccessfulDeletion} // Nouveau prop pour gérer le succès
         backendURL={import.meta.env.VITE_BACKEND_URL}
-        userId={userInfo ? userInfo.id : null}
+        userId={userId}
         setIsLogged={setIsLogged} // Passer cette fonction comme prop
         setShouldRedirect={setShouldRedirect} // Passer cette fonction comme prop
       />
@@ -116,23 +146,55 @@ export default function Profile() {
         {/* Conteneur pour la photo, le pseudo et l'email */}
         <div className="mt-12 flex flex-col items-center">
           {/* Photo de profil */}
-          <img
-            src={
-              userInfo && userInfo.picture
-                ? userInfo.picture
-                : "../../../public/images/Ellipse 1.png"
-            }
-            alt="Profil"
-            className="mb-4 h-[159.11px] w-[155px] rounded-full"
+          {previewURL ? (
+            <img
+              src={previewURL}
+              alt="Profil"
+              onClick={() => document.getElementById("fileInput").click()}
+              className="mb-4 h-[159.11px] w-[155px] rounded-full"
+            />
+          ) : (
+            <img
+              src={
+                userPicture
+                  ? `${backendUrl}/${userPicture}`
+                  : "../../../public/images/Ellipse 1.png"
+              }
+              alt="Profil"
+              className="mb-4 h-[159.11px] w-[155px] rounded-full"
+              onClick={() => document.getElementById("fileInput").click()}
+            />
+          )}
+          <input
+            type="file"
+            id="fileInput"
+            className="hidden"
+            onChange={handleFileChange}
           />
 
+          {/* Bouton pour changer la photo de profil */}
+          {selectedFile ? (
+            <button
+              className="mb-4 rounded bg-orange-500 px-4 py-2 text-white"
+              onClick={uploadFile}
+            >
+              Enregistrer
+            </button>
+          ) : (
+            <label
+              htmlFor="file"
+              onClick={() => document.getElementById("fileInput").click()}
+              className="mb-4 cursor-pointer rounded bg-orange-500 px-4 py-2 text-white"
+            >
+              Changer ma photo
+            </label>
+          )}
+
+          {/* Champ pour sélectionner un fichier */}
+
           {/* Pseudo et Email */}
-          <h2 className="mb-2 text-xl font-bold">
-            {userInfo ? userInfo.pseudo : "Chargement..."}
-          </h2>
-          <h2 className="mb-2 text-xl font-bold text-gray-600">
-            {userInfo ? userInfo.email : "Chargement..."}
-          </h2>
+          <h2 className="mb-2 text-xl font-bold">{userPseudo}</h2>
+          <h2 className="mb-2 text-xl font-bold text-gray-600">{userEmail}</h2>
         </div>
 
         {/* Conteneur pour la note, les étoiles et membre depuis */}
@@ -156,7 +218,7 @@ export default function Profile() {
           {/* Membre depuis */}
           <p>
             Membre depuis :{" "}
-            {userInfo ? formatMemberSince(userInfo.createdAt) : "Chargement..."}
+            {userCreatedAt ? formatMemberSince(userCreatedAt) : "Date inconnue"}
           </p>
         </div>
 
@@ -173,7 +235,7 @@ export default function Profile() {
             </button>
             <button
               className="text-black focus:outline-none"
-              onClick={handleOpenDeleteAccountModal}
+              onClick={() => setShowDeleteAccountModal(true)}
             >
               Supprimer mon compte
             </button>
@@ -199,7 +261,7 @@ export default function Profile() {
         {/* 2ème conteneur : Espace pour les cartes d'annonces */}
         <div className="mb-4 flex flex-wrap gap-4 border p-4">
           {/* Votre contenu ici, comme les cartes d'annonces */}
-          <AdsByUser userId={userInfo.id} route={"product/user"} />
+          <AdsByUser userId={userId} route={"product/user"} />
         </div>
 
         {/* 3ème conteneur : Titre pour l'historique de commandes */}
@@ -209,7 +271,7 @@ export default function Profile() {
 
         {/* 4ème conteneur : Espace pour les cartes d'historique de commande */}
         <div className="flex flex-wrap gap-4 border p-4">
-          <AdsByUser userId={userInfo.id} route={"product/order/user"} />
+          <AdsByUser userId={userId} route={"product/order/user"} />
           {/* Votre contenu ici, comme les cartes d'historique de commande */}
         </div>
       </div>

@@ -47,7 +47,13 @@ export default function LoginForm({ className }) {
     try {
       const response = await axios.post(`${backendURL}/auth/login`, data);
       if (response.status === 200 && response.data.access_token) {
+        console.log("response.data login :>> ", response.data);
         Cookies.set("token", response.data.access_token);
+        Cookies.set("user.id", response.data.user.id);
+        Cookies.set("user.email", response.data.user.email);
+        Cookies.set("user.pseudo", response.data.user.pseudo);
+        Cookies.set("user.picture", response.data.user.picture);
+        Cookies.set("user.createdAt", response.data.user.createdAt);
         setIsLogged(true);
 
         const profileResponse = await axios.get(`${backendURL}/auth/profile`, {

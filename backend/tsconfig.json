@@ -17,5 +17,9 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "uploads/**/*" // Ajoutez cette ligne pour inclure le dossier uploads et son contenu
+  ]
 }
