@@ -1,4 +1,5 @@
-export default function ConfirmationModal() {
+/* eslint-disable react/prop-types */
+export default function ConfirmationModal({ handleCloseConfirmationModal }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="w-1/3 rounded-lg bg-white p-8 shadow-lg">

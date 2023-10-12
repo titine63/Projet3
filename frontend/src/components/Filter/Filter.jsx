@@ -6,7 +6,6 @@ import { GiClothes, GiBodyHeight } from "react-icons/gi";
 import { BsTagsFill } from "react-icons/bs";
 import { PiHandHeartFill } from "react-icons/pi";
 import { IoIosColorPalette } from "react-icons/io";
-import { useState, useEffect } from "react";
 
 export default function FilterModal({
   filterParams,

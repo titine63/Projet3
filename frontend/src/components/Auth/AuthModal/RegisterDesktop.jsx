@@ -6,7 +6,7 @@ import RegisterForm from "../AuthForms/RegisterForm";
 
 export default function RegisterDeskop() {
   // Importer les états et fonctions depuis le contexte global
-  const { closeModal, handleModalContent } = useContext(GlobalContext);
+  const { setShowAuthModal, setModalContent } = useContext(GlobalContext);
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function RegisterDeskop() {
           {/* Bouton pour fermer la modale */}
           <span
             className="close-button absolute left-4 top-1 cursor-pointer text-4xl"
-            onClick={closeModal}
+            onClick={() => setShowAuthModal(false)}
           >
             &times;
           </span>
@@ -28,7 +28,7 @@ export default function RegisterDeskop() {
             </p>
             {/* Bouton permettant d'afficher le login en changeant l'état de modalContent */}
             <button
-              onClick={handleModalContent}
+              onClick={() => setModalContent(true)}
               type="button"
               className="button-switch"
             >
