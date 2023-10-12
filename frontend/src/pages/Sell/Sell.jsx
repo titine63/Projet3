@@ -238,7 +238,7 @@ export default function Sell() {
             <img
               src="./../../../public/images/ink.png"
               alt="lnk"
-              className="fixed bottom-0 right-0"
+              className="fixed bottom-16 right-0 w-28 lg:bottom-0 lg:w-64"
             />
           </div>
         </div>

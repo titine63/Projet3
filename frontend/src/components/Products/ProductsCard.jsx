@@ -132,6 +132,11 @@ export default function ProductCard({ product }) {
               {modalVisible && (
                 <div className="fixed left-1/2 top-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 flex-col justify-center bg-[#fce3d7] p-12 text-center text-lg lg:text-2xl">
                   <p className="mb-14">{successMessage}</p>
+                  <img
+                    src="./../../../public/images/sitting.png"
+                    alt="lnk"
+                    className="fixed bottom-16 right-0 w-28 lg:bottom-0 lg:w-64"
+                  />
                 </div>
               )}
 
@@ -146,25 +151,27 @@ export default function ProductCard({ product }) {
           )}
 
           <div>
-            {userInfo && userId == userInfo.id && !modalVisible ? (
-              <div className="titles flex items-center gap-4">
-                <img
-                  className="w-16 rounded-[50%] md:w-24 lg:w-32"
-                  src={userInfo.picture}
-                  alt="seller picture"
-                />
-                <h2 className="">{userInfo.pseudo}</h2>
-              </div>
-            ) : (
-              <div className="titles flex items-center gap-4">
-                <img
-                  className="w-16 rounded-[50%] md:w-24 lg:w-32"
-                  src="../../../public/images/Ellipse 1.png"
-                  alt="seller picture"
-                />
-                <h2 className="">User</h2>
-              </div>
-            )}
+            {!modalVisible ? (
+              userInfo && userId === userInfo.id ? (
+                <div className="titles flex items-center gap-4">
+                  <img
+                    className="w-16 rounded-[50%] md:w-24 lg:w-32"
+                    src={userInfo.picture}
+                    alt="seller picture"
+                  />
+                  <h2 className="">{userInfo.pseudo}</h2>
+                </div>
+              ) : (
+                <div className="titles flex items-center gap-4">
+                  <img
+                    className="w-16 rounded-[50%] md:w-24 lg:w-32"
+                    src="../../../public/images/Ellipse 1.png"
+                    alt="seller picture"
+                  />
+                  <h2 className="">User</h2>
+                </div>
+              )
+            ) : null}
 
             {userInfo && userId == userInfo.id ? (
               <div className="w-full">
