@@ -30,6 +30,8 @@ export default function ProductCard({ product }) {
     userId,
   } = product;
 
+  const titleProduct = title;
+
   const handleDelete = async (e) => {
     e.preventDefault();
 
@@ -37,7 +39,7 @@ export default function ProductCard({ product }) {
       const response = await axios.delete(`${backendURL}/product/${id}`);
 
       setSuccessMessage(
-        `Votre annonce "${response.data.title}" est maintenant supprimée !`,
+        `Votre annonce "${titleProduct}" est maintenant supprimée !`,
       );
       setModalVisible(true);
 
