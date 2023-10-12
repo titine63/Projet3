@@ -150,7 +150,7 @@ export default function ProductCard({ product }) {
                 </div>
               )}
 
-              <Link to="/card">
+              <Link to={`/product/update/${id}`}>
                 <p className="buy-btn p-9">Modifier</p>
               </Link>
             </div>
