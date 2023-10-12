@@ -10,15 +10,13 @@ import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
-
 import axios from "axios";
-
-import { schema } from "../../../utils/const";
+import { registerSchema } from "../../../utils/const";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function RegisterForm({ className }) {
-  const { closeModal, openModalOnLogin, showToast } = useContext(GlobalContext); // Ajout de showToast
+  const { setModalContent, showToast } = useContext(GlobalContext);
 
   const {
     register,
@@ -26,7 +24,7 @@ export default function RegisterForm({ className }) {
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(registerSchema),
   });
 
   async function onSubmit(data) {
@@ -34,10 +32,7 @@ export default function RegisterForm({ className }) {
       const response = await axios.post(`${backendURL}/auth/register`, data);
 
       if (response.status === 201) {
-        closeModal();
-        openModalOnLogin();
-
-        // Utilisation de la méthode showToast du contexte global
+        setModalContent(true);
         showToast(
           "Inscription réussie ! Vous pouvez maintenant vous connecter.",
         );

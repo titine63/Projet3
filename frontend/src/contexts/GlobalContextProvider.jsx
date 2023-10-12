@@ -1,14 +1,8 @@
 //GlobaContextProvider.jsx
 /* eslint-disable react/prop-types */
-import {
-  createContext,
-  useState,
-  useMemo,
-  useCallback,
-  useEffect,
-} from "react";
+import { createContext, useState, useMemo } from "react";
 import Cookies from "js-cookie";
-import { Toast } from "../utils/Toast"; // Import du composant Toast
+import Toast from "../utils/Toast"; // Import du composant Toast
 
 // Création du contexte global de l'application
 export const GlobalContext = createContext();
@@ -20,48 +14,18 @@ export function GlobalContextProvider({ children }) {
   const [isLogged, setIsLogged] = useState(initialIsLogged);
 
   // Etat pour les informations de l'utilisateur
-  const [userInfo, setUserInfo] = useState(null);
-
-  useEffect(() => {
-    if (Cookies.get("userData")) {
-      const serializedUserData = Cookies.get("userData");
-      // Désérialisez la chaîne pour obtenir l'objet original
-      const userData = JSON.parse(serializedUserData);
-      setUserInfo(userData);
-      console.log("Cookies.get(userData) :>> ", Cookies.get("userData"));
-    }
-  }, []); // Le tableau de dépendances vide signifie que cet effet ne sera exécuté qu'une fois, au montage du composant
-  console.log("userInfo :>> ", userInfo);
+  const initialUserInfo = Cookies.get("userData")
+    ? JSON.parse(Cookies.get("userData"))
+    : null;
+  const [userInfo, setUserInfo] = useState(initialUserInfo);
 
   // État pour savoir si la modale est ouverte ou non
   const [showAuthModal, setShowAuthModal] = useState(false);
   // État pour savoir si la modale est sur login ou register (true = login, false = register)
   const [modalContent, setModalContent] = useState(true);
 
-  const [isToastVisible, setToastVisibility] = useState(false); // État du toast
-  const [toastMessage, setToastMessage] = useState(""); // Message du toast
-
-  // Change le contenu de la modale
-  const handleModalContent = useCallback(() => {
-    setModalContent(!modalContent);
-  }, [modalContent]); // modalContent est une dépendance
-
-  // Ferme la modale
-  function closeModal() {
-    setShowAuthModal(false);
-  }
-
-  // Ouvre la modale sur login
-  function openModalOnLogin() {
-    setModalContent(true);
-    setShowAuthModal(true);
-  }
-
-  // Ouvre la modale sur register
-  function openModalOnRegister() {
-    setShowAuthModal(true);
-    setModalContent(false);
-  }
+  const [isToastVisible, setToastVisibility] = useState(false); // État du toast (visible ou non)
+  const [toastMessage, setToastMessage] = useState(""); // Message du toast à afficher
 
   // Fonction pour afficher un toast
   function showToast(message) {
@@ -82,26 +46,15 @@ export function GlobalContextProvider({ children }) {
       setIsLogged,
       showAuthModal,
       setShowAuthModal,
-      closeModal,
       modalContent,
       setModalContent,
-      handleModalContent,
-      openModalOnLogin,
-      openModalOnRegister,
       userInfo,
       setUserInfo,
       isToastVisible, // Ajout de l'état du toast
       showToast, // Ajout de la fonction pour afficher le toast
     }),
     // les valeurs du tableau de dépendances à surveiller
-    [
-      isLogged,
-      showAuthModal,
-      modalContent,
-      handleModalContent,
-      userInfo,
-      isToastVisible,
-    ],
+    [isLogged, showAuthModal, modalContent, userInfo, isToastVisible],
   );
 
   return (

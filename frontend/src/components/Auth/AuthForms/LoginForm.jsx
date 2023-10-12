@@ -4,35 +4,23 @@ import { useContext, useState } from "react"; // Import useState
 import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useNavigate, Link } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { loginSchema } from "../../../utils/const";
 import ModalResetPassword from "./../../../components/Auth/Modals/ModalResetPassword"; // Import du composant
 import ModalError from "./../../../components/Auth/Modals/ModalError"; // Import du composant
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function LoginForm({ className }) {
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const { setIsLogged, closeModal, setUserInfo } = useContext(GlobalContext);
+  const { setIsLogged, setShowAuthModal } = useContext(GlobalContext);
   const [showErrorModal, setShowErrorModal] = useState(false); // Ajout de l'état pour la modale d'erreur
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
 
   let navigate = useNavigate();
-
-  const schema = yup
-    .object({
-      email: yup
-        .string()
-        .required("Ce champ est obligatoire.")
-        .email("L'email est incorrect."),
-      password: yup
-        .string()
-        .min(8, "Le mot de passe doit contenir au moins 8 caractères.")
-        .required("Ce champ est obligatoire."),
-    })
-    .required();
 
   const {
     register,
@@ -40,7 +28,7 @@ export default function LoginForm({ className }) {
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
 
   async function onSubmit(data) {
@@ -48,22 +36,21 @@ export default function LoginForm({ className }) {
       const response = await axios.post(`${backendURL}/auth/login`, data);
       if (response.status === 200 && response.data.access_token) {
         console.log("response.data login :>> ", response.data);
+
         Cookies.set("token", response.data.access_token);
-        Cookies.set("user.id", response.data.user.id);
-        Cookies.set("user.email", response.data.user.email);
-        Cookies.set("user.pseudo", response.data.user.pseudo);
-        Cookies.set("user.picture", response.data.user.picture);
-        Cookies.set("user.createdAt", response.data.user.createdAt);
+
+        const userData = {
+          id: response.data.user.id,
+          email: response.data.user.email,
+          pseudo: response.data.user.pseudo,
+          picture: response.data.user.picture,
+          createdAt: response.data.user.createdAt,
+        };
+        const serialisedUserData = JSON.stringify(userData);
+        Cookies.set("userData", serialisedUserData);
+
         setIsLogged(true);
-
-        const profileResponse = await axios.get(`${backendURL}/auth/profile`, {
-          headers: {
-            Authorization: `Bearer ${response.data.access_token}`,
-          },
-        });
-
-        setUserInfo(profileResponse.data);
-        closeModal();
+        setShowAuthModal(false);
         navigate("/profile");
       }
     } catch (error) {
