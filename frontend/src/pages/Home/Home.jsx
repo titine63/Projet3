@@ -73,7 +73,7 @@ export default function Home() {
         </div>
         <img
           className="home-img"
-          src="./../../../public/images/home-image.png"
+          src="/images/home-image.png"
           alt="home-img"
         />
       </section>
