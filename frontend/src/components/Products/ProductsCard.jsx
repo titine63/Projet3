@@ -137,6 +137,14 @@ export default function ProductCard({ product }) {
                     alt="lnk"
                     className="fixed bottom-16 right-0 w-28 lg:bottom-0 lg:w-64"
                   />
+                  <div className="flex flex-col justify-center gap-5 lg:flex-row">
+                    <Link className="button lg:w-[15%]" to="/">
+                      Accueil
+                    </Link>
+                    <Link className="button lg:w-[15%]" to="/profile">
+                      Profile
+                    </Link>
+                  </div>
                 </div>
               )}
 

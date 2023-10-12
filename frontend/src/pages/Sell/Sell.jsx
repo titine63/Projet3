@@ -227,11 +227,11 @@ export default function Sell() {
         <div className="fixed left-1/2 top-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 flex-col justify-center bg-[#fce3d7] p-12 text-center text-lg lg:text-2xl ">
           <div className="modal-content">
             <p className="mb-14">{successMessage}</p>
-            <div className="flex flex-col gap-5 lg:flex-row lg:justify-around">
-              <button className="btn-user" onClick={() => handleSeeProduct()}>
+            <div className="flex flex-col justify-center gap-5 lg:flex-row">
+              <button className="button" onClick={() => handleSeeProduct()}>
                 Voir l'annonce
               </button>
-              <button className="btn-user" onClick={() => handleAddProduct()}>
+              <button className="button" onClick={() => handleAddProduct()}>
                 Déposez une autre annonce
               </button>
             </div>
