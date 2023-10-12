@@ -6,9 +6,18 @@ import { BsTagsFill } from "react-icons/bs";
 import { PiHandHeartFill } from "react-icons/pi";
 import { GiClothes, GiBodyHeight } from "react-icons/gi";
 import { IoIosColorPalette } from "react-icons/io";
+import { GlobalContext } from "./../../contexts/GlobalContextProvider";
+import { useContext, useState } from "react";
+import axios from "axios";
 
 export default function ProductCard({ product }) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const { userInfo } = useContext(GlobalContext);
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const {
+    id,
     title,
     description,
     price,
@@ -18,7 +27,27 @@ export default function ProductCard({ product }) {
     color,
     category,
     state,
+    userId,
   } = product;
+
+  const titleProduct = title;
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.delete(`${backendURL}/product/${id}`);
+
+      setSuccessMessage(
+        `Votre annonce "${titleProduct}" est maintenant supprimée !`,
+      );
+      setModalVisible(true);
+
+      console.log("Annonce supprimée avec succès :", response.data);
+    } catch (error) {
+      console.error("Erreur lors de la supprition de l'annonce :", error);
+    }
+  };
 
   return (
     <section className="relative">
@@ -97,26 +126,79 @@ export default function ProductCard({ product }) {
               </div>
             </div>
           </div>
-          <Link to="/card">
-            <p className="buy-btn">Acheter</p>
-          </Link>
+          {userInfo && userId == userInfo.id ? (
+            <div className="flex flex-col justify-center gap-5 lg:flex-row lg:justify-between">
+              <button onClick={handleDelete}>
+                <p className="buy-btn p-9">Supprimer</p>
+              </button>
+              {modalVisible && (
+                <div className="fixed left-1/2 top-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 flex-col justify-center bg-[#fce3d7] p-12 text-center text-lg lg:text-2xl">
+                  <p className="mb-14">{successMessage}</p>
+                  <img
+                    src="./../../../public/images/sitting.png"
+                    alt="lnk"
+                    className="fixed bottom-16 right-0 w-28 lg:bottom-0 lg:w-64"
+                  />
+                  <div className="flex flex-col justify-center gap-5 lg:flex-row">
+                    <Link className="button lg:w-[15%]" to="/">
+                      Accueil
+                    </Link>
+                    <Link className="button lg:w-[15%]" to="/profile">
+                      Profile
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              <Link to="/card">
+                <p className="buy-btn p-9">Modifier</p>
+              </Link>
+            </div>
+          ) : (
+            <Link to="/card">
+              <p className="buy-btn">Acheter</p>
+            </Link>
+          )}
+
           <div>
-            <div className="titles flex items-center gap-4">
-              <img
-                className="w-16 rounded-[50%] md:w-24 lg:w-32"
-                src="../../../public/images/Ellipse 1.png"
-                alt="seller picture"
-              />
-              <h2 className="">User</h2>
-            </div>
-            <div className="flex justify-between gap-2">
-              <Link to="/profile">
-                <p className="btn-user">Voir le profil</p>
-              </Link>
-              <Link to="/messages">
-                <p className="btn-user">Envoyer un message</p>
-              </Link>
-            </div>
+            {!modalVisible ? (
+              userInfo && userId === userInfo.id ? (
+                <div className="titles flex items-center gap-4">
+                  <img
+                    className="w-16 rounded-[50%] md:w-24 lg:w-32"
+                    src={userInfo.picture}
+                    alt="seller picture"
+                  />
+                  <h2 className="">{userInfo.pseudo}</h2>
+                </div>
+              ) : (
+                <div className="titles flex items-center gap-4">
+                  <img
+                    className="w-16 rounded-[50%] md:w-24 lg:w-32"
+                    src="../../../public/images/Ellipse 1.png"
+                    alt="seller picture"
+                  />
+                  <h2 className="">User</h2>
+                </div>
+              )
+            ) : null}
+
+            {userInfo && userId == userInfo.id ? (
+              <div className="w-full">
+                <Link to="/profile">
+                  <p className="btn-user">Voir mes annonces</p>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex justify-between gap-2">
+                <Link to="/profile">
+                  <p className="btn-user">Voir le profil</p>
+                </Link>
+                <Link to="/messages">
+                  <p className="btn-user">Envoyer un message</p>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
