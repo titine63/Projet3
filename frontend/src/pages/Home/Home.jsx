@@ -15,7 +15,7 @@ export default function Home() {
             Vendre <span className="text-xl font-bold text-[#EC5A13]">.</span>
           </p>
           <p className="carousel-text">
-            Répéter<span className="text-xl font-bold text-[#EC5A13]">.</span>
+            Recommencer<span className="text-xl font-bold text-[#EC5A13]">.</span>
           </p>
         </>
       ),

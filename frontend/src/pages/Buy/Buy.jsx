@@ -63,7 +63,7 @@ export default function Buy() {
             <div>
               <img
                 className="buy-img"
-                src="./../../../public/images/man-image.png"
+                src="/images/man-image.png"
                 alt="man-img"
               />
             </div>
@@ -73,7 +73,7 @@ export default function Buy() {
             <div>
               <img
                 className="buy-img"
-                src="./../../../public/images/woman-image.png"
+                src="/images/woman-image.png"
                 alt="man-img"
               />
             </div>
@@ -82,7 +82,7 @@ export default function Buy() {
             <div>
               <img
                 className="buy-img"
-                src="./../../../public/images/kids-image.png"
+                src="/images/kids-image.png"
                 alt="man-img"
               />
             </div>
@@ -90,7 +90,7 @@ export default function Buy() {
         </div>
 
         <div className="tendence">
-          <h2 className="buy-page-home-h2">Tendences du moment</h2>
+          <h2 className="buy-page-home-h2">Tendances du moment</h2>
 
           <Link
             to="#"
