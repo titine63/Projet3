@@ -19,26 +19,36 @@ export default function Carousel({ children }) {
     setId((prevId) => (prevId + 1) % length);
   };
 
-  // Changement de slide automatique toutes les 15 secondes
+  // Changement de slide automatique toutes les 7 secondes
   useEffect(() => {
     const intervalId = setInterval(() => {
       setId((prevId) => (prevId + 1) % length);
-    }, 7000); // Change slide every 7 seconds
+    }, 7000);
 
     return () => clearInterval(intervalId); // Clean up the interval on component unmount
   }, [length]);
 
   return (
     <div className="carousel">
-      <FaChevronLeft
-        className="leftArrow cursor-pointer text-[#ec5a13] sm:text-lg md:text-xl lg:text-2xl"
+      <span
+        className="cursor-pointer rounded-full bg-[#f5f5f4] bg-opacity-50 p-3"
         onClick={handlePrevious}
-      />
+      >
+        <FaChevronLeft
+          className="leftArrow cursor-pointer pr-[3px] text-[#ec5a13] sm:text-lg md:text-xl lg:text-2xl"
+          onClick={handlePrevious}
+        />
+      </span>
       {children[id]}
-      <FaChevronRight
-        className="rightArrow cursor-pointer text-[#ec5a13] sm:text-lg md:text-xl lg:text-2xl"
+      <span
+        className="cursor-pointer rounded-full bg-[#f5f5f4] bg-opacity-50 p-3"
         onClick={handleNext}
-      />
+      >
+        <FaChevronRight
+          className="rightArrow cursor-pointer p-0 pl-[3px] text-[#ec5a13] sm:text-lg md:text-xl lg:text-2xl"
+          onClick={handleNext}
+        />
+      </span>
     </div>
   );
 }

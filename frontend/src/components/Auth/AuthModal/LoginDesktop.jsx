@@ -6,7 +6,7 @@ import LoginForm from "../AuthForms/LoginForm";
 // Contenu de la modale de connexion
 export default function LoginDeskop() {
   // Importer les états et fonctions depuis le contexte global
-  const { closeModal, handleModalContent } = useContext(GlobalContext);
+  const { setShowAuthModal, setModalContent } = useContext(GlobalContext);
 
   return (
     <>
@@ -34,7 +34,7 @@ export default function LoginDeskop() {
           {/* Bouton pour fermer la modale en haut à droite (une croix -> X ) */}
           <span
             className="close-button absolute right-4 top-1 cursor-pointer text-4xl"
-            onClick={closeModal}
+            onClick={() => setShowAuthModal(false)}
           >
             &times;
           </span>
@@ -46,7 +46,7 @@ export default function LoginDeskop() {
             </p>
             {/* Bouton permettant d'afficher le register en changeant l'état de modalContent */}
             <button
-              onClick={handleModalContent}
+              onClick={() => setModalContent(false)}
               type="button"
               className="button-switch"
             >

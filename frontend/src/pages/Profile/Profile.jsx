@@ -11,7 +11,8 @@ import axios from "axios";
 
 export default function Profile() {
   // Utilisation du contexte global pour obtenir des méthodes et des états
-  const { setIsLogged, closeModal, isLogged } = useContext(GlobalContext);
+  const { setIsLogged, closeModal, isLogged, userInfo } =
+    useContext(GlobalContext);
 
   // Récupération de l'URL du backend depuis les variables d'environnement
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -22,25 +23,15 @@ export default function Profile() {
   const [previewURL, setPreviewURL] = useState(null);
   // État local pour gérer la redirection
   const [shouldRedirect, setShouldRedirect] = useState(false);
-  console.log("Cookies.get(user) :>> ", Cookies.get());
-  const userId = Cookies.get("user.id");
-  console.log("userId :>> ", userId);
-  const [userPicture, setUserPicture] = useState(Cookies.get("user.picture"));
-  console.log("userPicture  :>> ", userPicture);
-  const userPseudo = Cookies.get("user.pseudo");
-  console.log("userPseudo :>> ", userPseudo);
-  const userEmail = Cookies.get("user.email");
-  console.log("userEmail :>> ", userEmail);
-  const userCreatedAt = Cookies.get("user.createdAt");
-  console.log("userCreatedAt :>> ", userCreatedAt);
-  const token = Cookies.get("token");
-  console.log("token :>> ", token);
   // État local pour gérer la réinitialisation du mot de passe
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
   // État local pour gérer la suppression du compte
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
   // Nouvel état local pour gérer la confirmation de la suppression
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
+  const [userPicture, setUserPicture] = useState(Cookies.get("user.picture"));
+  console.log("userPicture  :>> ", userPicture);
 
   // Nouvelle fonction pour gérer la fermeture de la modale de confirmation
   function handleCloseConfirmationModal() {
@@ -55,7 +46,7 @@ export default function Profile() {
     closeModal();
     setShouldRedirect(true);
   }
-  if (!token) {
+  if (!isLogged) {
     return <Navigate to="/login" />;
   }
   // Rediriger si l'utilisateur doit être déconnecté
@@ -69,14 +60,13 @@ export default function Profile() {
     const url = URL.createObjectURL(event.target.files[0]);
     setPreviewURL(url);
   }
-  console.log("previewURL :>> ", previewURL);
   // Fonction pour gérer l'envoi du fichier
   function uploadFile() {
     const formData = new FormData();
     formData.append("file", selectedFile);
 
     axios
-      .put(`${backendUrl}/users/upload/${userId}`, formData)
+      .put(`${backendUrl}/users/upload/${userInfo.id}`, formData)
       .then((response) => {
         console.log("reponse upload", response.data);
         alert("Photo mise à jour avec succès!");
@@ -120,7 +110,7 @@ export default function Profile() {
         onClose={() => setShowDeleteAccountModal(false)} // Uniquement fermer la modale si "Annuler" est cliqué
         onSuccessfulDeletion={handleSuccessfulDeletion} // Nouveau prop pour gérer le succès
         backendURL={import.meta.env.VITE_BACKEND_URL}
-        userId={userId}
+        userId={userInfo.id}
         setIsLogged={setIsLogged} // Passer cette fonction comme prop
         setShouldRedirect={setShouldRedirect} // Passer cette fonction comme prop
       />
@@ -195,8 +185,10 @@ export default function Profile() {
           {/* Champ pour sélectionner un fichier */}
 
           {/* Pseudo et Email */}
-          <h2 className="mb-2 text-xl font-bold">{userPseudo}</h2>
-          <h2 className="mb-2 text-xl font-bold text-gray-600">{userEmail}</h2>
+          <h2 className="mb-2 text-xl font-bold">{userInfo.pseudo}</h2>
+          <h2 className="mb-2 text-xl font-bold text-gray-600">
+            {userInfo.email}
+          </h2>
         </div>
 
         {/* Conteneur pour la note, les étoiles et membre depuis */}
@@ -218,10 +210,7 @@ export default function Profile() {
           </div>
 
           {/* Membre depuis */}
-          <p>
-            Membre depuis :{" "}
-            {userCreatedAt ? formatMemberSince(userCreatedAt) : "Date inconnue"}
-          </p>
+          <p>Membre depuis : {formatMemberSince(userInfo.createdAt)}</p>
         </div>
 
         {/* Boutons en bas */}
@@ -263,7 +252,7 @@ export default function Profile() {
         {/* 2ème conteneur : Espace pour les cartes d'annonces */}
         <div className="mb-4 flex flex-wrap gap-4 border p-4">
           {/* Votre contenu ici, comme les cartes d'annonces */}
-          <AdsByUser userId={userId} route={"product/user"} />
+          <AdsByUser userId={userInfo.id} route={"product/user"} />
         </div>
 
         {/* 3ème conteneur : Titre pour l'historique de commandes */}
@@ -273,7 +262,7 @@ export default function Profile() {
 
         {/* 4ème conteneur : Espace pour les cartes d'historique de commande */}
         <div className="flex flex-wrap gap-4 border p-4">
-          <AdsByUser userId={userId} route={"product/order/user"} />
+          <AdsByUser userId={userInfo.id} route={"product/order/user"} />
           {/* Votre contenu ici, comme les cartes d'historique de commande */}
         </div>
       </div>

@@ -11,16 +11,23 @@ import { FaSearch } from "react-icons/fa";
 
 export default function Header() {
   // Importer les états et fonctions depuis le contexte global
-  const {
-    isLogged,
-    showAuthModal,
-    closeModal,
-    openModalOnLogin,
-    openModalOnRegister,
-  } = useContext(GlobalContext);
+  const { isLogged, showAuthModal, setShowAuthModal, setModalContent } =
+    useContext(GlobalContext);
 
   // État pour stocker la valeur de la barre de recherche
   const [searchValue, setSearchValue] = useState("");
+
+  // Ouvre la modale sur login
+  function openModalOnLogin() {
+    setModalContent(true);
+    setShowAuthModal(true);
+  }
+
+  // Ouvre la modale sur register
+  function openModalOnRegister() {
+    setShowAuthModal(true);
+    setModalContent(false);
+  }
 
   // Gestionnaire pour mettre à jour la valeur de la barre de recherche
   function handleSearchChange(event) {
@@ -91,7 +98,7 @@ export default function Header() {
               {showAuthModal && (
                 <div
                   className="modal-overlay hidden lg:block"
-                  onClick={closeModal}
+                  onClick={() => setShowAuthModal(false)}
                 ></div>
               )}
               {/* Modale d'authentification, ne s'affiche qu'à partir de 1024px de large (80vw x 80wh) */}

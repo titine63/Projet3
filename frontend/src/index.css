@@ -88,7 +88,7 @@
 }
 
 .carousel-text {
-  @apply text-center text-sm font-semibold md:text-base lg:text-lg xl:text-xl;
+  @apply text-center text-sm font-semibold md:text-base lg:text-xl xl:text-2xl;
 }
 
 .home-section {
@@ -100,7 +100,7 @@
 }
 
 .button-homepage {
-  @apply flex min-w-[8.125rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2 shadow-sm shadow-black;
+  @apply flex w-[10rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2 shadow-sm shadow-black;
 }
 
 /* Carousel.jsx => carousel */
@@ -275,4 +275,18 @@
 
 .button-switch {
   @apply rounded-xl bg-[#F5F5F5] px-6 py-2 text-center font-medium text-black shadow-sm shadow-black;
+}
+
+/* Toast (Toast.jsx) => toast */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: white;
+  color: #333;
+  padding: 15px;
+  border-radius: 5px;
+  z-index: 1000;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
 }
