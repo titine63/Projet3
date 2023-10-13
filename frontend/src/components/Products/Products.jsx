@@ -1,11 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useParams } from "react-router-dom";
-import ProductCard from "./ProductsCard";
+import ProductsDetail from "./ProductsDetail";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 const Products = () => {
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const { id } = useParams();
 
   const [products, setProducts] = useState([]);
@@ -30,7 +32,7 @@ const Products = () => {
     <main className="main">
       <section>
         {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductsDetail key={product.id} product={product} />
         ))}
       </section>
     </main>

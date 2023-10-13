@@ -60,15 +60,24 @@ export default function Header() {
           {isLogged && (
             <>
               {/* Lien vers favoris desktop */}
-              <Link to="/favorites" className="hidden sm:block">
+              <Link
+                to="/favorites"
+                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform sm:block"
+              >
                 <img src={heartIcon}></img>
               </Link>
               {/* Lien vers chat desktop */}
-              <Link to="/chat" className="hidden sm:block">
+              <Link
+                to="/chat"
+                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform sm:block"
+              >
                 <img src={chatIcon}></img>
               </Link>
               {/* Lien vers profil desktop */}
-              <Link to="/profile" className="hidden sm:block">
+              <Link
+                to="/profile"
+                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform sm:block"
+              >
                 <img src={userIcon}></img>
               </Link>
               {/* Lien vers profil mobile (si connecté, l'icône user renvoie vers le profil) */}
@@ -82,14 +91,14 @@ export default function Header() {
             <>
               {/* Bouton login en desktop (ouvre la modale) */}
               <button
-                className="button-grey hidden lg:block"
+                className="button-grey hidden underline-offset-2 hover:underline lg:block"
                 onClick={openModalOnLogin}
               >
                 Se connecter
               </button>
               {/* Bouton register en desktop (ouvre la modale) */}
               <button
-                className="button hidden lg:block"
+                className="button hidden underline-offset-2 hover:underline lg:block"
                 onClick={openModalOnRegister}
               >
                 Créer un compte

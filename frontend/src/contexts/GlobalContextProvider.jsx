@@ -36,7 +36,7 @@ export function GlobalContextProvider({ children }) {
     // Cacher le toast après quelques secondes
     setTimeout(() => {
       setToastVisibility(false);
-    }, 10000); // 3 secondes
+    }, 5000); // 5 secondes
   }
 
   // useMemo permet de ne pas recréer la valeur du contexte à chaque fois que le composant est rendu

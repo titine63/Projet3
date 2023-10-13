@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import ProductCard from "../Products/ProductCard";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -28,19 +28,7 @@ export default function AdsByUser({ userId, route }) {
   return (
     <>
       {ads.map((product) => (
-        <Link key={product.id} to={`/buy/product/${product.id}`}>
-          <div key={product.id} className="flex items-center gap-10">
-            <h3 className="text-center">
-              {product.title} <br /> <span>{product.price} €</span>
-            </h3>
-            <img
-              key={product.id}
-              className="tend-img"
-              src="https://picsum.photos/150/200"
-              alt="man-img"
-            />
-          </div>
-        </Link>
+        <ProductCard key={product.id} product={product} />
       ))}
     </>
   );

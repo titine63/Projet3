@@ -6,8 +6,9 @@ import axios from "axios";
 import { AiOutlineFilter } from "react-icons/ai";
 import FilterModal from "../../components/Filter/Filter";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function Buy() {
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const [products, setProducts] = useState([]);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [filtredProducts, setFiltredProducts] = useState(null);
@@ -90,7 +91,7 @@ export default function Buy() {
         </div>
 
         <div className="tendence">
-          <h2 className="buy-page-home-h2">Tendences du moment</h2>
+          <h2 className="buy-page-home-h2">Tendances du moment</h2>
 
           <Link
             to="#"

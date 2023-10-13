@@ -7,7 +7,7 @@ import { PiHandHeartFill } from "react-icons/pi";
 import { GiClothes, GiBodyHeight } from "react-icons/gi";
 import { IoIosColorPalette } from "react-icons/io";
 
-export default function ProductCard({ product }) {
+export default function ProductsDetail({ product }) {
   const {
     title,
     description,

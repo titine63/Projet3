@@ -2,7 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* Police de caractère */
+@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
 /* Tailwind Default Breakpoints */
 /* 
   'sm': {'min': '640px', 'max': '767px'},
@@ -14,12 +16,20 @@
 /* --Mobile-- */
 
 /* Global accross the application*/
+* {
+  @apply font-mono;
+}
+
 .h1 {
   @apply text-center text-2xl font-bold md:text-3xl lg:text-4xl;
 }
 
 .h2 {
   @apply text-center text-xl font-bold md:text-2xl;
+}
+
+.h3 {
+  @apply text-lg font-semibold md:text-xl;
 }
 
 .button {
@@ -34,18 +44,19 @@
   @apply flex h-full flex-col items-center py-8;
 }
 
-/* Layout.jsx => main */
+/* pages/*.jsx => main */
 .main {
-  @apply min-h-screen pb-16 pt-[82px] md:pb-0;
+  @apply min-h-screen pb-16 pt-[10vh] md:pb-0;
 }
 
 /* Header.jsx => header, logo, navbar-desktop, search-bar-container, search-bar, button-grey */
 .header {
-  @apply fixed top-0 z-10 flex w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8;
+  @apply fixed top-0 z-10 flex h-[10vh] w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8;
 }
 
 .logo {
   @apply left-0 my-8 text-5xl font-bold text-[#ec5a13];
+  font-family: "Mooli";
 }
 
 .navbar-desktop {
