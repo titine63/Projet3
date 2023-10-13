@@ -10,7 +10,7 @@ import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 import { useContext, useState } from "react";
 import axios from "axios";
 
-export default function ProductCard({ product }) {
+export default function ProductsDetail({ product }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const { userInfo } = useContext(GlobalContext);
