@@ -151,7 +151,7 @@ export default function Profile() {
           {/* Bouton pour changer la photo de profil */}
           {selectedFile ? (
             <button
-              className="mb-4 cursor-pointer  bg-orange-500 px-4 py-2 text-white underline-offset-2 hover:border hover:border-black hover:underline"
+              className="mb-4 cursor-pointer rounded bg-orange-500 px-4 py-2 text-white underline-offset-2 hover:border hover:border-black hover:underline"
               onClick={uploadFile}
             >
               Enregistrer
