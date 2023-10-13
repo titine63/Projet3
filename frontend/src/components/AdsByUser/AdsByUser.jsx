@@ -27,8 +27,8 @@ export default function AdsByUser({ userId, route }) {
 
   return (
     <>
-      {ads.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {ads.map((ad) => (
+        <ProductCard key={ad.id} product={ad} />
       ))}
     </>
   );

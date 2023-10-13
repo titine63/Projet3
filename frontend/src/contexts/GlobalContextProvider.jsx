@@ -17,7 +17,10 @@ export function GlobalContextProvider({ children }) {
   const initialUserInfo = Cookies.get("userData")
     ? JSON.parse(Cookies.get("userData"))
     : null;
+
   const [userInfo, setUserInfo] = useState(initialUserInfo);
+
+  const [wishlist, setWishlist] = useState([]);
 
   // État pour savoir si la modale est ouverte ou non
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -52,9 +55,11 @@ export function GlobalContextProvider({ children }) {
       setUserInfo,
       isToastVisible, // Ajout de l'état du toast
       showToast, // Ajout de la fonction pour afficher le toast
+      wishlist,
+      setWishlist,
     }),
     // les valeurs du tableau de dépendances à surveiller
-    [isLogged, showAuthModal, modalContent, userInfo, isToastVisible],
+    [isLogged, showAuthModal, modalContent, userInfo, isToastVisible, wishlist],
   );
 
   return (

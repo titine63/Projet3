@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
+
 import { Link } from "react-router-dom";
 import { HiUserGroup } from "react-icons/hi";
 import { BsTagsFill } from "react-icons/bs";
@@ -15,6 +17,7 @@ export default function ProductsDetail({ product }) {
   const [successMessage, setSuccessMessage] = useState("");
   const { userInfo } = useContext(GlobalContext);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const { setWishlist, showToast } = useContext(GlobalContext);
 
   const {
     id,
@@ -49,6 +52,15 @@ export default function ProductsDetail({ product }) {
     }
   };
 
+  const handleAddToWishlist = () => {
+    addToWishlist(product);
+    showToast("Ajouté !");
+  };
+
+  const addToWishlist = (product) => {
+    setWishlist((prevWishlist) => [...prevWishlist, product]);
+  };
+
   return (
     <section className="relative">
       <div className="hidden xl:fixed xl:bottom-[45%] xl:left-[5%] xl:block xl:w-[32%] xl:translate-y-1/2">
@@ -67,9 +79,9 @@ export default function ProductsDetail({ product }) {
         />
         <p className="product-price">{price} €</p>
         <div className="product-details">
-          <Link to="/favorites">
-            <p className="btn-fav">Ajouter aux favoris</p>
-          </Link>
+          <button className="btn-fav" onClick={handleAddToWishlist}>
+            Ajouter aux favoris
+          </button>
           <div>
             <h2 className="titles">Description</h2>
             <p className="md:text-xl">{description}</p>
