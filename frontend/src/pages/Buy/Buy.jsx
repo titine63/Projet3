@@ -112,7 +112,7 @@ export default function Buy() {
 
         {filtredProducts && filtredProducts.length === 0 ? (
           <h2 className="not-found">
-            Désolé ! Aucun produit de correspond à votre recherche ...
+            Désolé ! Aucun produit ne correspond à votre recherche ...
           </h2>
         ) : null}
 
