@@ -105,17 +105,11 @@ export default function Buy() {
           {filteredProducts && filteredProducts.length != 0
             ? filteredProducts
                 .filter((product) => product.id >= 1 && product.id <= 12)
-                .map((product) => {
-                  return (
-                    <Link key={product.id} to={`product/${product.id}`}>
-                      <ProductCard product={product} />
-                    </Link>
-                  );
-                })
+                .map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))
             : products.map((product) => (
-                <Link key={product.id} to={`product/${product.id}`}>
-                  <ProductCard product={product} />
-                </Link>
+                <ProductCard key={product.id} product={product} />
               ))}
         </div>
       )}

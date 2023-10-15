@@ -12,12 +12,13 @@ import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 import { useContext, useState } from "react";
 import axios from "axios";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function ProductsDetail({ product }) {
+  const { setWishlist, showToast, userInfo } = useContext(GlobalContext);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const { userInfo } = useContext(GlobalContext);
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const { setWishlist, showToast } = useContext(GlobalContext);
 
   const {
     id,
@@ -75,7 +76,7 @@ export default function ProductsDetail({ product }) {
         <img
           src="https://picsum.photos/400/600"
           alt={title}
-          className="sm:w- m-auto w-[60%] xl:left-0 xl:hidden"
+          className="m-auto w-[60%] xl:left-0 xl:hidden"
         />
         <p className="product-price">{price} €</p>
         <div className="product-details">
