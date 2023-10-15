@@ -38,24 +38,24 @@ export default function Header() {
 
   return (
     <>
-      <header className="header">
+      <header className="header fixed top-0 z-10 flex h-[10vh] w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8">
         {/* Logo Trinded */}
         <Link to="/">
           <span className="logo">TRINDED</span>
         </Link>
         {/* Barre de recherche */}
-        <form className="search-bar-container hidden sm:block">
+        <form className="relative mr-auto hidden flex-grow rounded-lg border-y-2 border-[#ec5a13] sm:block sm:max-w-[50%] lg:ml-4">
           <input
             type="text"
             placeholder="Rechercher"
             value={searchValue}
             onChange={handleSearchChange}
-            className="search-bar hidden sm:block"
+            className="hidden w-full rounded-lg border-[#ec5a13] sm:block"
           />
-          <FaSearch className="search-icon cursor-pointer" />
+          <FaSearch className="absolute right-2 top-3 h-5 w-5 cursor-pointer text-[#ec5a13] md:right-4 md:top-2 md:h-7 md:w-7" />
         </form>
         {/* Boutons de navigation */}
-        <nav className="navbar-desktop">
+        <nav className="flex items-center gap-4 lg:gap-6">
           {/* --- Si l'utilisateur est connecté, on affiche ça --- */}
           {isLogged && (
             <>
@@ -91,7 +91,7 @@ export default function Header() {
             <>
               {/* Bouton login en desktop (ouvre la modale) */}
               <button
-                className="button-grey hidden underline-offset-2 hover:underline lg:block"
+                className="hidden min-w-[100px] bg-[#d9d9d9] px-2 py-1 underline-offset-2 shadow-sm shadow-black hover:underline md:px-4 md:py-2 lg:block"
                 onClick={openModalOnLogin}
               >
                 Se connecter
@@ -106,7 +106,7 @@ export default function Header() {
               {/* Arrière-plan semi-transparent, si on clique en dehors de la modale, elle se ferme */}
               {showAuthModal && (
                 <div
-                  className="modal-overlay hidden lg:block"
+                  className="fixed left-0 top-0 z-[999] hidden h-full w-full bg-black opacity-50 lg:block"
                   onClick={() => setShowAuthModal(false)}
                 ></div>
               )}

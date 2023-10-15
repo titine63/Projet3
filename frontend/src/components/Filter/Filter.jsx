@@ -36,7 +36,7 @@ export default function FilterModal({
           <span className="criterias">Prix</span>
         </div>
 
-        <div className="price-filter">
+        <div className="flex">
           <label>
             Min
             <br />

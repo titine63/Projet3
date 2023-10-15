@@ -29,7 +29,7 @@ export default function Carousel({ children }) {
   }, [length]);
 
   return (
-    <div className="flex h-[25vh] w-full items-center justify-around bg-[#FCE3D7]">
+    <div className="carousel relative flex h-[25vh] w-full items-center justify-around bg-[#FCE3D7]">
       <span
         className="mx-1 cursor-pointer rounded-full bg-[#f5f5f4] bg-opacity-50 p-3"
         onClick={handlePrevious}

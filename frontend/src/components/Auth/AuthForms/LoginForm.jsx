@@ -104,7 +104,7 @@ export default function LoginForm({ className }) {
         </div>
         <Link
           to="#"
-          className="md:text:lg mt-2 text-center underline lg:mt-4"
+          className="md:text:lg mt-2 text-center underline underline-offset-2 lg:mt-4"
           onClick={() => setShowResetPasswordModal(true)}
         >
           Oups ! Mot de passe oublié ?
@@ -113,7 +113,10 @@ export default function LoginForm({ className }) {
         <button type="submit" className="button-auth">
           Se connecter
         </button>
-        <Link to="/register" className="mt-5 underline md:text-lg lg:hidden">
+        <Link
+          to="/register"
+          className="mt-5 underline underline-offset-2 md:text-lg lg:hidden"
+        >
           Pas encore de compte ?
         </Link>
       </form>

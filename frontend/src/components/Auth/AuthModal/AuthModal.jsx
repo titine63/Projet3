@@ -10,7 +10,7 @@ export default function AuthModal() {
   const { modalContent } = useContext(GlobalContext);
   // modalContent : true = login, false = register
   return (
-    <div className="modal modal-desktop">
+    <div className="fixed left-[50%] top-[50%] z-[1000] h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white drop-shadow-2xl">
       {modalContent ? <LoginDesktop /> : <RegisterDesktop />}
     </div>
   );

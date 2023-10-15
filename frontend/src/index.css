@@ -49,9 +49,10 @@
   @apply min-h-screen pb-20 pt-[10vh] sm:pb-16;
 }
 
-/* Header.jsx => header, logo, navbar-desktop, search-bar-container, search-bar, button-grey */
+/* Header.jsx */
+
 .header {
-  @apply fixed top-0 z-10 flex h-[10vh] w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8;
+  box-shadow: 0px 0px 10px #ec5a13;
 }
 
 .logo {
@@ -59,75 +60,23 @@
   font-family: "Mooli";
 }
 
-.navbar-desktop {
-  @apply flex items-center gap-4 lg:gap-6;
+/* Carousel.jsx  */
+.carousel {
+  box-shadow: 0px 0px 10px #ec5a13;
 }
 
-.search-bar-container {
-  @apply relative mr-auto flex-grow rounded-lg border-y-2 border-[#ec5a13] sm:max-w-[50%] lg:ml-4;
+/* Home.jsx  */
+.home-section {
+  box-shadow: 0px 0px 10px #ec5a13;
 }
 
-.search-bar {
-  @apply w-full rounded-lg border-[#ec5a13];
-}
-
-.search-icon {
-  @apply absolute right-2 top-3 h-5 w-5 text-[#ec5a13] md:right-4 md:top-2 md:h-7 md:w-7;
-}
-
-.button-grey {
-  @apply min-w-[100px] bg-[#d9d9d9] px-2 py-1 shadow-sm shadow-black md:px-4 md:py-2;
-}
-
-/* Home.jsx => home-section, carousel-items, carousel-text */
 .carousel-text {
   @apply text-center text-sm font-semibold md:text-base lg:text-xl xl:text-2xl;
 }
 
-.button-homepage {
-  @apply flex w-[10rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2 shadow-sm shadow-black;
-}
-
 /***** buy pages ******/
-
-.buy-page-home {
-  @apply mt-16 flex w-full flex-grow flex-col xl:mr-[50rem] xl:mt-0 xl:flex-grow-0;
-}
-
-.buy-page-home-h2 {
-  @apply mb-9 text-center text-xl font-bold md:text-2xl xl:text-3xl xl:font-medium;
-}
-
-.buy-imgs {
-  @apply mx-[5%] mb-16 grid grid-cols-3 gap-5 xl:mx-[10%] xl:justify-items-center xl:gap-0;
-}
-
-.tendence {
-  @apply flex items-baseline justify-center gap-5 xl:ml-36;
-}
-
-.button-filter {
-  @apply flex max-h-8 gap-3 bg-[#FCE3D7] text-lg;
-}
-
-.tend-imgs {
-  @apply mx-[5%] grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 md:items-center md:self-center lg:grid-cols-5 xl:mx-[10%] xl:grid-cols-6 xl:justify-items-center;
-}
-
-.tend-img {
-  @apply md:content-center;
-}
-
 .product-price {
   @apply text-2xl text-[#ec5a13] md:text-3xl;
-}
-
-.btn-fav {
-  @apply w-[100%] bg-[#ec5a13] py-1 text-center text-xl text-white md:text-2xl;
-}
-
-.buy-btn {
-  @apply bg-[#ec5a13] py-1 text-center text-xl text-white md:w-[100%] md:text-2xl;
 }
 
 .product-card {
@@ -174,9 +123,6 @@
 .filter-modal-content input[type="number"] {
   @apply w-[75%] border-[#ec5a13];
 }
-.price-filter {
-  @apply flex;
-}
 
 .filter-modal-content select {
   @apply w-[88%] border-[#ec5a13] p-2;
@@ -184,9 +130,6 @@
 
 .filter-modal-content h3 {
   @apply mb-4 text-2xl;
-}
-.not-found {
-  @apply m-auto text-center text-2xl font-semibold text-[#ec5a13] md:text-3xl;
 }
 
 .modal {
@@ -230,20 +173,13 @@
 }
 
 .button-auth {
-  @apply mt-4 rounded-xl bg-[#f5ac89] px-6 py-2 font-medium shadow-sm shadow-black;
+  @apply mt-4 rounded-xl bg-[#f5ac89] px-6 py-2 font-medium underline-offset-2 shadow-sm shadow-black hover:underline;
 }
 
-/* Modale (Header.jsx) => modal, modal-overlay, button-switch */
-.modal {
-  @apply fixed left-[50%] top-[50%] z-[1000] h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white drop-shadow-2xl;
-}
-
-.modal-overlay {
-  @apply fixed left-0 top-0 z-[999] h-full w-full bg-black opacity-50;
-}
+/* Modale (Header.jsx) */
 
 .button-switch {
-  @apply rounded-xl bg-[#F5F5F5] px-6 py-2 text-center font-medium text-black shadow-sm shadow-black;
+  @apply rounded-xl bg-[#F5F5F5] px-6 py-2 text-center font-medium text-black underline-offset-2 shadow-sm shadow-black hover:underline;
 }
 
 /* Toast (Toast.jsx) => toast */

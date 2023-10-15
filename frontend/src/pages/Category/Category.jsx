@@ -62,9 +62,10 @@ export default function Category() {
   }, [filterParams]);
 
   return (
-    <main className="main flex flex-col items-center pb-16">
+    <main className="main flex flex-col items-center">
       <div className="my-8 flex w-[90%] items-baseline justify-center gap-6 lg:gap-12 xl:ml-36">
         <h1 className="h1 my-8 text-center">Filtrer par : {category}</h1>
+
         <ButtonFilter openFilterModal={openFilterModal} />
         <FilterModal
           isOpen={isFilterModalOpen}
