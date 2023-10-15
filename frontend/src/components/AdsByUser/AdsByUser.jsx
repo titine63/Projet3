@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import ProductCard from "../Products/ProductCard";
+import ProductCard from "../ProductCard/ProductCard";
 import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;

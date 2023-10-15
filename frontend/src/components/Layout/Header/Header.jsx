@@ -76,7 +76,7 @@ export default function Header() {
               {/* Lien vers profil desktop */}
               <Link
                 to="/profile"
-                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform sm:block"
+                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform lg:block"
               >
                 <img src={userIcon}></img>
               </Link>

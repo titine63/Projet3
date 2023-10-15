@@ -3,16 +3,19 @@ import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "./../../contexts/GlobalContextProvider";
+import { GlobalContext } from "../../contexts/GlobalContextProvider";
+
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function UpdateProduct() {
+  const { id } = useParams();
+  const { userInfo } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-  const [selectedFile, setSelectedFile] = useState(null);
-  const navigate = useNavigate();
-  const { userInfo } = useContext(GlobalContext);
-  const { id } = useParams();
 
   useEffect(() => {
     axios

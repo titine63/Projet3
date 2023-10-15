@@ -8,7 +8,7 @@ export default function ProductCard({ product }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
-    <div className="s relative flex flex-col gap-1 rounded-lg border-2 bg-slate-100 p-1 shadow-lg transition duration-300 ease-in-out hover:-translate-y-1 hover:translate-x-1 hover:shadow-xl">
+    <div className="relative flex flex-col gap-1 rounded-lg border-2 bg-slate-100 p-1 shadow-lg transition duration-300 ease-in-out hover:-translate-y-1 hover:translate-x-1 hover:shadow-xl">
       {!isFavorite && (
         <AiOutlineHeart
           className="absolute right-2 top-1 cursor-pointer text-3xl transition duration-200 ease-in-out hover:scale-110 hover:transform"
