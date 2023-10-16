@@ -103,7 +103,7 @@ export default function Profile() {
   return (
     <main className="main relative flex flex-col lg:flex-row">
       {/* Partie gauche pour les informations de profil */}
-      <div className="flex h-[90vh] flex-col justify-between bg-[#FCE3D7] lg:fixed lg:w-1/3 xl:w-1/4">
+      <div className="flex flex-col justify-between bg-[#FCE3D7] pb-20 sm:mt-4 lg:fixed lg:h-screen lg:w-1/3 xl:w-1/4">
         <div className=" mt-12 flex flex-col items-center">
           <span className="relative">
             {selectedFile ? (
@@ -221,14 +221,16 @@ export default function Profile() {
 
       {/* Partie droite pour les annonces et l'historique */}
       <div className="right-0 w-screen p-4 lg:absolute lg:w-2/3 xl:w-3/4">
-        <h1 className="h1 text-center">Mon profil</h1>
+        <h1 className="h1 mt-4  text-center">Mon profil</h1>
         {/* Espace pour les cartes d'annonces */}
-        <h2 className="h3 mb-4 pl-8">Mes annonces en ligne</h2>
+        <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">Mes annonces en ligne</h2>
         <div className="mb-4 grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/user"} />
         </div>
 
-        <h2 className="h3 mb-4 pl-8">Mon historique de commande</h2>
+        <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">
+          Mon historique de commande
+        </h2>
         {/* Espace pour les cartes d'historique de commande */}
         <div className="grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/order/user"} />
