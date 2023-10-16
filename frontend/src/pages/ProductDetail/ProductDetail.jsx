@@ -15,7 +15,8 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const { wishlist, setWishlist, showToast, userInfo } = useContext(GlobalContext);
+  const { wishlist, setWishlist, showToast, userInfo } =
+    useContext(GlobalContext);
   console.log("wishlist :>> ", wishlist);
 
   const [isFavorite, setIsFavorite] = useState(false);
@@ -23,7 +24,7 @@ export default function ProductDetail() {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  
+
   const titleProduct = product.title;
 
   const addToWishlist = (product) => {
@@ -62,12 +63,13 @@ export default function ProductDetail() {
       .get(`${backendURL}/product/${id}`)
       .then((res) => {
         setProduct(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
       });
   }, []);
+
+  console.log("product :>> ", product);
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -84,7 +86,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <main className="main">
+    <main className="main my-8">
       <section className="relative">
         <div className=" hidden xl:fixed xl:bottom-[45%] xl:left-[5%] xl:block xl:w-[32%] xl:translate-y-1/2">
           <img
@@ -107,7 +109,9 @@ export default function ProductDetail() {
             <button
               type="button"
               className="bg-[#ec5a13] px-4 py-1 text-center text-xl text-white md:text-2xl"
-              onClick={isFavorite ? handleDeleteFromWishList : handleAddToWishlist}
+              onClick={
+                isFavorite ? handleDeleteFromWishList : handleAddToWishlist
+              }
             >
               Ajouter aux favoris
             </button>
@@ -195,20 +199,29 @@ export default function ProductDetail() {
                 {userInfo && product.userId === userInfo.id ? (
                   <>
                     <img
-                      className="w-16 rounded-[50%] border border-orange-500 md:w-24 lg:w-32"
+                      className="h-16 w-16 rounded-[50%] border  border-black md:h-24 md:w-24 lg:h-32 lg:w-32"
                       src={userInfo.picture}
                       alt="seller picture"
                     />
                     <h2>{userInfo.pseudo}</h2>
                   </>
+                ) : product.userPicture ? (
+                  <>
+                    <img
+                      className="h-16 w-16 rounded-[50%] border border-black md:h-24 md:w-24 lg:h-32 lg:w-32"
+                      src={`${backendURL}/${product.userPicture}`}
+                      alt="seller picture"
+                    />
+                    <h2>{product.userPseudo}</h2>
+                  </>
                 ) : (
                   <>
                     <img
-                      className="w-16 rounded-[50%] border-orange-500 md:w-24 lg:w-32"
+                      className="h-16 w-16 rounded-[50%] border border-black md:h-24 md:w-24 lg:h-32 lg:w-32"
                       src="../../../public/images/Ellipse 1.png"
                       alt="seller picture"
                     />
-                    <h2>Utilisateur inconnu</h2>
+                    <h2>{product.userPseudo}</h2>
                   </>
                 )}
               </div>
@@ -244,7 +257,7 @@ export default function ProductDetail() {
         <div className="fixed left-1/2 top-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 flex-col justify-center bg-[#fce3d7] p-12 text-center text-lg lg:text-2xl">
           <p className="mb-14 font-semibold">{successMessage}</p>
           <img
-            src="./../../../public/images/sitting.png"
+            src="/images/sitting.png"
             alt="lnk"
             className="fixed bottom-16 right-0 w-28 lg:bottom-0 lg:w-64"
           />

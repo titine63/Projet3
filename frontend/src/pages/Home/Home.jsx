@@ -57,24 +57,18 @@ export default function Home() {
           <div className="flex flex-col items-center gap-8 text-center md:gap-12 lg:gap-14 xl:gap-16">
             <div className="flex flex-col items-center gap-2 md:gap-6">
               <h2 className="w-[90%]">Explorez notre brocante virtuelle.</h2>
-              <Link
-                to="/buy"
-                className="flex w-[10rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2 shadow-sm shadow-black transition duration-200 ease-in-out hover:scale-110"
-              >
+              <Link to="/buy" className="btn-homepage">
                 Acheter
-                <BiSolidChevronsRight className="text-[#ec5a13]" />
+                <BiSolidChevronsRight className="absolute right-2 top-1/2 -translate-y-1/2 text-[#ec5a13]" />
               </Link>
             </div>
             <div className="flex flex-col items-center gap-2 md:gap-6">
               <h2 className="w-[90%]">
                 Donnez une seconde vie à vos vêtements.
               </h2>
-              <Link
-                to="/sell"
-                className="flex w-[10rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2 shadow-sm shadow-black transition duration-200 ease-in-out hover:scale-110"
-              >
+              <Link to="/sell" className="btn-homepage">
                 Vendre
-                <BiSolidChevronsRight className="text-[#ec5a13]" />
+                <BiSolidChevronsRight className="absolute right-2 top-1/2 -translate-y-1/2 text-[#ec5a13]" />
               </Link>
             </div>
           </div>
@@ -83,7 +77,6 @@ export default function Home() {
           className="home-section w-[90%] xl:w-2/3 xl:shadow-none"
           src="/images/home-image.png"
           alt="dressing picture"
-
         />
       </section>
     </main>
