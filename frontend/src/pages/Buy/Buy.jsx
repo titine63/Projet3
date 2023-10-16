@@ -64,7 +64,7 @@ export default function Buy() {
             <div>
               <img
                 className="buy-img"
-                src="./../../../public/images/man-image.png"
+                src="/images/man-image.png"
                 alt="man-img"
               />
             </div>
@@ -74,7 +74,7 @@ export default function Buy() {
             <div>
               <img
                 className="buy-img"
-                src="./../../../public/images/woman-image.png"
+                src="/images/woman-image.png"
                 alt="man-img"
               />
             </div>
@@ -83,7 +83,7 @@ export default function Buy() {
             <div>
               <img
                 className="buy-img"
-                src="./../../../public/images/kids-image.png"
+                src="/images/kids-image.png"
                 alt="man-img"
               />
             </div>
@@ -113,7 +113,7 @@ export default function Buy() {
 
         {filtredProducts && filtredProducts.length === 0 ? (
           <h2 className="not-found">
-            Désolé ! Aucun produit de correspond à votre recherche ...
+            Désolé ! Aucun produit ne correspond à votre recherche ...
           </h2>
         ) : null}
 
