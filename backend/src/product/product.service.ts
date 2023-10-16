@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { Product, Category } from './entities/product.entity';
 import { Order } from './../order/entities/order.entity';
+import { User } from 'src/users/user.entity/user.entity';
 
 @Injectable()
 export class ProductService {
@@ -15,6 +16,8 @@ export class ProductService {
     private productRepository: Repository<Product>,
     @InjectRepository(Order)
     private orderRepository: Repository<Order>,
+    @InjectRepository(User)
+    private usersService: Repository<User>,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -111,8 +114,22 @@ export class ProductService {
     return await this.filterProductWithQuery(filter);
   }
 
-  async findOneProduct(id: number): Promise<Product> {
-    return await this.productRepository.findOne({ where: { id: id } });
+  async findOneProduct(id: number): Promise<any> {
+    const product = await this.productRepository.findOne({ where: { id: id } });
+    if (product && product.userId) {
+      // Supposons que votre entité Product a une propriété userId
+      const user = await this.usersService.findOne({
+        where: { id: product.userId },
+      });
+      const productWithUser = {
+        ...product,
+        userPseudo: user?.pseudo,
+        userPicture: user?.picture,
+      };
+      return productWithUser;
+    }
+
+    return product;
   }
 
   async findProductsByCategory(category: Category): Promise<Product[]> {

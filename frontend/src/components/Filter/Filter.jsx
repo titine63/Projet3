@@ -26,7 +26,7 @@ export default function FilterModal({
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Filters"
-      className="filter-modal flex h-screen flex-col gap-4 pb-20 md:pb-8 xl:gap-8"
+      className="filter-modal flex h-screen flex-col gap-4 pb-20 md:pb-8"
     >
       <h3 className="h3 relative mt-4 w-full self-start pl-[5%] xl:mt-8">
         Filtrer par :{" "}

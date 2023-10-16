@@ -132,7 +132,7 @@ export default function Profile() {
               <img
                 src={
                   userPicture
-                    ? `${backendUrl}/${userPicture}`
+                    ? `${backendUrl}/${userInfo.picture}`
                     : "../../../public/images/Ellipse 1.png"
                 }
                 alt="Profil"
@@ -220,22 +220,22 @@ export default function Profile() {
       </div>
 
       {/* Partie droite pour les annonces et l'historique */}
-      <div className="right-0 w-screen p-4 lg:absolute lg:w-2/3 xl:w-3/4">
-        <h1 className="h1 mt-4  text-center">Mon profil</h1>
+      <section className="right-0 my-8 w-screen p-4 lg:absolute lg:w-2/3 xl:w-3/4">
+        <h1 className="h1   text-center">Mon profil</h1>
         {/* Espace pour les cartes d'annonces */}
-        <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">Mes annonces en ligne</h2>
+        <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">Mes annonces en ligne :</h2>
         <div className="mb-4 grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/user"} />
         </div>
 
         <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">
-          Mon historique de commande
+          Mon historique de commande :
         </h2>
         {/* Espace pour les cartes d'historique de commande */}
         <div className="grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/order/user"} />
         </div>
-      </div>
+      </section>
       {/* Appel du composant ModalResetPassword avec les props nécessaires */}
       <ModalResetPassword
         isOpen={showResetPasswordModal}

@@ -8,8 +8,6 @@ export default function ProductCard({ product }) {
   const { wishlist, setWishlist, showToast } = useContext(GlobalContext);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  console.log("wishlist :>> ", wishlist);
-
   const addToWishlist = (product) => {
     console.log("AddToWishlist called");
     setWishlist((prevWishlist) => [...prevWishlist, product]);
