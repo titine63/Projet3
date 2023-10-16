@@ -81,8 +81,9 @@ export default function Home() {
         </div>
         <img
           className="home-section w-[90%] xl:w-2/3 xl:shadow-none"
-          src="./../../../public/images/home-image.png"
+          src="/images/home-image.png"
           alt="dressing picture"
+
         />
       </section>
     </main>
