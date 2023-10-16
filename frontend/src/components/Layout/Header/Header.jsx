@@ -8,14 +8,12 @@ import chatIcon from "./../../../assets/icons/msg.svg";
 import userIcon from "./../../../assets/icons/users-group-rounded-line.svg";
 import AuthModal from "../../Auth/AuthModal/AuthModal";
 import { FaSearch } from "react-icons/fa";
+import axios from "axios";
 
 export default function Header() {
   // Importer les états et fonctions depuis le contexte global
   const { isLogged, showAuthModal, setShowAuthModal, setModalContent } =
     useContext(GlobalContext);
-
-  // État pour stocker la valeur de la barre de recherche
-  const [searchValue, setSearchValue] = useState("");
 
   // Ouvre la modale sur login
   function openModalOnLogin() {
@@ -29,12 +27,22 @@ export default function Header() {
     setModalContent(false);
   }
 
-  // Gestionnaire pour mettre à jour la valeur de la barre de recherche
-  function handleSearchChange(event) {
-    setSearchValue(event.target.value);
-  }
+  const [searchTerm, setSearchTerm] = useState("");
+  const apiUrl = "http://localhost:3000/product/search";
 
-  // (Optionnel) Si vous souhaitez gérer la soumission de la recherche, ajoutez un gestionnaire d'événements ici.
+  const handleSearch = async (searchTerm) => {
+    try {
+      const response = await axios.get(apiUrl, {
+        params: {
+          title: searchTerm,
+        },
+      });
+      setSearchTerm(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la recherche :", error);
+    }
+  };
+  console.log("searchTerm :>> ", searchTerm);
 
   return (
     <>
@@ -44,15 +52,36 @@ export default function Header() {
           <span className="logo">TRINDED</span>
         </Link>
         {/* Barre de recherche */}
-        <form className="relative mr-auto hidden flex-grow rounded-lg border-y-2 border-[#ec5a13] sm:block sm:max-w-[50%] lg:ml-4">
+        <form
+          className="relative mr-auto hidden flex-grow rounded-lg border-y-2 border-[#ec5a13] sm:block sm:max-w-[50%] lg:ml-4"
+          onSubmit={(e) => {
+            e.preventDefault(); // Empêche la soumission du formulaire par défaut
+            handleSearch(searchTerm); // Appel de la fonction de recherche
+          }}
+        >
           <input
             type="text"
             placeholder="Rechercher"
-            value={searchValue}
-            onChange={handleSearchChange}
-            className="hidden w-full rounded-lg border-[#ec5a13] sm:block"
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+            className="w-full rounded-lg border-[#ec5a13]"
           />
           <FaSearch className="absolute right-2 top-3 h-5 w-5 cursor-pointer text-[#ec5a13] md:right-4 md:top-2 md:h-7 md:w-7" />
+          {/* <div>
+            {searchTerm.length > 0 && (
+              <div className="search-results">
+                {searchTerm.map((result, index) => (
+                  <div key={index}>
+                    <h3>{result.title}</h3>
+                    <p>Prix : {result.price}</p>
+                    <p>Description : {result.description}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div> */}
         </form>
         {/* Boutons de navigation */}
         <nav className="flex items-center gap-4 lg:gap-6">
