@@ -1,10 +1,11 @@
 /*index css*/
+@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 /* Police de caractère */
-@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
 /* Tailwind Default Breakpoints */
 /* 
   'sm': {'min': '640px', 'max': '767px'},
@@ -25,11 +26,11 @@
 }
 
 .h2 {
-  @apply text-center text-xl font-bold md:text-2xl;
+  @apply text-center text-xl font-semibold md:text-2xl;
 }
 
 .h3 {
-  @apply text-lg font-semibold md:text-xl;
+  @apply text-lg font-medium md:text-xl;
 }
 
 .button {
@@ -75,17 +76,6 @@
 }
 
 /***** buy pages ******/
-.product-price {
-  @apply text-2xl text-[#ec5a13] md:text-3xl;
-}
-
-.product-card {
-  @apply top-6 my-6 flex flex-col items-center gap-5 xl:absolute xl:right-[5%] xl:w-[50%];
-}
-
-.product-details {
-  @apply mb-6 flex w-[90%] flex-col justify-center gap-8 md:w-[80%] xl:w-full xl:gap-16;
-}
 
 .titles {
   @apply relative mb-6 font-semibold md:text-2xl;
@@ -100,36 +90,20 @@
   bottom: -10px;
 }
 
-.product-criteria {
-  @apply grid grid-cols-2 md:text-lg xl:grid-cols-3;
-}
-
-.criterias {
-  @apply pl-8 font-medium md:text-xl;
-}
-
-.btn-user {
-  @apply bg-[#ec5a13] px-3 py-1 text-center text-white md:text-2xl;
-}
-
 /******************************************************************** .modal-filter ***************************************************
   */
 
 .filter-modal {
-  @apply w-[80%] max-w-[400px] rounded-lg bg-[#fce3d7] p-5;
+  @apply w-full max-w-[400px] overflow-y-auto rounded-lg bg-[#fce3d7] pt-[10vh] sm:w-[80%];
   box-shadow: 0px 0px 10px #ec5a13;
 }
 
 .filter-modal-content input[type="number"] {
-  @apply w-[75%] border-[#ec5a13];
+  @apply border-[#ec5a13];
 }
 
 .filter-modal-content select {
-  @apply w-[88%] border-[#ec5a13] p-2;
-}
-
-.filter-modal-content h3 {
-  @apply mb-4 text-2xl;
+  @apply w-[90%] border-[#ec5a13];
 }
 
 .modal {

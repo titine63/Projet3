@@ -15,12 +15,47 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const { userInfo } = useContext(GlobalContext);
+  const { wishlist, setWishlist, showToast, userInfo } = useContext(GlobalContext);
+  console.log("wishlist :>> ", wishlist);
 
+  const [isFavorite, setIsFavorite] = useState(false);
   const [product, setProduct] = useState({});
 
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  
+  const titleProduct = product.title;
+
+  const addToWishlist = (product) => {
+    console.log("AddToWishlist called");
+    setWishlist((prevWishlist) => [...prevWishlist, product]);
+  };
+
+  const deleteFromWishlist = (product) => {
+    console.log("deleteFromWishlist called");
+    setWishlist((prevWishlist) =>
+      prevWishlist.filter((item) => item.id !== product.id),
+    );
+  };
+
+  const handleAddToWishlist = () => {
+    console.log("handleAddToWishlist called");
+    addToWishlist(product);
+    setIsFavorite(true);
+    showToast("Ajouté !");
+  };
+
+  const handleDeleteFromWishList = () => {
+    console.log("handleDeleteFromWishList called");
+    deleteFromWishlist(product);
+    setIsFavorite(false);
+    showToast("Supprimé !");
+  };
+
+  useEffect(() => {
+    const productInWishList = wishlist.some((item) => item.id === product.id);
+    setIsFavorite(productInWishList);
+  }, [wishlist, product]);
 
   useEffect(() => {
     axios
@@ -34,19 +69,14 @@ export default function ProductDetail() {
       });
   }, []);
 
-  const titleProduct = product.title;
-
   const handleDelete = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.delete(`${backendURL}/product/${id}`);
-
       setSuccessMessage(
         `Votre annonce "${titleProduct}" est maintenant supprimée !`,
       );
       setModalVisible(true);
-
       console.log("Annonce supprimée avec succès :", response.data);
     } catch (error) {
       console.error("Erreur lors de la supprition de l'annonce :", error);
@@ -74,12 +104,13 @@ export default function ProductDetail() {
             {product.price} €
           </p>
           <div className="flex w-[90%] flex-col justify-center gap-8 md:w-[80%] xl:w-full xl:gap-10">
-            <Link
-              to="/favorites"
+            <button
+              type="button"
               className="bg-[#ec5a13] px-4 py-1 text-center text-xl text-white md:text-2xl"
+              onClick={isFavorite ? handleDeleteFromWishList : handleAddToWishlist}
             >
               Ajouter aux favoris
-            </Link>
+            </button>
             <div>
               <h2 className="titles">Description</h2>
               <p className="md:text-xl">{product.description}</p>
