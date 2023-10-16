@@ -11,11 +11,11 @@ export default function LoginDeskop() {
   return (
     <>
       {/* Contenu de la modale de connexion (prend toute la hauteur et largeur du parent */}
-      <div className="modal-content-login flex h-full w-full">
+      <div className="flex h-full w-full">
         {/* Partie gauche, flex-4 permet de donner un proportion à l'élément en largeur, ici 3/5 */}
-        <div className="login-left-part flex flex-[3] flex-col items-start justify-evenly bg-[#F5F5F5]">
+        <div className="flex flex-[3] flex-col items-start justify-center gap-20 bg-[#F5F5F5]">
           {/* La div contenant la phrase au dessus du formulaire */}
-          <div className="flex w-[80%] gap-8 pl-[10%] xl:w-[90%] xl:gap-16">
+          <div className="flex w-[80%] flex-col gap-8 pl-[10%] xl:w-[90%] xl:flex-row xl:gap-16">
             <p className="h2">
               Connectez<span className="text-[#ec5a13]">.</span>
             </p>
@@ -30,10 +30,10 @@ export default function LoginDeskop() {
           <LoginForm className="form flex w-[90%] flex-col items-center gap-6 self-start" />
         </div>
         {/* Partie droite en position relative pour placer ses enfants directs en absolute, flex-2 permet de donner un proportion à l'élément en largeur, ici 2/5 */}
-        <div className="login-right-part relative h-full flex-[2] bg-[#ec5a13]">
+        <div className="relative h-full flex-[2] bg-[#ec5a13]">
           {/* Bouton pour fermer la modale en haut à droite (une croix -> X ) */}
           <span
-            className="close-button absolute right-4 top-1 cursor-pointer text-4xl"
+            className="absolute right-4 top-1 cursor-pointer text-4xl"
             onClick={() => setShowAuthModal(false)}
           >
             &times;

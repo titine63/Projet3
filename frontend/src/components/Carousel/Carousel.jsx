@@ -29,9 +29,9 @@ export default function Carousel({ children }) {
   }, [length]);
 
   return (
-    <div className="carousel">
+    <div className="carousel relative flex h-[25vh] w-full items-center justify-around bg-[#FCE3D7]">
       <span
-        className="cursor-pointer rounded-full bg-[#f5f5f4] bg-opacity-50 p-3"
+        className="mx-1 cursor-pointer rounded-full bg-[#f5f5f4] bg-opacity-50 p-3"
         onClick={handlePrevious}
       >
         <FaChevronLeft
@@ -41,7 +41,7 @@ export default function Carousel({ children }) {
       </span>
       {children[id]}
       <span
-        className="cursor-pointer rounded-full bg-[#f5f5f4] bg-opacity-50 p-3"
+        className="mx-1 cursor-pointer rounded-full bg-[#f5f5f4] bg-opacity-50 p-3"
         onClick={handleNext}
       >
         <FaChevronRight

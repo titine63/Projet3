@@ -1,10 +1,11 @@
 /*index css*/
+@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 /* Police de caractère */
-@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
 /* Tailwind Default Breakpoints */
 /* 
   'sm': {'min': '640px', 'max': '767px'},
@@ -25,11 +26,11 @@
 }
 
 .h2 {
-  @apply text-center text-xl font-bold md:text-2xl;
+  @apply text-center text-xl font-semibold md:text-2xl;
 }
 
 .h3 {
-  @apply text-lg font-semibold md:text-xl;
+  @apply text-lg font-medium md:text-xl;
 }
 
 .button {
@@ -46,139 +47,35 @@
 
 /* pages/*.jsx => main */
 .main {
-  @apply min-h-screen pb-16 pt-[10vh] md:pb-0;
+  @apply min-h-screen pb-20 pt-16 sm:pb-16;
 }
 
-/* Header.jsx => header, logo, navbar-desktop, search-bar-container, search-bar, button-grey */
+/* Header.jsx */
+
 .header {
-  @apply fixed top-0 z-10 flex h-[10vh] w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8;
+  box-shadow: 0px 0px 10px #ec5a13;
 }
 
 .logo {
-  @apply left-0 my-8 text-5xl font-bold text-[#ec5a13];
+  @apply left-0 my-8 text-4xl font-bold text-[#ec5a13] sm:text-5xl;
   font-family: "Mooli";
 }
 
-.navbar-desktop {
-  @apply flex items-center gap-4 lg:gap-6;
+/* Carousel.jsx  */
+.carousel {
+  box-shadow: 0px 0px 10px #ec5a13;
 }
 
-.search-bar-container {
-  @apply relative mr-auto flex-grow rounded-lg border-y-2 border-[#ec5a13] sm:max-w-[50%] lg:ml-4;
-}
-
-.search-bar {
-  @apply w-full rounded-lg border-[#ec5a13];
-}
-
-.search-icon {
-  @apply absolute right-2 top-3 h-5 w-5 text-[#ec5a13] md:right-4 md:top-2 md:h-7 md:w-7;
-}
-
-.button-grey {
-  @apply min-w-[100px] bg-[#d9d9d9] px-2 py-1 shadow-sm shadow-black md:px-4 md:py-2;
-}
-
-/* Footer.jsx => footer */
-.footer {
-  @apply fixed bottom-0 z-10 w-full bg-stone-100 px-4 py-2 sm:hidden;
-}
-
-/* NavbarMobile.jsx => navbar-mobile, menu-ul-horizontal */
-.navbar-mobile {
-  @apply h-full w-full sm:hidden;
-}
-
-.menu-ul-horizontal {
-  @apply flex items-center justify-between px-3;
-}
-
-/* Home.jsx => home-section, carousel-items, carousel-text */
-.carousel-item {
-  @apply flex w-[80%] items-center justify-center gap-8 md:gap-10 lg:gap-12 xl:gap-16;
+/* Home.jsx  */
+.home-section {
+  box-shadow: 0px 0px 10px #ec5a13;
 }
 
 .carousel-text {
   @apply text-center text-sm font-semibold md:text-base lg:text-xl xl:text-2xl;
 }
 
-.home-section {
-  @apply mt-16 flex flex-col items-center justify-center gap-7 text-center;
-}
-
-.container-button-home {
-  @apply flex flex-col items-center justify-center gap-2 text-center;
-}
-
-.button-homepage {
-  @apply flex w-[10rem] items-center justify-between gap-5 bg-[#FCE3D7] py-1 pl-5 pr-2 shadow-sm shadow-black;
-}
-
-/* Carousel.jsx => carousel */
-.carousel {
-  @apply flex h-44 w-full items-center justify-around bg-[#FCE3D7] md:h-[16.5rem];
-}
-
-.home-bottom {
-  @apply md:flex md:flex-col md:items-center md:justify-center xl:flex-row;
-}
-
-.home-img {
-  @apply hidden  md:block xl:max-w-[62%] xl:self-start;
-}
-
-.home-buttons {
-  @apply my-16 flex flex-grow flex-col items-center gap-10  md:text-2xl;
-}
 /***** buy pages ******/
-
-.buy-page-home {
-  @apply mt-16 flex w-full flex-grow flex-col xl:mr-[50rem] xl:mt-0 xl:flex-grow-0;
-}
-
-.buy-page-home-h2 {
-  @apply mb-9 text-center text-xl font-bold md:text-2xl xl:text-3xl xl:font-medium;
-}
-
-.buy-imgs {
-  @apply mx-[5%] mb-16 grid grid-cols-3 gap-5 xl:mx-[10%] xl:justify-items-center xl:gap-0;
-}
-
-.tendence {
-  @apply flex items-baseline justify-center gap-5 xl:ml-36;
-}
-
-.button-filter {
-  @apply flex max-h-8 gap-3 bg-[#FCE3D7] text-lg;
-}
-
-.tend-imgs {
-  @apply mx-[5%] grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 md:items-center md:self-center lg:grid-cols-5 xl:mx-[10%] xl:grid-cols-6 xl:justify-items-center;
-}
-
-.tend-img {
-  @apply md:content-center;
-}
-
-.product-price {
-  @apply text-2xl text-[#ec5a13] md:text-3xl;
-}
-
-.btn-fav {
-  @apply w-[100%] bg-[#ec5a13] py-1 text-center text-xl text-white md:text-2xl;
-}
-
-.buy-btn {
-  @apply bg-[#ec5a13] py-1 text-center text-xl text-white md:w-[100%] md:text-2xl;
-}
-
-.product-card {
-  @apply top-6 my-6 flex flex-col items-center gap-5 xl:absolute xl:right-[5%] xl:w-[50%];
-}
-
-.product-details {
-  @apply mb-6 flex w-[90%] flex-col justify-center gap-8 md:w-[80%] xl:w-full xl:gap-16;
-}
 
 .titles {
   @apply relative mb-6 font-semibold md:text-2xl;
@@ -193,42 +90,20 @@
   bottom: -10px;
 }
 
-.product-criteria {
-  @apply grid grid-cols-2 md:text-lg xl:grid-cols-3;
-}
-
-.criterias {
-  @apply pl-8 font-medium md:text-xl;
-}
-
-.btn-user {
-  @apply bg-[#ec5a13] px-3 py-1 text-center text-white md:text-2xl;
-}
-
 /******************************************************************** .modal-filter ***************************************************
   */
 
 .filter-modal {
-  @apply w-[80%] max-w-[400px] rounded-lg bg-[#fce3d7] p-5;
+  @apply w-full max-w-[400px] overflow-y-auto rounded-lg bg-[#fce3d7] pt-[10vh] sm:w-[80%];
   box-shadow: 0px 0px 10px #ec5a13;
 }
 
 .filter-modal-content input[type="number"] {
-  @apply w-[75%] border-[#ec5a13];
-}
-.price-filter {
-  @apply flex;
+  @apply border-[#ec5a13];
 }
 
 .filter-modal-content select {
-  @apply w-[88%] border-[#ec5a13] p-2;
-}
-
-.filter-modal-content h3 {
-  @apply mb-4 text-2xl;
-}
-.not-found {
-  @apply m-auto text-center text-2xl font-semibold text-[#ec5a13] md:text-3xl;
+  @apply w-[90%] border-[#ec5a13];
 }
 
 .modal {
@@ -272,20 +147,13 @@
 }
 
 .button-auth {
-  @apply mt-4 rounded-xl bg-[#f5ac89] px-6 py-2 font-medium shadow-sm shadow-black;
+  @apply mt-4 rounded-xl bg-[#f5ac89] px-6 py-2 font-medium underline-offset-2 shadow-sm shadow-black hover:underline;
 }
 
-/* Modale (Header.jsx) => modal, modal-overlay, button-switch */
-.modal {
-  @apply fixed left-[50%] top-[50%] z-[1000] h-[80vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white drop-shadow-2xl;
-}
-
-.modal-overlay {
-  @apply fixed left-0 top-0 z-[999] h-full w-full bg-black opacity-50;
-}
+/* Modale (Header.jsx) */
 
 .button-switch {
-  @apply rounded-xl bg-[#F5F5F5] px-6 py-2 text-center font-medium text-black shadow-sm shadow-black;
+  @apply rounded-xl bg-[#F5F5F5] px-6 py-2 text-center font-medium text-black underline-offset-2 shadow-sm shadow-black hover:underline;
 }
 
 /* Toast (Toast.jsx) => toast */

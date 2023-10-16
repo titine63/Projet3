@@ -9,9 +9,9 @@ import Favorites from "./pages/Favorites/Favorites";
 import Profile from "./pages/Profile/Profile";
 import Sell from "./pages/Sell/Sell";
 import Buy from "./pages/Buy/Buy";
-import Products from "./components/Products/Products";
-import Category from "./components/Products/category";
-import UpdateProduct from "./components/Products/updateProduct";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import Category from "./pages/Category/Category";
+import UpdateProduct from "./pages/UpdateProduct/UpdateProduct";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/buy" element={<Buy />} />
               <Route path="/sell" element={<Sell />} />
-              <Route path="/buy/product/:id" element={<Products />} />
+              <Route path="/buy/product/:id" element={<ProductDetail />} />
               <Route path="/product/update/:id" element={<UpdateProduct />} />
               <Route
                 path="/product/category/:category"

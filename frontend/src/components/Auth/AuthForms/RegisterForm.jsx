@@ -104,7 +104,10 @@ export default function RegisterForm({ className }) {
       <button type="submit" className="button-auth">
         Créer un compte
       </button>
-      <Link to="/login" className="text-l mt-5 underline md:text-lg lg:hidden">
+      <Link
+        to="/login"
+        className="text-l mt-5 underline underline-offset-2 md:text-lg lg:hidden"
+      >
         Vous avez déjà un compte ?
       </Link>
     </form>
