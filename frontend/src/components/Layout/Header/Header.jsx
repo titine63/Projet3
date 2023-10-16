@@ -38,7 +38,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="header fixed top-0 z-10 flex h-[10vh] w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8">
+      <header className="header fixed top-0 z-10 flex h-20 w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8">
         {/* Logo Trinded */}
         <Link to="/">
           <span className="logo">TRINDED</span>
