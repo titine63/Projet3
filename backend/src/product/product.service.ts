@@ -61,6 +61,9 @@ export class ProductService {
     if (filter.color) {
       queryBuilder.andWhere('product.color = :color', { color: filter.color });
     }
+    if (filter.title) {
+      queryBuilder.andWhere('product.title = :title', { title: filter.title });
+    }
 
     if (filter.minPrice) {
       queryBuilder.andWhere('product.price >= :minPrice', {
@@ -122,6 +125,14 @@ export class ProductService {
     }
 
     return product;
+
+  async searchProductsByTitle(title: string): Promise<Product[]> {
+    const filter = { title };
+    return await this.filterProductWithQuery(filter);
+  }
+
+  async findOneProduct(id: number): Promise<Product> {
+    return await this.productRepository.findOne({ where: { id: id } });
   }
 
   async findProductsByCategory(category: Category): Promise<Product[]> {

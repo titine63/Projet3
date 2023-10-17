@@ -48,6 +48,14 @@ export class ProductController {
     return await this.productService.filterProductWithQuery(filter);
   }
 
+  @Get('search')
+  async searchProductsByTitle(@Query('title') title: string) {
+    if (title) {
+      const products = await this.productService.searchProductsByTitle(title);
+      return products;
+    }
+  }
+
   @Get(':id')
   findOneProduct(@Param('id') id: number) {
     return this.productService.findOneProduct(id);
