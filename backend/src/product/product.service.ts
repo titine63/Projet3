@@ -125,14 +125,11 @@ export class ProductService {
     }
 
     return product;
+  }
 
   async searchProductsByTitle(title: string): Promise<Product[]> {
     const filter = { title };
     return await this.filterProductWithQuery(filter);
-  }
-
-  async findOneProduct(id: number): Promise<Product> {
-    return await this.productRepository.findOne({ where: { id: id } });
   }
 
   async findProductsByCategory(category: Category): Promise<Product[]> {
