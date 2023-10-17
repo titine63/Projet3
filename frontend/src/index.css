@@ -121,17 +121,20 @@
 /******************************************************************** .modal-filter ***************************************************
   */
 
-.params-command {
-  @apply mt-6 grid justify-center gap-y-2 lg:flex lg:flex-row lg:justify-around;
+/* .params-command {
+  @apply grid h-full justify-center gap-y-2 lg:flex lg:flex-row lg:justify-around;
+} */
+.sell-section {
+  height: calc(100vh - 80px);
+}
+.params-product-form select,
+.params-product-form input,
+.params-product-form textarea {
+  @apply w-full rounded border-[#ec5a13] bg-[#D9D9D9] focus:bg-white;
 }
 
-.params-command select,
-.params-command input,
-.params-command textarea {
-  @apply border-[#ec5a13];
-}
-.sell-page {
-  @apply flex flex-col gap-5 bg-[#FCE3D7] text-center lg:flex-row;
+.params-product-form label {
+  @apply text-start text-xl font-semibold;
 }
 
 .btn-command {

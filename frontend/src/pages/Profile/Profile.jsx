@@ -126,17 +126,17 @@ export default function Profile() {
                 src={previewURL}
                 alt="Profil"
                 onClick={() => document.getElementById("fileInput").click()}
-                className="mb-4 h-[159.11px] w-[155px] cursor-pointer rounded-full"
+                className="mb-4 h-40 w-40 cursor-pointer rounded-full"
               />
             ) : (
               <img
                 src={
                   userPicture
                     ? `${backendUrl}/${userInfo.picture}`
-                    : "../../../public/images/Ellipse 1.png"
+                    : "/images/Ellipse 1.png"
                 }
                 alt="Profil"
-                className="mb-4 h-[159.11px] w-[155px] cursor-pointer rounded-full"
+                className="mb-4 h-40 w-40 cursor-pointer rounded-full"
                 onClick={() => document.getElementById("fileInput").click()}
               />
             )}
@@ -221,8 +221,7 @@ export default function Profile() {
 
       {/* Partie droite pour les annonces et l'historique */}
       <section className="right-0 my-8 w-screen p-4 lg:absolute lg:w-2/3 xl:w-3/4">
-        <h1 className="h1   text-center">Mon profil</h1>
-        {/* Espace pour les cartes d'annonces */}
+        <h1 className="h1 text-center">Mon profil</h1>
         <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">Mes annonces en ligne :</h2>
         <div className="mb-4 grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/user"} />
@@ -231,7 +230,6 @@ export default function Profile() {
         <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">
           Mon historique de commande :
         </h2>
-        {/* Espace pour les cartes d'historique de commande */}
         <div className="grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/order/user"} />
         </div>
