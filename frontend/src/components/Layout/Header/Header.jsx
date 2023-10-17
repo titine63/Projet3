@@ -1,7 +1,7 @@
 //Header.jsx
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import heartIcon from "./../../../assets/icons/heart.svg";
 import chatIcon from "./../../../assets/icons/msg.svg";
@@ -28,6 +28,7 @@ export default function Header() {
   }
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
   const apiUrl = "http://localhost:3000/product/search";
 
   const handleSearch = async (searchTerm) => {
@@ -37,12 +38,24 @@ export default function Header() {
           title: searchTerm,
         },
       });
-      setSearchTerm(response.data);
+      setSearchResult(response.data);
     } catch (error) {
       console.error("Erreur lors de la recherche :", error);
     }
   };
   console.log("searchTerm :>> ", searchTerm);
+  console.log("searchResult :>> ", searchResult);
+
+  useEffect(() => {
+    // Cette fonction sera appelée à chaque changement de searchTerm
+    if (searchTerm === "") {
+      // Effacer les résultats de recherche lorsque searchTerm est vide
+      setSearchResult([]);
+    } else {
+      // Effectuer la recherche lorsque searchTerm n'est pas vide
+      handleSearch(searchTerm);
+    }
+  }, [searchTerm]);
 
   return (
     <>
@@ -55,8 +68,8 @@ export default function Header() {
         <form
           className="relative mr-auto hidden flex-grow rounded-lg border-y-2 border-[#ec5a13] sm:block sm:max-w-[50%] lg:ml-4"
           onSubmit={(e) => {
-            e.preventDefault(); // Empêche la soumission du formulaire par défaut
-            handleSearch(searchTerm); // Appel de la fonction de recherche
+            e.preventDefault();
+            handleSearch(searchTerm);
           }}
         >
           <input
@@ -69,19 +82,26 @@ export default function Header() {
             className="w-full rounded-lg border-[#ec5a13]"
           />
           <FaSearch className="absolute right-2 top-3 h-5 w-5 cursor-pointer text-[#ec5a13] md:right-4 md:top-2 md:h-7 md:w-7" />
-          {/* <div>
-            {searchTerm.length > 0 && (
-              <div className="search-results">
-                {searchTerm.map((result, index) => (
-                  <div key={index}>
-                    <h3>{result.title}</h3>
-                    <p>Prix : {result.price}</p>
-                    <p>Description : {result.description}</p>
-                  </div>
+          <div className="absolute left-0 right-0 top-[60px] rounded-b-lg border-[#ec5a13] bg-white">
+            {searchResult && searchResult.length > 0 && (
+              <ul className="flex flex-col justify-center text-center">
+                {searchResult.map((res) => (
+                  <li key={res.id} className=" hover:text-[#ec5a13]">
+                    <a href={`http://localhost:5173/buy/product/${res.id}`}>
+                      <span className="mx-1 text-lg">{res.title}</span>
+                      <span className="mx-1 text-lg">{res.category}</span>
+                      <span className="mx-1 text-lg">{res.size}</span>
+                    </a>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
-          </div> */}
+            {searchResult && searchResult.length === 0 && searchTerm !== "" && (
+              <p className="flex flex-col justify-center text-center text-lg">
+                Aucun résultat
+              </p>
+            )}
+          </div>
         </form>
         {/* Boutons de navigation */}
         <nav className="flex items-center gap-4 lg:gap-6">
