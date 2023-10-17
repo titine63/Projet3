@@ -38,7 +38,7 @@ export default function ProductForm({
 
   function handlePictureChange(event) {
     if (event.target.files.length > 6) {
-      alert("Vous ne pouvez sélectionner que 4 fichiers au maximum.");
+      alert("Vous ne pouvez sélectionner que 6 photos au maximum.");
       return;
     }
     const files = Array.from(event.target.files);
@@ -57,25 +57,29 @@ export default function ProductForm({
     setPreviewURLs(newURLs);
   }
 
-  console.log("selectedFiles :>> ", selectedFiles);
+  const uploadImage = async (productId, file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    // formData.append("productId", productId);
+    try {
+      await axios.post(`${backendURL}/picture/upload/${productId}`, formData);
+      console.log("Picture uploaded");
+    } catch (error) {
+      console.error("Error uploading the image:", error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const data = new FormData();
-    selectedFiles.forEach((file, index) => {
-      data.append(`pictures[${index}]`, file);
-    });
-    Object.keys(formData).forEach((key) => {
-      data.append(key, formData[key]);
-    });
-
     try {
-      const response = await axios.post(`${backendURL}/product`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(`${backendURL}/product`, formData); // Path needs to be updated
+      const createdProductId = response.data.id;
+
+      // Upload each image with the product ID
+      for (const file of selectedFiles) {
+        await uploadImage(createdProductId, file);
+      }
+
       setSuccessMessage(
         `Votre annonce "${response.data.title}" est maintenant en ligne !`,
       );
