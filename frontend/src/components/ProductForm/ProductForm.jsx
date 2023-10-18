@@ -18,6 +18,7 @@ export default function ProductForm({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewURLs, setPreviewURLs] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -72,7 +73,11 @@ export default function ProductForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${backendURL}/product`, formData); // Path needs to be updated
+      const priceFlt = parseFloat(formData.price);
+      const response = await axios.post(`${backendURL}/product`, {
+        ...formData,
+        price: priceFlt,
+      });
       const createdProductId = response.data.id;
 
       // Upload each image with the product ID
@@ -87,7 +92,15 @@ export default function ProductForm({
       setCreatedProductId(response.data.id);
       console.log("Annonce créée avec succès :", response.data);
     } catch (error) {
-      console.error("Erreur lors de la création de l'annonce :", error);
+      if (
+        error.response &&
+        error.response.data &&
+        Array.isArray(error.response.data.message)
+      ) {
+        setErrorMessage(error.response.data.message.join(", ")); // Convertir le tableau de messages en une seule chaîne
+      } else {
+        console.error("Erreur lors de la création de l'annonce :", error);
+      }
     }
   };
 
@@ -248,7 +261,7 @@ export default function ProductForm({
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
-              <label>Taille :</label>
+              <label>* Taille :</label>
               <select name="size" value={formData.size} onChange={handleChange}>
                 <option value="">Sélectionnez une option</option>
                 <option value="XS">XS</option>
@@ -287,6 +300,7 @@ export default function ProductForm({
         >
           Déposer l'annonce
         </button>
+        {errorMessage && <p className="error-span">{errorMessage}</p>}
       </form>
     </>
   );
