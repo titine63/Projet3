@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
+import { diskStorage } from 'multer';
 import * as path from 'path';
 import { PictureService } from './picture.service';
 import { CreatePictureDto } from './dto/create-picture.dto';
@@ -20,16 +21,35 @@ import { UpdatePictureDto } from './dto/update-picture.dto';
 export class PictureController {
   constructor(private readonly pictureService: PictureService) {}
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  @Post('upload/:id')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, file, cb) => {
+          const filename =
+            path.parse(file.originalname).name.replace(/\s/g, '') + Date.now();
+          const extension = path.parse(file.originalname).ext;
+          cb(null, `${filename}${extension}`);
+        },
+      }),
+    }),
+  )
+  uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Param('id') id: string,
+  ) {
     console.log(file);
-    // // Obtenez le chemin d'accès relatif du fichier. Si votre base de données et votre serveur de fichiers sont sur la même machine, vous pouvez simplement stocker le chemin d'accès relatif.
-    // const relativePath = path.join('uploads', file.filename);
+    // Obtenez le chemin d'accès relatif du fichier. Si votre base de données et votre serveur de fichiers sont sur la même machine, vous pouvez simplement stocker le chemin d'accès relatif.
+    const relativePath = path.join('uploads', file.filename);
 
-    // // Utilisez votre service pour sauvegarder le chemin d'accès en base de données.
-    // const savedPicture = this.pictureService.createPic(relativePath);
-    // return savedPicture;
+    // Utilisez votre service pour sauvegarder le chemin d'accès en base de données.
+    const savedPicture = this.pictureService.createPic({
+      url: relativePath,
+      productId: parseInt(id),
+      fileName: file.filename,
+    } as CreatePictureDto);
+    return savedPicture;
   }
 
   @Post()

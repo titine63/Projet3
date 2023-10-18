@@ -1,6 +1,5 @@
 /*index css*/
 @import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Mooli&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -18,7 +17,13 @@
 
 /* Global accross the application*/
 * {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+  @apply font-sans;
+}
+
+.logo {
+  @apply left-0 my-8 text-4xl font-bold text-[#ec5a13] sm:text-5xl;
+  font-family: "Mooli";
 }
 
 .h1 {
@@ -30,11 +35,19 @@
 }
 
 .h3 {
-  @apply text-lg font-medium md:text-xl;
+  @apply text-lg font-semibold md:text-xl;
 }
 
 .button {
   @apply min-w-[100px] bg-[#ec5a13] px-2 py-1 text-white shadow-sm shadow-black md:px-4 md:py-2;
+}
+
+.btn-homepage {
+  @apply relative  w-[10rem] bg-[#FCE3D7] px-3 py-1 text-start shadow-md shadow-black transition duration-200 ease-in-out hover:scale-110;
+}
+
+.btn-homepage:hover {
+  box-shadow: 0px 0px 10px #ec5a13;
 }
 
 .element-desktop {
@@ -56,11 +69,6 @@
   box-shadow: 0px 0px 10px #ec5a13;
 }
 
-.logo {
-  @apply left-0 my-8 text-4xl font-bold text-[#ec5a13] sm:text-5xl;
-  font-family: "Mooli";
-}
-
 /* Carousel.jsx  */
 .carousel {
   box-shadow: 0px 0px 10px #ec5a13;
@@ -72,7 +80,7 @@
 }
 
 .carousel-text {
-  @apply text-center text-sm font-semibold md:text-base lg:text-xl xl:text-2xl;
+  @apply text-center text-sm font-medium md:text-base lg:text-xl xl:text-2xl;
 }
 
 /***** buy pages ******/
@@ -113,17 +121,20 @@
 /******************************************************************** .modal-filter ***************************************************
   */
 
-.params-command {
-  @apply mt-6 grid justify-center gap-y-2 lg:flex lg:flex-row lg:justify-around;
+/* .params-command {
+  @apply grid h-full justify-center gap-y-2 lg:flex lg:flex-row lg:justify-around;
+} */
+.sell-section {
+  height: calc(100vh - 80px);
+}
+.params-product-form select,
+.params-product-form input,
+.params-product-form textarea {
+  @apply w-full rounded border-[#ec5a13] bg-[#D9D9D9] focus:bg-white;
 }
 
-.params-command select,
-.params-command input,
-.params-command textarea {
-  @apply border-[#ec5a13];
-}
-.sell-page {
-  @apply flex flex-col gap-5 bg-[#FCE3D7] text-center lg:flex-row;
+.params-product-form label {
+  @apply text-start text-xl font-semibold;
 }
 
 .btn-command {
