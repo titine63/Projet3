@@ -228,7 +228,7 @@ export default function Profile() {
         </div>
 
         <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">
-          Mon historique de commande :
+          Mon historique de commande : Mon historique de commande :
         </h2>
         <div className="grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/order/user"} />
