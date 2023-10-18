@@ -2,16 +2,9 @@
 import { useNavigate } from "react-router-dom";
 import ProductForm from "../../components/ProductForm/ProductForm";
 import { useState } from "react";
-// import axios from "axios";
-
-// const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Sell() {
   const navigate = useNavigate();
-
-  // const [selectedFile, setSelectedFile] = useState(null);
-  // const [previewURL, setPreviewURL] = useState(null);
-  // const [pictures, setPictures] = useState([])
 
   const [createdProductId, setCreatedProductId] = useState(null);
 
@@ -36,7 +29,7 @@ export default function Sell() {
             informations au max !
           </h3>
         </div>
-        <div className="hidden w-[80%] flex-col gap-2 self-center lg:flex">
+        <div className="hidden w-[80%] flex-col gap-2 self-center lg:flex lg:w-[70%]">
           <p className="text-start lg:block lg:font-medium">
             *{" "}
             <span className="underline underline-offset-4">
