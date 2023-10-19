@@ -1,10 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { useState, useContext } from "react";
+import { useForm } from "react-hook-form";
 import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 import { LiaTimesCircleSolid } from "react-icons/lia";
 import { MdOutlineAddBox } from "react-icons/md";
 import axios from "axios";
+import { productFormSchema } from "./../../utils/const";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -18,24 +21,15 @@ export default function ProductForm({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewURLs, setPreviewURLs] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    brand: "",
-    price: "",
-    category: "",
-    color: "",
-    clothing_type: "",
-    size: "",
-    state: "",
-    userId: userInfo.id,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onSubmit",
+    resolver: yupResolver(productFormSchema),
   });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   function handlePictureChange(event) {
     if (event.target.files.length > 6) {
@@ -70,14 +64,13 @@ export default function ProductForm({
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  async function onSubmit(data) {
     try {
-      const priceFlt = parseFloat(formData.price);
-      const response = await axios.post(`${backendURL}/product`, {
-        ...formData,
-        price: priceFlt,
-      });
+      const payload = {
+        ...data,
+        userId: userInfo.id,
+      };
+      const response = await axios.post(`${backendURL}/product`, payload);
       const createdProductId = response.data.id;
 
       // Upload each image with the product ID
@@ -97,18 +90,21 @@ export default function ProductForm({
         error.response.data &&
         Array.isArray(error.response.data.message)
       ) {
-        setErrorMessage(error.response.data.message.join(", ")); // Convertir le tableau de messages en une seule chaîne
+        console.log(
+          "error.response.data.message :>> ",
+          error.response.data.message,
+        );
       } else {
         console.error("Erreur lors de la création de l'annonce :", error);
       }
     }
-  };
+  }
 
   return (
     <>
       <form
         className="params-product-form items-center lg:flex lg:w-3/4 lg:flex-col lg:bg-white lg:pb-8 lg:pt-16"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="lg: mb-8 flex flex-col items-center gap-2 lg:w-[80%] lg:flex-row lg:gap-4">
           <label className="w-[90%] text-start sm:w-[80%] md:w-[70%] lg:flex-[1]">
@@ -164,31 +160,23 @@ export default function ProductForm({
           <div className="flex w-[90%] flex-col gap-4 sm:w-[80%] md:w-[70%] lg:w-1/2">
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Titre :</label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-              />
+              <input type="text" name="title" {...register("title")} />
+              {errors.title && (
+                <span className="error-span">{errors.title.message}</span>
+              )}
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Prix :</label>
-              <input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-              />
+              <input type="number" name="price" {...register("price")} />
+              {errors.price && (
+                <span className="error-span">{errors.price.message}</span>
+              )}
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Type de vêtements :</label>
-              <select
-                name="clothing_type"
-                value={formData.clothingType}
-                onChange={handleChange}
-              >
+              <select name="clothing_type" {...register("clothing_type")}>
                 <option value="">Sélectionnez une option</option>
                 <option value="T-shirt">T-shirt</option>
                 <option value="Pantalon">Pantalon</option>
@@ -197,6 +185,11 @@ export default function ProductForm({
                 <option value="Short">Short</option>
                 <option value="Sous-vêtement">Sous-vêtement</option>
               </select>
+              {errors.clothing_type && (
+                <span className="error-span">
+                  {errors.clothing_type.message}
+                </span>
+              )}
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
@@ -204,37 +197,33 @@ export default function ProductForm({
               <textarea
                 id="description"
                 name="description"
-                value={formData.description}
-                onChange={handleChange}
                 rows={5}
                 cols={30}
+                {...register("description")}
               />
+              {errors.description && (
+                <span className="error-span">{errors.description.message}</span>
+              )}
             </div>
           </div>
 
           <div className="flex w-[90%] flex-col gap-4 sm:w-[80%] md:w-[70%] lg:w-1/2 lg:items-start">
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Catégorie :</label>
-              <select
-                className=""
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-              >
+              <select name="category" {...register("category")}>
                 <option value="">Sélectionnez une option</option>
                 <option value="Homme">Homme</option>
                 <option value="Femme">Femme</option>
                 <option value="Enfant">Enfant</option>
               </select>
+              {errors.category && (
+                <span className="error-span">{errors.category.message}</span>
+              )}
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>Marque :</label>
-              <select
-                name="brand"
-                value={formData.brand}
-                onChange={handleChange}
-              >
+              <select name="brand" {...register("brand")}>
                 <option value="">Sélectionnez une option</option>
                 <option value="Nike">Nike</option>
                 <option value="Adidas">Adidas</option>
@@ -247,11 +236,7 @@ export default function ProductForm({
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>Etat :</label>
-              <select
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-              >
+              <select name="state" {...register("state")}>
                 <option value="">Sélectionnez une option</option>
                 <option value="Neuf">Neuf</option>
                 <option value="Très bon état">Très bon état</option>
@@ -262,7 +247,7 @@ export default function ProductForm({
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Taille :</label>
-              <select name="size" value={formData.size} onChange={handleChange}>
+              <select name="size" {...register("size")}>
                 <option value="">Sélectionnez une option</option>
                 <option value="XS">XS</option>
                 <option value="S">S</option>
@@ -272,15 +257,14 @@ export default function ProductForm({
                 <option value="XXL">XXL</option>
                 <option value="XXXL">XXXL</option>
               </select>
+              {errors.size && (
+                <span className="error-span">{errors.size.message}</span>
+              )}
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>Couleur :</label>
-              <select
-                name="color"
-                value={formData.color}
-                onChange={handleChange}
-              >
+              <select name="color" {...register("color")}>
                 <option value="">Sélectionnez une option</option>
                 <option value="Rouge">Rouge</option>
                 <option value="Orange">Orange</option>
@@ -300,7 +284,6 @@ export default function ProductForm({
         >
           Déposer l'annonce
         </button>
-        {errorMessage && <p className="error-span">{errorMessage}</p>}
       </form>
     </>
   );
