@@ -17,7 +17,6 @@ export default function ProductDetail() {
   const { id } = useParams();
   const { wishlist, setWishlist, showToast, userInfo } =
     useContext(GlobalContext);
-  console.log("wishlist :>> ", wishlist);
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [product, setProduct] = useState({});
@@ -26,6 +25,7 @@ export default function ProductDetail() {
   const [successMessage, setSuccessMessage] = useState("");
 
   const titleProduct = product.title;
+  console.log("product :>> ", product);
 
   const addToWishlist = (product) => {
     console.log("AddToWishlist called");
@@ -63,6 +63,7 @@ export default function ProductDetail() {
       .get(`${backendURL}/product/${id}`)
       .then((res) => {
         setProduct(res.data);
+        setPictures(res.data.pictures);
       })
       .catch((err) => {
         console.error(err);
