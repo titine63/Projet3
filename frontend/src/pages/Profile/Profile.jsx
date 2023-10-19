@@ -14,12 +14,7 @@ import axios from "axios";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function Profile() {
-  const { setIsLogged, isLogged, userInfo, showToast } =
-    useContext(GlobalContext);
-
-  console.log("isLogged :>> ", isLogged);
-  console.log("token ==>  ", Cookies.get("token"));
-  console.log("userInfo :>> ", userInfo);
+  const { setIsLogged, userInfo, showToast } = useContext(GlobalContext);
 
   // État pour gérer si un fichier est sélectionné
   const [selectedFile, setSelectedFile] = useState(null);
@@ -37,7 +32,8 @@ export default function Profile() {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   // Récupérer la photo de profil des cookies
-  const [userPicture, setUserPicture] = useState(Cookies.get("user.picture"));
+  const [userPicture, setUserPicture] = useState(userInfo.picture || null);
+  console.log("userPicture :>> ", userPicture);
 
   // Nouvelle fonction pour gérer la fermeture de la modale de confirmation
   function handleCloseConfirmationModal() {
@@ -132,7 +128,7 @@ export default function Profile() {
               <img
                 src={
                   userPicture
-                    ? `${backendUrl}/${userInfo.picture}`
+                    ? `${backendUrl}${userPicture}`
                     : "/images/Ellipse 1.png"
                 }
                 alt="Profil"
