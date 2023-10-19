@@ -248,7 +248,7 @@ export default function ProductForm({
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Taille :</label>
               <select name="size" {...register("size")}>
-                <option value="default">Sélectionnez une option</option>
+                <option value="">Sélectionnez une option</option>
                 <option value="XS">XS</option>
                 <option value="S">S</option>
                 <option value="M">M</option>
