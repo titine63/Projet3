@@ -8,6 +8,7 @@ import { Repository, In } from 'typeorm';
 import { Product, Category } from './entities/product.entity';
 import { Order } from './../order/entities/order.entity';
 import { User } from './../users/user.entity/user.entity';
+import { Picture } from './../picture/entities/picture.entity';
 
 @Injectable()
 export class ProductService {
@@ -18,6 +19,8 @@ export class ProductService {
     private orderRepository: Repository<Order>,
     @InjectRepository(User)
     private usersService: Repository<User>,
+    @InjectRepository(Picture)
+    private pictureService: Repository<Picture>,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -116,10 +119,15 @@ export class ProductService {
       const user = await this.usersService.findOne({
         where: { id: product.userId },
       });
+
+      const pictures = await this.pictureService.find({
+        where: { productId: id },
+      });
       const productWithUser = {
         ...product,
         userPseudo: user?.pseudo,
         userPicture: user?.picture,
+        pictures: pictures,
       };
       return productWithUser;
     }
