@@ -5,12 +5,14 @@ import { config } from 'dotenv';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import * as express from 'express';
 import { join } from 'path';
+import { ValidationPipe } from '@nestjs/common';
 
 config();
 
 async function bootstrap() {
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+  app.useGlobalPipes(new ValidationPipe());
   const port = process.env.PORT || 3000;
   const cors = process.env.FRONTEND_URL || 'http://localhost:5173/';
   app.use(cookieParser());

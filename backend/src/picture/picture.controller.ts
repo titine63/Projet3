@@ -41,7 +41,7 @@ export class PictureController {
   ) {
     console.log(file);
     // Obtenez le chemin d'accès relatif du fichier. Si votre base de données et votre serveur de fichiers sont sur la même machine, vous pouvez simplement stocker le chemin d'accès relatif.
-    const relativePath = path.join('/uploads', file.filename);
+    const relativePath = path.join('uploads', file.filename);
 
     // Utilisez votre service pour sauvegarder le chemin d'accès en base de données.
     const savedPicture = this.pictureService.createPic({

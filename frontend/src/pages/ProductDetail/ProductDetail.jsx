@@ -9,10 +9,6 @@ import { GiClothes, GiBodyHeight } from "react-icons/gi";
 import { IoIosColorPalette } from "react-icons/io";
 import { GlobalContext } from "../../contexts/GlobalContextProvider";
 import { useContext, useState, useEffect } from "react";
-import {
-  TbSquareRoundedChevronLeft,
-  TbSquareRoundedChevronRight,
-} from "react-icons/tb";
 import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -24,8 +20,6 @@ export default function ProductDetail() {
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [product, setProduct] = useState({});
-  const [pictures, setPictures] = useState([]);
-  const [currentPicture, setCurrentPicture] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -46,31 +40,17 @@ export default function ProductDetail() {
   };
 
   const handleAddToWishlist = () => {
+    console.log("handleAddToWishlist called");
     addToWishlist(product);
     setIsFavorite(true);
     showToast("Ajouté !");
   };
 
   const handleDeleteFromWishList = () => {
+    console.log("handleDeleteFromWishList called");
     deleteFromWishlist(product);
     setIsFavorite(false);
     showToast("Supprimé !");
-  };
-
-  const nextPicture = () => {
-    if (currentPicture === pictures.length - 1) {
-      setCurrentPicture(0);
-    } else {
-      setCurrentPicture(currentPicture + 1);
-    }
-  };
-
-  const prevPicture = () => {
-    if (currentPicture === 0) {
-      setCurrentPicture(pictures.length - 1);
-    } else {
-      setCurrentPicture(currentPicture - 1);
-    }
   };
 
   useEffect(() => {
@@ -90,6 +70,8 @@ export default function ProductDetail() {
       });
   }, []);
 
+  console.log("product :>> ", product);
+
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
@@ -108,58 +90,23 @@ export default function ProductDetail() {
     <main className="main my-8">
       <section className="relative">
         <div className=" hidden xl:fixed xl:bottom-[45%] xl:left-[5%] xl:block xl:w-[32%] xl:translate-y-1/2">
-          <TbSquareRoundedChevronLeft
-            className="absolute -left-14 top-1/2 -translate-y-1/2  transform cursor-pointer text-4xl text-[#ec5a13]"
-            onClick={prevPicture}
-          />
-          {pictures.length > 0 ? (
-            <img
-              src={`${backendURL}${pictures[currentPicture].url}`}
-              alt={product.title}
-              className="w-full"
-            />
-          ) : (
-            <img
-              src="https://picsum.photos/800/920"
-              alt={product.title}
-              className="w-full"
-            />
-          )}
-
-          <TbSquareRoundedChevronRight
-            className="absolute -right-14 top-1/2 -translate-y-1/2 transform cursor-pointer text-4xl text-[#ec5a13]"
-            onClick={nextPicture}
+          <img
+            src="https://picsum.photos/800/920"
+            alt={product.title}
+            className="w-full"
           />
         </div>
         <div className="mt-6 flex flex-col items-center gap-6 pb-16 xl:absolute xl:right-[5%] xl:w-[50%]">
           <h1 className="h1">{product.title}</h1>
-          <div className="relative m-auto w-[70%] xl:hidden">
-            <TbSquareRoundedChevronLeft
-              className="absolute -left-8 top-1/2 -translate-y-1/2 transform  cursor-pointer text-2xl text-[#ec5a13] sm:-left-12 sm:text-3xl lg:text-4xl"
-              onClick={prevPicture}
-            />
-            {pictures.length > 0 ? (
-              <img
-                src={`${backendURL}${pictures[currentPicture].url}`}
-                alt={product.title}
-                className="m-auto"
-              />
-            ) : (
-              <img
-                src="https://picsum.photos/400/400"
-                alt={product.title}
-                className="m-auto"
-              />
-            )}
-            <TbSquareRoundedChevronRight
-              className="absolute -right-8 top-1/2 -translate-y-1/2 transform cursor-pointer text-2xl text-[#ec5a13] sm:-right-12 sm:text-3xl lg:text-4xl"
-              onClick={nextPicture}
-            />
-          </div>
+          <img
+            src="https://picsum.photos/400/600"
+            alt={product.title}
+            className="m-auto w-[60%] xl:left-0 xl:hidden"
+          />
           <p className="text-2xl text-[#ec5a13] md:text-3xl">
             {product.price} €
           </p>
-          <div className="flex w-[90%] flex-col justify-center gap-6 md:w-[80%] md:gap-8 xl:w-full xl:gap-10">
+          <div className="flex w-[90%] flex-col justify-center gap-8 md:w-[80%] xl:w-full xl:gap-10">
             <button
               type="button"
               className="bg-[#ec5a13] px-4 py-1 text-center text-xl text-white md:text-2xl"
@@ -175,7 +122,7 @@ export default function ProductDetail() {
             </div>
             <div>
               <h2 className="titles">Critères</h2>
-              <div className="ga grid grid-cols-2 gap-2 md:text-lg xl:grid-cols-3 xl:gap-y-8">
+              <div className="grid grid-cols-2 gap-y-8 md:text-lg xl:grid-cols-3">
                 <div className="relative">
                   <HiUserGroup className="absolute top-1 text-xl text-[#ec5a13]" />
                   <p className="pl-8 font-medium md:text-xl">Catégorie</p>
@@ -250,11 +197,20 @@ export default function ProductDetail() {
 
             <div>
               <div className="titles flex items-center gap-8">
-                {product.userPicture ? (
+                {userInfo && product.userId === userInfo.id ? (
+                  <>
+                    <img
+                      className="h-16 w-16 rounded-[50%] border  border-black md:h-24 md:w-24 lg:h-32 lg:w-32"
+                      src={userInfo.picture}
+                      alt="seller picture"
+                    />
+                    <h2>{userInfo.pseudo}</h2>
+                  </>
+                ) : product.userPicture ? (
                   <>
                     <img
                       className="h-16 w-16 rounded-[50%] border border-black md:h-24 md:w-24 lg:h-32 lg:w-32"
-                      src={`${backendURL}${product.userPicture}`}
+                      src={`${backendURL}/${product.userPicture}`}
                       alt="seller picture"
                     />
                     <h2>{product.userPseudo}</h2>
