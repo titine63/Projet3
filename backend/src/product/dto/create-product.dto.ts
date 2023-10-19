@@ -11,12 +11,12 @@ import { Category } from '../entities/product.entity';
 
 export class CreateProductDto {
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Le titre est obligatoire' })
   @MaxLength(50)
   title: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'La description est obligatoire' })
   description: string;
 
   @IsNumber({
@@ -24,16 +24,16 @@ export class CreateProductDto {
     allowInfinity: false,
     maxDecimalPlaces: 2,
   })
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Le prix est obligatoire' })
   price: number;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'La taille est obligatoire' })
   @MaxLength(10)
   size: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Le type de vêtement est obligatoire' })
   @MaxLength(20)
   clothing_type: string;
 
@@ -48,7 +48,9 @@ export class CreateProductDto {
   color: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({
+    message: 'La catégorie est obligatoire parmi Homme, Femme, Enfant',
+  })
   @MaxLength(10)
   @IsEnum(Category)
   category: Category;

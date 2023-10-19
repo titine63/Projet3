@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,6 +8,7 @@ import { Repository, In } from 'typeorm';
 import { Product, Category } from './entities/product.entity';
 import { Order } from './../order/entities/order.entity';
 import { User } from './../users/user.entity/user.entity';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class ProductService {
@@ -21,6 +22,14 @@ export class ProductService {
   ) {}
 
   async create(createProductDto: CreateProductDto) {
+    const errors = await validate(createProductDto);
+
+    if (errors.length > 0) {
+      const errorMessages = errors.map((error) =>
+        Object.values(error.constraints).join(', '),
+      );
+      throw new BadRequestException(errorMessages.join('\n'));
+    }
     return await this.productRepository.save(createProductDto);
   }
 
