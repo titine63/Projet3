@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { Product, Category } from './entities/product.entity';
 import { Order } from './../order/entities/order.entity';
 import { User } from './../users/user.entity/user.entity';
 import { Picture } from './../picture/entities/picture.entity';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class ProductService {
@@ -24,6 +25,14 @@ export class ProductService {
   ) {}
 
   async create(createProductDto: CreateProductDto) {
+    const errors = await validate(createProductDto);
+
+    if (errors.length > 0) {
+      const errorMessages = errors.map((error) =>
+        Object.values(error.constraints).join(', '),
+      );
+      throw new BadRequestException(errorMessages.join('\n'));
+    }
     return await this.productRepository.save(createProductDto);
   }
 
@@ -114,7 +123,7 @@ export class ProductService {
 
   async findOneProduct(id: number): Promise<any> {
     const product = await this.productRepository.findOne({ where: { id: id } });
-    if (product && product.userId) {
+    if (product?.userId) {
       // Supposons que votre entité Product a une propriété userId
       const user = await this.usersService.findOne({
         where: { id: product.userId },
