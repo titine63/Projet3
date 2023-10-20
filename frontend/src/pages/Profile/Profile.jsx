@@ -14,17 +14,14 @@ import axios from "axios";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function Profile() {
-  const { setIsLogged, isLogged, userInfo, showToast } =
-    useContext(GlobalContext);
+  const { setIsLogged, showToast } = useContext(GlobalContext);
 
-  console.log("isLogged :>> ", isLogged);
-  console.log("token ==>  ", Cookies.get("token"));
-  console.log("userInfo :>> ", userInfo);
-
-  // État pour gérer si un fichier est sélectionné
   const [selectedFile, setSelectedFile] = useState(null);
-  // État pour gérer l'URL de prévisualisation
   const [previewURL, setPreviewURL] = useState(null);
+
+  const userInfo = Cookies.get("userData")
+    ? JSON.parse(Cookies.get("userData"))
+    : null;
 
   // Gérer la redirection
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -36,8 +33,8 @@ export default function Profile() {
   // Confirmation de la suppression du compte
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
-  // Récupérer la photo de profil des cookies
-  const [userPicture, setUserPicture] = useState(Cookies.get("user.picture"));
+  const [userPicture, setUserPicture] = useState(userInfo?.picture || null);
+  console.log("userPicture :>> ", userPicture);
 
   // Nouvelle fonction pour gérer la fermeture de la modale de confirmation
   function handleCloseConfirmationModal() {
@@ -75,6 +72,9 @@ export default function Profile() {
         showToast("Photo mise à jour avec succès!");
         if (response.data.picture) {
           setUserPicture(response.data.picture);
+          // // Mettre à jour le cookie ici
+          const updatedUserInfo = { ...userInfo, picture: response.data.picture };
+          Cookies.set("userData", JSON.stringify(updatedUserInfo));
         }
         setSelectedFile(null);
         setPreviewURL(null);
@@ -132,7 +132,7 @@ export default function Profile() {
               <img
                 src={
                   userPicture
-                    ? `${backendUrl}/${userInfo.picture}`
+                    ? `${backendUrl}${userPicture}`
                     : "/images/Ellipse 1.png"
                 }
                 alt="Profil"
@@ -228,7 +228,7 @@ export default function Profile() {
         </div>
 
         <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">
-          Mon historique de commande : Mon historique de commande :
+          Mon historique de commande :
         </h2>
         <div className="grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/order/user"} />
