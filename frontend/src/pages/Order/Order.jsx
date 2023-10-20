@@ -48,9 +48,13 @@ export default function Order() {
       <form className="params-product-form items-center lg:flex lg:w-3/4 lg:flex-col lg:bg-white lg:pb-8 lg:pt-16">
         <div className="mb-8 flex flex-col items-center gap-2 lg:w-[80%] lg:flex-row lg:gap-4">
           <label className=" w-[90%] gap-4  bg-[#e6c9ba] p-4 sm:w-[80%] md:flex md:w-[80%] md:flex-col md:items-center lg:flex lg:flex-[1] lg:flex-row lg:bg-[#fce3d7]">
-            <img src="https://picsum.photos/450/255" alt={productData.title} />
+            <img
+              src="https://picsum.photos/450/255"
+              alt={productData.title}
+              className="md:w-[100%]"
+            />
             <div className="lg:flex lg:w-[100%] lg:flex-col">
-              <h2 className="mb-4">Le résumé de votre commande :</h2>
+              <h2 className="m-4">Le résumé de votre commande:</h2>
               <div className="lg:mt-10 lg:flex lg:flex-row lg:justify-between">
                 <div className="flex flex-col justify-center p-14 text-center md:p-0">
                   {productData.title} <br /> {productData.size} -{" "}
