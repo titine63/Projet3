@@ -98,7 +98,7 @@ export default function Buy() {
 
       {filteredProducts && filteredProducts.length === 0 ? (
         <h2 className="h2 mt-20 text-[#ec5a13]">
-          Désolé ! Aucun produit de correspond à votre recherche ...
+          Désolé ! Aucun produit ne correspond à votre recherche ...
         </h2>
       ) : (
         <div className="grid w-[90%] grid-cols-2 items-center justify-center gap-6 sm:grid-cols-3 md:grid-cols-4 lg:w-[80%] lg:grid-cols-5 xl:grid-cols-6">

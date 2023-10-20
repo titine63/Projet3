@@ -188,7 +188,7 @@ export default function ProductDetail() {
               </div>
             ) : (
               <Link
-                to="/order"
+                to={`/order/${id}`}
                 className="mx-auto bg-[#ec5a13] px-4 py-1 text-center text-xl text-white md:w-[100%] md:text-2xl"
               >
                 Acheter
