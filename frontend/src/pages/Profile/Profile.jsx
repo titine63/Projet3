@@ -23,7 +23,6 @@ export default function Profile() {
     ? JSON.parse(Cookies.get("userData"))
     : null;
 
-  // Gérer la redirection
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   // Modal pour réinitialiser le mot de passe
@@ -34,13 +33,13 @@ export default function Profile() {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const [userPicture, setUserPicture] = useState(userInfo?.picture || null);
-  console.log("userPicture :>> ", userPicture);
 
   // Nouvelle fonction pour gérer la fermeture de la modale de confirmation
   function handleCloseConfirmationModal() {
     setShowConfirmationModal(false);
     handleLogout(); // Déconnecter l'utilisateur et rediriger vers l'accueil
   }
+
   // Fonction pour gérer la déconnexion de l'utilisateur
   function handleLogout() {
     // Suppression du token JWT du cookie
@@ -132,7 +131,7 @@ export default function Profile() {
                     ? `${backendUrl}${userPicture}`
                     : "/images/Ellipse 1.png"
                 }
-                alt="Profil"
+                alt="Photo de profil"
                 className="mb-4 h-40 w-40 cursor-pointer rounded-full"
                 onClick={() => document.getElementById("fileInput").click()}
               />

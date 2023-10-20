@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -80,7 +80,7 @@ export class ProductController {
     return this.productService.findProductsByCategory(category);
   }
 
-  @Patch(':id')
+  @Put(':id')
   updateProduct(
     @Param('id') id: number,
     @Body() updateProductDto: UpdateProductDto,

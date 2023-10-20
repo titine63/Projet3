@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 import { LiaTimesCircleSolid } from "react-icons/lia";
@@ -12,9 +12,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function ProductForm({
+  productData,
   setModalVisible,
   setSuccessMessage,
-  setCreatedProductId,
+  setProductId,
+  mode,
 }) {
   const { userInfo } = useContext(GlobalContext);
 
@@ -24,12 +26,33 @@ export default function ProductForm({
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(productFormSchema),
   });
+
+  useEffect(() => {
+    if (productData) {
+      setValue("title", productData.title);
+      setValue("price", productData.price);
+      setValue("description", productData.description);
+      setValue("clothing_type", productData.clothing_type);
+      setValue("category", productData.category);
+      setValue("brand", productData.brand);
+      setValue("state", productData.state);
+      setValue("size", productData.size);
+      setValue("color", productData.color);
+      if (productData.pictures) {
+        setPreviewURLs(
+          productData.pictures.map((picture) => `${backendURL}${picture.url}`),
+        );
+      }
+    }
+  }, [productData, setValue]);
+  console.log("productData.pictures :>> ", productData.pictures);
 
   function handlePictureChange(event) {
     if (event.target.files.length > 6) {
@@ -55,7 +78,6 @@ export default function ProductForm({
   const uploadImage = async (productId, file) => {
     const formData = new FormData();
     formData.append("file", file);
-    // formData.append("productId", productId);
     try {
       await axios.post(`${backendURL}/picture/upload/${productId}`, formData);
       console.log("Picture uploaded");
@@ -70,33 +92,40 @@ export default function ProductForm({
         ...data,
         userId: userInfo.id,
       };
-      const response = await axios.post(`${backendURL}/product`, payload);
-      const createdProductId = response.data.id;
+      if (mode === "create") {
+        const response = await axios.post(`${backendURL}/product`, payload);
+        const createdProductId = response.data.id;
 
-      // Upload each image with the product ID
-      for (const file of selectedFiles) {
-        await uploadImage(createdProductId, file);
-      }
-
-      setSuccessMessage(
-        `Votre annonce "${response.data.title}" est maintenant en ligne !`,
-      );
-      setModalVisible(true);
-      setCreatedProductId(response.data.id);
-      console.log("Annonce créée avec succès :", response.data);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        Array.isArray(error.response.data.message)
-      ) {
-        console.log(
-          "error.response.data.message :>> ",
-          error.response.data.message,
+        // Upload each image with the product ID
+        for (const file of selectedFiles) {
+          await uploadImage(createdProductId, file);
+        }
+        setSuccessMessage(
+          `Votre annonce "${response.data.title}" est maintenant en ligne !`,
         );
-      } else {
-        console.error("Erreur lors de la création de l'annonce :", error);
+        setModalVisible(true);
+        setProductId(response.data.id);
+        console.log("Annonce créée avec succès :", response.data);
+      } else if (mode === "update") {
+        const productId = productData.id;
+        const response = await axios.put(
+          `${backendURL}/product/${productId}`,
+          payload,
+        );
+
+        // Upload each image with the product ID
+        for (const file of selectedFiles) {
+          await uploadImage(productId, file);
+        }
+        setSuccessMessage(
+          `Votre annonce "${payload.title}" est maintenant en ligne !`,
+        );
+        setModalVisible(true);
+        setProductId(response.data.id);
+        console.log("Annonce modifié avec succès :", response.data);
       }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de l'annonce :", error);
     }
   }
 
@@ -120,7 +149,7 @@ export default function ProductForm({
           />
 
           <div className="grid w-[90%] grid-cols-2 items-center justify-center gap-4 sm:w-[80%] md:w-[70%] lg:flex-[3] xl:grid-cols-3">
-            {previewURLs.length > 0
+            {previewURLs && previewURLs.length > 0
               ? previewURLs.map((url) => (
                   <div
                     key={url}
@@ -146,7 +175,7 @@ export default function ProductForm({
                   </div>
                 ))
               : null}
-            {previewURLs.length < 6 ? (
+            {previewURLs && previewURLs.length < 6 ? (
               <MdOutlineAddBox
                 src="/images/add-square.svg"
                 className="h-32 w-32 cursor-pointer rounded-md object-cover text-slate-500 hover:opacity-70 sm:h-40 sm:w-40"
