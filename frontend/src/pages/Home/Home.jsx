@@ -39,6 +39,7 @@ export default function Home() {
       ),
     },
   ];
+
   return (
     <main className="main flex flex-col">
       <Carousel>
