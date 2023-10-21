@@ -41,19 +41,12 @@ export class ProductController {
   @Get('filter')
   //NestJS extrait automatiquement les paramètres de l'URL et les place dans un objet filter
   async filterProductWithQuery(@Query() filter: any) {
-    console.log(
-      'this.productService. :>> ',
-      await this.productService.filterProductWithQuery(filter),
-    );
     return await this.productService.filterProductWithQuery(filter);
   }
 
-  @Get('search')
-  async searchProductsByTitle(@Query('title') title: string) {
-    if (title) {
-      const products = await this.productService.searchProductsByTitle(title);
-      return products;
-    }
+  @Get('search/:searchTerm')
+  async searchProductsBySearchTerm(@Param('searchTerm') searchTerm: string) {
+    return await this.productService.searchProductsBySearchTerm(searchTerm);
   }
 
   @Get(':id')
@@ -63,8 +56,6 @@ export class ProductController {
 
   @Get('category/:category')
   async findProductsByCategory(@Param('category') categoryParam: string) {
-    console.log('categoryParam :>> ', categoryParam);
-
     const categoryMapping: Record<string, Category> = {
       homme: Category.MEN,
       femme: Category.WOMMEN,
@@ -76,7 +67,6 @@ export class ProductController {
     }
 
     const category: Category = categoryMapping[categoryParam.toLowerCase()];
-    console.log('category :>> ', category);
     return this.productService.findProductsByCategory(category);
   }
 
