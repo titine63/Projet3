@@ -4,6 +4,8 @@ import { useState, useContext, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function ProductCard({ product }) {
   const { wishlist, setWishlist, showToast } = useContext(GlobalContext);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -56,11 +58,19 @@ export default function ProductCard({ product }) {
 
       <h2 className="h3 pb-1 pl-2">{product.title}</h2>
       <Link to={`/buy/product/${product.id}`}>
-        <img
-          src="https://picsum.photos/400/500"
-          alt={product.title}
-          className=""
-        />
+        {product.pictures.length > 0 && product.pictures[0].url ? (
+          <img
+            src={`${backendURL}${product.pictures[0].url}`}
+            alt={product.title}
+            className=""
+          />
+        ) : (
+          <img
+            src="https://picsum.photos/400/500"
+            alt={product.title}
+            className=""
+          />
+        )}
         <p className="pl-2 text-lg font-bold text-orange-500">
           {product.price} €
         </p>

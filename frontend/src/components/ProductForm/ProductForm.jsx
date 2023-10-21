@@ -23,6 +23,7 @@ export default function ProductForm({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewURLs, setPreviewURLs] = useState([]);
+  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   const {
     register,
@@ -52,7 +53,6 @@ export default function ProductForm({
       }
     }
   }, [productData, setValue]);
-  console.log("productData.pictures :>> ", productData.pictures);
 
   function handlePictureChange(event) {
     if (event.target.files.length > 6) {
@@ -73,6 +73,15 @@ export default function ProductForm({
     const newURLs = [...previewURLs];
     newURLs.splice(index, 1);
     setPreviewURLs(newURLs);
+
+    if (mode === "update") {
+      const pictureToDelete = productData.pictures[index];
+      setImagesToDelete((prevImages) => [...prevImages, pictureToDelete]);
+    }
+    // Si vous avez des identifiants pour chaque image, ajoutez cette image à la liste imagesToDelete.
+    if (mode === "update" && productData.pictures[index].id) {
+      setImagesToDelete([...imagesToDelete, productData.pictures[index].id]);
+    }
   }
 
   const uploadImage = async (productId, file) => {
@@ -85,6 +94,15 @@ export default function ProductForm({
       console.error("Error uploading the image:", error);
     }
   };
+
+  async function deleteImageFromServer(imageId) {
+    try {
+      await axios.delete(`${backendURL}/picture/${imageId}`);
+      console.log("Image supprimée avec succès :", imageId);
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'image :", error);
+    }
+  }
 
   async function onSubmit(data) {
     try {
@@ -112,7 +130,9 @@ export default function ProductForm({
           `${backendURL}/product/${productId}`,
           payload,
         );
-
+        for (const imageId of imagesToDelete) {
+          await deleteImageFromServer(imageId);
+        }
         // Upload each image with the product ID
         for (const file of selectedFiles) {
           await uploadImage(productId, file);
@@ -197,7 +217,13 @@ export default function ProductForm({
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Prix :</label>
-              <input type="number" name="price" {...register("price")} />
+              <input
+                type="number"
+                name="price"
+                step="0.01"
+                min="0"
+                {...register("price")}
+              />
               {errors.price && (
                 <span className="error-span">{errors.price.message}</span>
               )}
@@ -307,12 +333,21 @@ export default function ProductForm({
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2"
-        >
-          Déposer l'annonce
-        </button>
+        {mode === "create" ? (
+          <button
+            type="submit"
+            className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2"
+          >
+            Déposer l'annonce
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2"
+          >
+            Modifier l'annonce
+          </button>
+        )}
       </form>
     </>
   );

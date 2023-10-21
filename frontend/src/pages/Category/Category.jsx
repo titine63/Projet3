@@ -13,6 +13,7 @@ export default function Category() {
 
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(null);
+  console.log("products :>> ", products);
   console.log("filteredProducts :>> ", filteredProducts);
 
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);

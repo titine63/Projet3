@@ -24,7 +24,7 @@ export default function ProductDetail() {
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [product, setProduct] = useState({});
-  const [pictures, setPictures] = useState([]);
+  console.log("product :>> ", product);
   const [currentPicture, setCurrentPicture] = useState(0);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -58,7 +58,7 @@ export default function ProductDetail() {
   };
 
   const nextPicture = () => {
-    if (currentPicture === pictures.length - 1) {
+    if (currentPicture === product.pictures.length - 1) {
       setCurrentPicture(0);
     } else {
       setCurrentPicture(currentPicture + 1);
@@ -67,7 +67,7 @@ export default function ProductDetail() {
 
   const prevPicture = () => {
     if (currentPicture === 0) {
-      setCurrentPicture(pictures.length - 1);
+      setCurrentPicture(product.pictures.length - 1);
     } else {
       setCurrentPicture(currentPicture - 1);
     }
@@ -83,7 +83,6 @@ export default function ProductDetail() {
       .get(`${backendURL}/product/${id}`)
       .then((res) => {
         setProduct(res.data);
-        setPictures(res.data.pictures);
       })
       .catch((err) => {
         console.error(err);
@@ -112,9 +111,9 @@ export default function ProductDetail() {
             className="absolute -left-14 top-1/2 -translate-y-1/2  transform cursor-pointer text-4xl text-[#ec5a13]"
             onClick={prevPicture}
           />
-          {pictures.length > 0 ? (
+          {product.pictures && product.pictures.length > 0 ? (
             <img
-              src={`${backendURL}${pictures[currentPicture].url}`}
+              src={`${backendURL}${product.pictures[currentPicture].url}`}
               alt={product.title}
               className="w-full"
             />
@@ -138,9 +137,9 @@ export default function ProductDetail() {
               className="absolute -left-8 top-1/2 -translate-y-1/2 transform  cursor-pointer text-2xl text-[#ec5a13] sm:-left-12 sm:text-3xl lg:text-4xl"
               onClick={prevPicture}
             />
-            {pictures.length > 0 ? (
+            {product.pictures && product.pictures.length > 0 ? (
               <img
-                src={`${backendURL}${pictures[currentPicture].url}`}
+                src={`${backendURL}${product.pictures[currentPicture].url}`}
                 alt={product.title}
                 className="m-auto"
               />

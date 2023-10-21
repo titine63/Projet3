@@ -23,6 +23,7 @@ export default function FilterModal({
 
   return (
     <Modal
+      appElement={document.getElementById("root")}
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Filters"
@@ -40,7 +41,7 @@ export default function FilterModal({
 
       <div className="relative mx-[5%] mb-2 flex flex-col gap-1">
         <AiOutlineEuroCircle className="absolute top-1 text-xl text-[#ec5a13]" />
-        <span className="pl-8 font-medium md:text-xl">Prix</span>
+        <p className="pl-8 font-medium md:text-xl">Prix</p>
 
         <div className="flex justify-between ">
           <div className="flex w-[45%] flex-col">
@@ -75,9 +76,7 @@ export default function FilterModal({
           value={filterParams.clothing_type}
           onChange={handleChange}
         >
-          <option value="">
-            Sélectionnez <span className="hidden sm:block">une option...</span>
-          </option>
+          <option value="">Sélectionnez une option...</option>
           <option value="T-shirt">T-shirt</option>
           <option value="Pantalon">Pantalon</option>
           <option value="Jean">Jean</option>
@@ -97,9 +96,7 @@ export default function FilterModal({
         <label className="pl-8 font-medium md:text-xl">Marque</label>
 
         <select name="brand" value={filterParams.brand} onChange={handleChange}>
-          <option value="">
-            Sélectionnez <span className="hidden sm:block">une option...</span>
-          </option>
+          <option value="">Sélectionnez une option...</option>
           <option value="Nike">Nike</option>
           <option value="Adidas">Adidas</option>
           <option value="Lacoste">Lacoste</option>
@@ -116,9 +113,7 @@ export default function FilterModal({
         <GiBodyHeight className="absolute top-1 text-xl text-[#ec5a13]" />
         <label className="pl-8 font-medium md:text-xl">Taille</label>
         <select name="size" value={filterParams.size} onChange={handleChange}>
-          <option value="">
-            Sélectionnez <span className="hidden sm:block">une option...</span>
-          </option>
+          <option value="">Sélectionnez une option...</option>
           <option value="XS">XS</option>
           <option value="S">S</option>
           <option value="M">M</option>
@@ -134,9 +129,7 @@ export default function FilterModal({
         <label className="pl-8 font-medium md:text-xl">Etat</label>
 
         <select name="state" value={filterParams.state} onChange={handleChange}>
-          <option value="">
-            Sélectionnez <span className="hidden sm:block">une option...</span>
-          </option>
+          <option value="">Sélectionnez une option...</option>
           <option value="Neuf">Neuf</option>
           <option value="Très bon état">Très bon état</option>
           <option value="Bon état">Bon état</option>
@@ -149,9 +142,7 @@ export default function FilterModal({
         <label className="pl-8 font-medium md:text-xl">Couleur</label>
 
         <select name="color" value={filterParams.color} onChange={handleChange}>
-          <option value="">
-            Sélectionnez <span className="hidden sm:block">une option...</span>
-          </option>
+          <option value="">Sélectionnez une option...</option>
           <option value="rouge">Rouge</option>
           <option value="orange">Orange</option>
           <option value="gris">gris</option>
