@@ -7,11 +7,10 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
-  OneToOne,
 } from 'typeorm';
 import { User } from './../../users/user.entity/user.entity';
 import { Order } from './../../order/entities/order.entity';
-import { Picture } from 'src/picture/entities/picture.entity';
+import { Picture } from './../../picture/entities/picture.entity';
 
 export enum Category {
   MEN = 'Homme',

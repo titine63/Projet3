@@ -8,20 +8,17 @@ import { Repository, In } from 'typeorm';
 import { Product, Category } from './entities/product.entity';
 import { Order } from './../order/entities/order.entity';
 import { User } from './../users/user.entity/user.entity';
-import { Picture } from './../picture/entities/picture.entity';
 import { validate } from 'class-validator';
+import { OrderService } from './../order/order.service';
+import { UsersService } from './../users/users.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
-    @InjectRepository(Order)
-    private orderRepository: Repository<Order>,
-    @InjectRepository(User)
-    private usersService: Repository<User>,
-    @InjectRepository(Picture)
-    private pictureService: Repository<Picture>,
+    private orderService: OrderService,
+    private usersService: UsersService,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -43,9 +40,7 @@ export class ProductService {
   async findOneProduct(id: number): Promise<any> {
     const product = await this.productRepository.findOne({ where: { id: id } });
     if (product?.userId) {
-      const user = await this.usersService.findOne({
-        where: { id: product.userId },
-      });
+      const user = await this.usersService.getUserById(product.userId);
       const productWithUser = {
         ...product,
         userPseudo: user?.pseudo,
@@ -77,9 +72,7 @@ export class ProductService {
 
   async getProductsByOrderUserId(userId: number): Promise<Product[]> {
     // D'abord, récupérez les IDs de commande pour le userId donné
-    const orders = await this.orderRepository.find({
-      where: { userId: userId },
-    });
+    const orders = await this.orderService.findAllOrdersByUserId(userId);
     // Ensuite, récupérez les IDs de commande pour le userId donné
     const orderIds = orders.map((order) => order.id);
 
