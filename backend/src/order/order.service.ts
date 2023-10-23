@@ -19,6 +19,11 @@ export class OrderService {
     return await this.orderRepository.find();
   }
 
+  // Récupérer toutes les commandes par leur userId
+  async findAllOrdersByUserId(userId: number) {
+    return await this.orderRepository.find({ where: { userId: userId } });
+  }
+
   async findOne(id: number) {
     return await this.orderRepository.findOne({ where: { id: id } });
   }

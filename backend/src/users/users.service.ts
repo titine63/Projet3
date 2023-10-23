@@ -39,6 +39,11 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email: email });
   }
 
+  // Récupérer un utilisateur par son id
+  async getUserById(id: number): Promise<User | undefined> {
+    return this.usersRepository.findOneBy({ id: id });
+  }
+
   // Enregistrer un nouvel utilisateur
   async saveUser(user: User): Promise<User> {
     return this.usersRepository.save(user);

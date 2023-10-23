@@ -23,7 +23,6 @@ export default function Profile() {
     ? JSON.parse(Cookies.get("userData"))
     : null;
 
-  // Gérer la redirection
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   // Modal pour réinitialiser le mot de passe
@@ -34,13 +33,13 @@ export default function Profile() {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const [userPicture, setUserPicture] = useState(userInfo?.picture || null);
-  console.log("userPicture :>> ", userPicture);
 
   // Nouvelle fonction pour gérer la fermeture de la modale de confirmation
   function handleCloseConfirmationModal() {
     setShowConfirmationModal(false);
     handleLogout(); // Déconnecter l'utilisateur et rediriger vers l'accueil
   }
+
   // Fonction pour gérer la déconnexion de l'utilisateur
   function handleLogout() {
     // Suppression du token JWT du cookie
@@ -73,7 +72,10 @@ export default function Profile() {
         if (response.data.picture) {
           setUserPicture(response.data.picture);
           // // Mettre à jour le cookie ici
-          const updatedUserInfo = { ...userInfo, picture: response.data.picture };
+          const updatedUserInfo = {
+            ...userInfo,
+            picture: response.data.picture,
+          };
           Cookies.set("userData", JSON.stringify(updatedUserInfo));
         }
         setSelectedFile(null);
@@ -135,7 +137,7 @@ export default function Profile() {
                     ? `${backendUrl}${userPicture}`
                     : "/images/Ellipse 1.png"
                 }
-                alt="Profil"
+                alt="Photo de profil"
                 className="mb-4 h-40 w-40 cursor-pointer rounded-full"
                 onClick={() => document.getElementById("fileInput").click()}
               />
@@ -223,14 +225,14 @@ export default function Profile() {
       <section className="right-0 my-8 w-screen p-4 lg:absolute lg:w-2/3 xl:w-3/4">
         <h1 className="h1 text-center">Mon profil</h1>
         <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">Mes annonces en ligne :</h2>
-        <div className="mb-4 grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="mb-4 grid grid-cols-1 gap-4 border p-4  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/user"} />
         </div>
 
         <h2 className="h3 mb-4 mt-6 pl-8 lg:mt-8">
           Mon historique de commande :
         </h2>
-        <div className="grid grid-cols-1 gap-4 border p-4  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 border p-4  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <AdsByUser userId={userInfo.id} route={"product/order/user"} />
         </div>
       </section>

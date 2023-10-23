@@ -6,13 +6,13 @@ import { useState } from "react";
 export default function Sell() {
   const navigate = useNavigate();
 
-  const [createdProductId, setCreatedProductId] = useState(null);
+  const [productId, setProductId] = useState(null);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleSeeProduct = () => {
-    navigate(`/buy/product/${createdProductId}`);
+    navigate(`/buy/product/${productId}`);
   };
 
   const handleAddProduct = () => {
@@ -39,7 +39,7 @@ export default function Sell() {
           <p className="text-start lg:block lg:font-medium">
             **{" "}
             <span className="underline underline-offset-4">
-              Vous pouvez ajouter jusqu'à 4 photos{" "}
+              Vous pouvez ajouter jusqu'à 6 photos{" "}
             </span>
           </p>
         </div>
@@ -48,7 +48,8 @@ export default function Sell() {
       <ProductForm
         setModalVisible={setModalVisible}
         setSuccessMessage={setSuccessMessage}
-        setCreatedProductId={setCreatedProductId}
+        setCreatedProductId={setProductId}
+        mode="create"
       />
 
       <div className="flex w-[90%] flex-col gap-2 self-center pb-4 lg:hidden ">

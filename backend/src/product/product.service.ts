@@ -8,20 +8,17 @@ import { Repository, In } from 'typeorm';
 import { Product, Category } from './entities/product.entity';
 import { Order } from './../order/entities/order.entity';
 import { User } from './../users/user.entity/user.entity';
-import { Picture } from './../picture/entities/picture.entity';
 import { validate } from 'class-validator';
+import { OrderService } from './../order/order.service';
+import { UsersService } from './../users/users.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
-    @InjectRepository(Order)
-    private orderRepository: Repository<Order>,
-    @InjectRepository(User)
-    private usersService: Repository<User>,
-    @InjectRepository(Picture)
-    private pictureService: Repository<Picture>,
+    private orderService: OrderService,
+    private usersService: UsersService,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -37,116 +34,22 @@ export class ProductService {
   }
 
   async getProducts(): Promise<Product[]> {
-    return await this.productRepository.find();
-  }
-
-  async getProductsByUserId(userId: number): Promise<Product[]> {
-    return await this.productRepository.find({ where: { userId: userId } });
-  }
-
-  async getProductsByOrderUserId(userId: number): Promise<Product[]> {
-    // D'abord, récupérez les IDs de commande pour le userId donné
-    const orders = await this.orderRepository.find({
-      where: { userId: userId },
-    });
-    console.log('orders :>> ', orders);
-    // Ensuite, récupérez les IDs de commande pour le userId donné
-    const orderIds = orders.map((order) => order.id);
-
-    // Ensuite, récupérez les produits associés à ces IDs de commande
-    const products = await this.productRepository.find({
-      where: { orderId: In(orderIds) },
-    });
-
-    return products;
-  }
-
-  async filterProductWithQuery(filter: any): Promise<Product[]> {
-    const queryBuilder = this.productRepository.createQueryBuilder('product');
-
-    if (filter.clothing_type) {
-      queryBuilder.andWhere('product.clothing_type = :clothing_type', {
-        clothing_type: filter.clothing_type,
-      });
-    }
-
-    if (filter.color) {
-      queryBuilder.andWhere('product.color = :color', { color: filter.color });
-    }
-    if (filter.title) {
-      queryBuilder.andWhere('product.title = :title', { title: filter.title });
-    }
-
-    if (filter.minPrice) {
-      queryBuilder.andWhere('product.price >= :minPrice', {
-        minPrice: filter.minPrice,
-      });
-    }
-
-    if (filter.maxPrice) {
-      queryBuilder.andWhere('product.price <= :maxPrice', {
-        maxPrice: filter.maxPrice,
-      });
-    }
-
-    if (filter.category) {
-      queryBuilder.andWhere('product.category = :category', {
-        category: filter.category,
-      });
-    }
-
-    if (filter.brand) {
-      queryBuilder.andWhere('product.brand = :brand', { brand: filter.brand });
-    }
-
-    if (filter.size) {
-      queryBuilder.andWhere('product.size = :size', { size: filter.size });
-    }
-
-    if (filter.state) {
-      queryBuilder.andWhere('product.state = :state', { state: filter.state });
-    }
-    if (filter.minPrice) {
-      queryBuilder.andWhere('product.price >= :minPrice', {
-        minPrice: filter.minPrice,
-      });
-    }
-
-    if (filter.maxPrice) {
-      queryBuilder.andWhere('product.price <= :maxPrice', {
-        maxPrice: filter.maxPrice,
-      });
-    }
-
-    return await queryBuilder.getMany();
+    return await this.productRepository.find({ relations: ['pictures'] });
   }
 
   async findOneProduct(id: number): Promise<any> {
     const product = await this.productRepository.findOne({ where: { id: id } });
     if (product?.userId) {
-      // Supposons que votre entité Product a une propriété userId
-      const user = await this.usersService.findOne({
-        where: { id: product.userId },
-      });
-
-      const pictures = await this.pictureService.find({
-        where: { productId: id },
-      });
+      const user = await this.usersService.getUserById(product.userId);
       const productWithUser = {
         ...product,
         userPseudo: user?.pseudo,
         userPicture: user?.picture,
-        pictures: pictures,
       };
       return productWithUser;
     }
 
     return product;
-  }
-
-  async searchProductsByTitle(title: string): Promise<Product[]> {
-    const filter = { title };
-    return await this.filterProductWithQuery(filter);
   }
 
   async findProductsByCategory(category: Category): Promise<Product[]> {
@@ -159,5 +62,92 @@ export class ProductService {
 
   async remove(id: number) {
     return await this.productRepository.delete(id);
+  }
+
+  async getProductsByUserId(userId: number): Promise<Product[]> {
+    return await this.productRepository.find({
+      where: { userId: userId },
+    });
+  }
+
+  async getProductsByOrderUserId(userId: number): Promise<Product[]> {
+    // D'abord, récupérez les IDs de commande pour le userId donné
+    const orders = await this.orderService.findAllOrdersByUserId(userId);
+    // Ensuite, récupérez les IDs de commande pour le userId donné
+    const orderIds = orders.map((order) => order.id);
+
+    // Ensuite, récupérez les produits associés à ces IDs de commande
+    const products = await this.productRepository.find({
+      where: { orderId: In(orderIds) },
+    });
+
+    return products;
+  }
+
+  async filterProductWithQuery(filter: any): Promise<Product[]> {
+    const queryBuilder = this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.pictures', 'picture');
+
+    const conditions = [
+      'clothing_type',
+      'color',
+      'title',
+      'category',
+      'brand',
+      'size',
+      'state',
+    ];
+
+    conditions.forEach((condition) => {
+      if (filter[condition]) {
+        queryBuilder.andWhere(`product.${condition} LIKE :${condition}`, {
+          [condition]: `%${filter[condition]}%`,
+        });
+      }
+    });
+
+    if (filter.minPrice) {
+      queryBuilder.andWhere('product.price >= :minPrice', {
+        minPrice: filter.minPrice,
+      });
+    }
+    if (filter.maxPrice) {
+      queryBuilder.andWhere('product.price <= :maxPrice', {
+        maxPrice: filter.maxPrice,
+      });
+    }
+
+    return await queryBuilder.getMany();
+  }
+
+  async searchProductsBySearchTerm(searchTerm: string): Promise<Product[]> {
+    const queryBuilder = this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.pictures', 'picture');
+
+    const conditions = [
+      'clothing_type',
+      'color',
+      'title',
+      'category',
+      'brand',
+      'size',
+      'state',
+    ];
+
+    conditions.forEach((condition, index) => {
+      if (index === 0) {
+        queryBuilder.where(`product.${condition} LIKE :${condition}`, {
+          [condition]: `%${searchTerm}%`,
+        });
+      } else {
+        queryBuilder.orWhere(`product.${condition} LIKE :${condition}`, {
+          [condition]: `%${searchTerm}%`,
+        });
+      }
+    });
+
+    return await queryBuilder.getMany();
   }
 }

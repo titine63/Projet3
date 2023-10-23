@@ -2,8 +2,8 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class SeedDB1695823881556 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`INSERT INTO \`users\`(pseudo, email, password, picture) VALUES ('busy_gnl', 'vallantjesse@live.com', '1e95745641dcf430c74ed81201c29605ca308a527e86e72a946e0d362cfd71ab', '/uploads/khaledmo.jpeg'),
-        ('khaledmo', 'khaled.mofleh707@gmail.com', 'f76ac55759dff7abb22f8a44cd1576b96c94af2ca29ab7c3c8fe6be480614881','/uploads/jesse-vallant.jpeg'),
+    await queryRunner.query(`INSERT INTO \`users\`(pseudo, email, password, picture) VALUES ('busy_gnl', 'vallantjesse@live.com', '1e95745641dcf430c74ed81201c29605ca308a527e86e72a946e0d362cfd71ab', '/uploads/jesse-vallant.jpeg'),
+        ('khaledmo', 'khaled.mofleh707@gmail.com', 'f76ac55759dff7abb22f8a44cd1576b96c94af2ca29ab7c3c8fe6be480614881','/uploads/khaledmo.jpeg'),
         ('titine03', 'sblanchonnet@yahoo.fr', '3c6856493101ffd766079b5110b646925e8cb86ea7d007237e15fdac352f731b', '/uploads/sandrine.jpeg');
         `);
 

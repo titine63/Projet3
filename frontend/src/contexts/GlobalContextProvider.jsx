@@ -17,7 +17,6 @@ export function GlobalContextProvider({ children }) {
   const initialUserInfo = Cookies.get("userData")
     ? JSON.parse(Cookies.get("userData"))
     : null;
-  // userInfo ? window.location.reload() : null;
 
   const [userInfo, setUserInfo] = useState(initialUserInfo);
 

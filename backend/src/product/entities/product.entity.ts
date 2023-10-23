@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { User } from './../../users/user.entity/user.entity';
 import { Order } from './../../order/entities/order.entity';
+import { Picture } from './../../picture/entities/picture.entity';
 
 export enum Category {
   MEN = 'Homme',
@@ -73,6 +75,15 @@ export class Product {
 
   @Column({ nullable: true })
   orderId: number;
+
+  @OneToMany(() => Picture, (picture) => picture.product, {
+    cascade: true,
+    nullable: true,
+    eager: true,
+  })
+  pictures: Picture[];
+
+  picture: string;
 
   @CreateDateColumn({
     type: 'timestamp',

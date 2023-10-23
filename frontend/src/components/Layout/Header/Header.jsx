@@ -10,6 +10,8 @@ import AuthModal from "../../Auth/AuthModal/AuthModal";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function Header() {
   // Importer les états et fonctions depuis le contexte global
   const { isLogged, showAuthModal, setShowAuthModal, setModalContent } =
@@ -29,28 +31,23 @@ export default function Header() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const apiUrl = "http://localhost:3000/product/search";
 
   const handleSearch = async (searchTerm) => {
     try {
-      const response = await axios.get(apiUrl, {
-        params: {
-          title: searchTerm,
-        },
-      });
+      const response = await axios.get(
+        `${backendURL}/product/search/${searchTerm}`,
+      );
       setSearchResult(response.data);
     } catch (error) {
       console.error("Erreur lors de la recherche :", error);
     }
   };
-  console.log("searchTerm :>> ", searchTerm);
-  console.log("searchResult :>> ", searchResult);
 
   useEffect(() => {
     // Cette fonction sera appelée à chaque changement de searchTerm
     if (searchTerm === "") {
       // Effacer les résultats de recherche lorsque searchTerm est vide
-      setSearchResult([]);
+      setSearchResult(null);
     } else {
       // Effectuer la recherche lorsque searchTerm n'est pas vide
       handleSearch(searchTerm);

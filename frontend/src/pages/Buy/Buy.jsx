@@ -32,6 +32,7 @@ export default function Buy() {
       .get(`${backendURL}/product`)
       .then((res) => {
         setProducts(res.data);
+        console.log("res.data :>> ", res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -104,7 +105,7 @@ export default function Buy() {
         <div className="grid w-[90%] grid-cols-2 items-center justify-center gap-6 sm:grid-cols-3 md:grid-cols-4 lg:w-[80%] lg:grid-cols-5 xl:grid-cols-6">
           {filteredProducts && filteredProducts.length != 0
             ? filteredProducts
-                .filter((product) => product.id >= 1 && product.id <= 12)
+                .filter((product) => product.id >= 35 && product.id <= 52)
                 .map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))

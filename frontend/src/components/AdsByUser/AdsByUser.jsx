@@ -24,6 +24,7 @@ export default function AdsByUser({ userId, route }) {
     //   // setIsLoading(false);
     // });
   }, []);
+  console.log("ads :>> ", ads);
 
   return (
     <>

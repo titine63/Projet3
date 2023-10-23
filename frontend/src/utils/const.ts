@@ -46,7 +46,7 @@ export const productFormSchema = yup
       .number()
       .typeError("Le prix est obligatoire")
       .required("Le prix est obligatoire")
-      .min(1, "Le prix ne peut pas être négatif ou null.")
+      .positive("Le prix ne peut pas être négatif ou null.")
       .test(
         "maxDecimalPlaces",
         "Le prix peut avoir au plus 2 décimales",

@@ -4,6 +4,8 @@ import { useState, useContext, useEffect } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 export default function ProductCard({ product }) {
   const { wishlist, setWishlist, showToast } = useContext(GlobalContext);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -40,7 +42,7 @@ export default function ProductCard({ product }) {
   }, [wishlist, product]);
 
   return (
-    <div className="relative flex flex-col gap-1 rounded-lg border-2 bg-slate-100 p-1 shadow-lg transition duration-300 ease-in-out hover:-translate-y-1 hover:translate-x-1 hover:shadow-xl">
+    <div className="relative flex h-[350px] flex-col gap-1 rounded-lg border-2 bg-slate-100 p-1 shadow-lg transition duration-300 ease-in-out hover:-translate-y-1 hover:translate-x-1 hover:shadow-xl md:h-[420px]">
       {!isFavorite && (
         <AiOutlineHeart
           className="absolute right-2 top-1 cursor-pointer text-3xl transition duration-200 ease-in-out hover:scale-110 hover:transform"
@@ -56,11 +58,19 @@ export default function ProductCard({ product }) {
 
       <h2 className="h3 pb-1 pl-2">{product.title}</h2>
       <Link to={`/buy/product/${product.id}`}>
-        <img
-          src="https://picsum.photos/400/500"
-          alt={product.title}
-          className=""
-        />
+        {product.pictures.length > 0 && product.pictures[0].url ? (
+          <img
+            src={`${backendURL}${product.pictures[0].url}`}
+            alt={product.title}
+            className="h-[230px] w-full object-cover md:h-[300px]"
+          />
+        ) : (
+          <img
+            src="https://picsum.photos/400/500"
+            alt={product.title}
+            className=""
+          />
+        )}
         <p className="pl-2 text-lg font-bold text-orange-500">
           {product.price} €
         </p>

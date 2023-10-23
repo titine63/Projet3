@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 import { LiaTimesCircleSolid } from "react-icons/lia";
@@ -12,24 +12,47 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function ProductForm({
+  productData,
   setModalVisible,
   setSuccessMessage,
-  setCreatedProductId,
+  setProductId,
+  mode,
 }) {
   const { userInfo } = useContext(GlobalContext);
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewURLs, setPreviewURLs] = useState([]);
+  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(productFormSchema),
   });
+
+  useEffect(() => {
+    if (productData) {
+      setValue("title", productData.title);
+      setValue("price", productData.price);
+      setValue("description", productData.description);
+      setValue("clothing_type", productData.clothing_type);
+      setValue("category", productData.category);
+      setValue("brand", productData.brand);
+      setValue("state", productData.state);
+      setValue("size", productData.size);
+      setValue("color", productData.color);
+      if (productData.pictures) {
+        setPreviewURLs(
+          productData.pictures.map((picture) => `${backendURL}${picture.url}`),
+        );
+      }
+    }
+  }, [productData, setValue]);
 
   function handlePictureChange(event) {
     if (event.target.files.length > 6) {
@@ -50,12 +73,20 @@ export default function ProductForm({
     const newURLs = [...previewURLs];
     newURLs.splice(index, 1);
     setPreviewURLs(newURLs);
+
+    if (mode === "update") {
+      const pictureToDelete = productData.pictures[index];
+      setImagesToDelete((prevImages) => [...prevImages, pictureToDelete]);
+    }
+    // Si vous avez des identifiants pour chaque image, ajoutez cette image à la liste imagesToDelete.
+    if (mode === "update" && productData.pictures[index].id) {
+      setImagesToDelete([...imagesToDelete, productData.pictures[index].id]);
+    }
   }
 
   const uploadImage = async (productId, file) => {
     const formData = new FormData();
     formData.append("file", file);
-    // formData.append("productId", productId);
     try {
       await axios.post(`${backendURL}/picture/upload/${productId}`, formData);
       console.log("Picture uploaded");
@@ -64,39 +95,57 @@ export default function ProductForm({
     }
   };
 
+  async function deleteImageFromServer(imageId) {
+    try {
+      await axios.delete(`${backendURL}/picture/${imageId}`);
+      console.log("Image supprimée avec succès :", imageId);
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'image :", error);
+    }
+  }
+
   async function onSubmit(data) {
     try {
       const payload = {
         ...data,
         userId: userInfo.id,
       };
-      const response = await axios.post(`${backendURL}/product`, payload);
-      const createdProductId = response.data.id;
+      if (mode === "create") {
+        const response = await axios.post(`${backendURL}/product`, payload);
+        const createdProductId = response.data.id;
 
-      // Upload each image with the product ID
-      for (const file of selectedFiles) {
-        await uploadImage(createdProductId, file);
-      }
-
-      setSuccessMessage(
-        `Votre annonce "${response.data.title}" est maintenant en ligne !`,
-      );
-      setModalVisible(true);
-      setCreatedProductId(response.data.id);
-      console.log("Annonce créée avec succès :", response.data);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        Array.isArray(error.response.data.message)
-      ) {
-        console.log(
-          "error.response.data.message :>> ",
-          error.response.data.message,
+        // Upload each image with the product ID
+        for (const file of selectedFiles) {
+          await uploadImage(createdProductId, file);
+        }
+        setSuccessMessage(
+          `Votre annonce "${response.data.title}" est maintenant en ligne !`,
         );
-      } else {
-        console.error("Erreur lors de la création de l'annonce :", error);
+        setModalVisible(true);
+        setProductId(response.data.id);
+        console.log("Annonce créée avec succès :", response.data);
+      } else if (mode === "update") {
+        const productId = productData.id;
+        const response = await axios.put(
+          `${backendURL}/product/${productId}`,
+          payload,
+        );
+        for (const imageId of imagesToDelete) {
+          await deleteImageFromServer(imageId);
+        }
+        // Upload each image with the product ID
+        for (const file of selectedFiles) {
+          await uploadImage(productId, file);
+        }
+        setSuccessMessage(
+          `Votre annonce "${payload.title}" est maintenant en ligne !`,
+        );
+        setModalVisible(true);
+        setProductId(response.data.id);
+        console.log("Annonce modifié avec succès :", response.data);
       }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de l'annonce :", error);
     }
   }
 
@@ -120,7 +169,7 @@ export default function ProductForm({
           />
 
           <div className="grid w-[90%] grid-cols-2 items-center justify-center gap-4 sm:w-[80%] md:w-[70%] lg:flex-[3] xl:grid-cols-3">
-            {previewURLs.length > 0
+            {previewURLs && previewURLs.length > 0
               ? previewURLs.map((url) => (
                   <div
                     key={url}
@@ -146,7 +195,7 @@ export default function ProductForm({
                   </div>
                 ))
               : null}
-            {previewURLs.length < 6 ? (
+            {previewURLs && previewURLs.length < 6 ? (
               <MdOutlineAddBox
                 src="/images/add-square.svg"
                 className="h-32 w-32 cursor-pointer rounded-md object-cover text-slate-500 hover:opacity-70 sm:h-40 sm:w-40"
@@ -168,7 +217,13 @@ export default function ProductForm({
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Prix :</label>
-              <input type="number" name="price" {...register("price")} />
+              <input
+                type="number"
+                name="price"
+                step="0.01"
+                min="0"
+                {...register("price")}
+              />
               {errors.price && (
                 <span className="error-span">{errors.price.message}</span>
               )}
@@ -278,12 +333,21 @@ export default function ProductForm({
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2"
-        >
-          Déposer l'annonce
-        </button>
+        {mode === "create" ? (
+          <button
+            type="submit"
+            className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2"
+          >
+            Déposer l'annonce
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2"
+          >
+            Modifier l'annonce
+          </button>
+        )}
       </form>
     </>
   );
