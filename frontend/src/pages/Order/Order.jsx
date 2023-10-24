@@ -109,7 +109,7 @@ export default function Order() {
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
-              <label>Options de payement :</label>
+              <label>Options de paiement :</label>
               <select name="payment">
                 <option value="">Sélectionnez une option</option>
                 <option value="cb">Carte bancaire</option>
