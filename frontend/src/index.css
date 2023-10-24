@@ -124,9 +124,13 @@
 /* .params-command {
   @apply grid h-full justify-center gap-y-2 lg:flex lg:flex-row lg:justify-around;
 } */
-/* .sell-section {
-  height: calc(100vh - 80px);
-} */
+
+@media screen and (min-width: 1024px) {
+  .sell-section {
+    height: calc(100vh - 80px);
+    @apply fixed;
+  }
+}
 .params-product-form select,
 .params-product-form input,
 .params-product-form textarea {

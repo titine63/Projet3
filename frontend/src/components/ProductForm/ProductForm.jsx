@@ -152,7 +152,7 @@ export default function ProductForm({
   return (
     <>
       <form
-        className="params-product-form items-center lg:flex lg:w-3/4 lg:flex-col lg:bg-white lg:pb-8 lg:pt-16"
+        className="params-product-form items-center lg:ml-[33%] lg:flex lg:w-3/4 lg:flex-col lg:bg-white lg:pb-8 lg:pt-16"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="lg: mb-8 flex flex-col items-center gap-2 lg:w-[80%] lg:flex-row lg:gap-4">
