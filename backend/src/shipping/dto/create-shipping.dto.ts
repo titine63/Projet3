@@ -24,7 +24,7 @@ export class CreateShippingDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(10)
-  postalCode: string;
+  postal_code: string;
 
   @IsString()
   @IsNotEmpty()
@@ -34,7 +34,7 @@ export class CreateShippingDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  shippingMethod: string;
+  shipping_method: string;
 
   @IsInt()
   @IsNotEmpty()

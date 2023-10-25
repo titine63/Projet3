@@ -17,7 +17,7 @@ export class CreateOrderDto {
   @IsNotEmpty()
   @MaxLength(20)
   @IsEnum(['paypal', 'stripe'])
-  paymentMethod: string;
+  payment_method: string;
 
   @IsInt()
   @IsNotEmpty()

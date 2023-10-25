@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-  // IsInt,
+  IsInt,
 } from 'class-validator';
 import { Category } from '../entities/product.entity';
 
@@ -60,7 +60,7 @@ export class CreateProductDto {
   @MaxLength(20)
   state: string;
 
-  // @IsInt()
-  // @IsNotEmpty()
-  // userId: number;
+  @IsInt()
+  @IsNotEmpty()
+  userId: number;
 }

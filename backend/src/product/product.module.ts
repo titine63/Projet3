@@ -8,6 +8,7 @@ import { OrderService } from './../order/order.service';
 import { UsersService } from './../users/users.service';
 import { OrderModule } from './../order/order.module';
 import { UsersModule } from './../users/users.module';
+import { ShippingModule } from './../shipping/shipping.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UsersModule } from './../users/users.module';
     PictureModule,
     OrderModule,
     UsersModule,
+    ShippingModule,
   ],
   controllers: [ProductController],
   providers: [ProductService, OrderService, UsersService],
