@@ -10,8 +10,6 @@ import {
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { Order } from './entities/order.entity';
-import { CreateShippingDto } from './../shipping/dto/create-shipping.dto';
 
 @Controller('order')
 export class OrderController {
@@ -20,17 +18,6 @@ export class OrderController {
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.orderService.create(createOrderDto);
-  }
-
-  @Post('shipping')
-  async createWithShipping(
-    @Body('shipping') createShippingDto: CreateShippingDto,
-    @Body('order') createOrderDto: CreateOrderDto,
-  ): Promise<Order> {
-    return await this.orderService.createOrderWithShipping(
-      createShippingDto,
-      createOrderDto,
-    );
   }
 
   @Get()

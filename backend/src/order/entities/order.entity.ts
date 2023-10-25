@@ -17,7 +17,7 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 20 })
+  @Column({ length: 20, default: 'pending' })
   status: string;
 
   @Column({ length: 20 })
@@ -39,6 +39,9 @@ export class Order {
   })
   @JoinColumn({ name: 'shippingId' })
   shipping: Shipping;
+
+  @Column()
+  shippingId: number;
 
   @OneToMany(() => Product, (product) => product.order, {
     cascade: false,

@@ -10,14 +10,8 @@ export class CreateOrderDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  @IsEnum(['pending', 'paid', 'shipped', 'delivered'])
-  status: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(20)
   @IsEnum(['paypal', 'stripe'])
-  payment_method: string;
+  paymentMethod: string;
 
   @IsInt()
   @IsNotEmpty()

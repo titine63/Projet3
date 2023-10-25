@@ -13,7 +13,8 @@ export class ShippingService {
   ) {}
 
   async create(createShippingDto: CreateShippingDto): Promise<Shipping> {
-    return await this.shippingRepository.save(createShippingDto);
+    const shipping = await this.shippingRepository.save(createShippingDto);
+    return shipping;
   }
 
   async findAll(): Promise<Shipping[]> {

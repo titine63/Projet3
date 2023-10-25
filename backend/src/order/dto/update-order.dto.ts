@@ -8,10 +8,4 @@ export class UpdateOrderDto extends PartialType(CreateOrderDto) {
   @MaxLength(20)
   @IsEnum(['pending', 'paid', 'shipped', 'delivered'])
   status: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(20)
-  @IsEnum(['paypal', 'stripe'])
-  paymentMethod: string;
 }

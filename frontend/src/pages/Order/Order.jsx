@@ -29,27 +29,21 @@ export default function Order() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-
+    data.userId = userInfo.id;
     axios
-      .post(`${backendURL}/order/shipping`, {
-        shipping: {
-          firstname: data.firstname,
-          lastname: data.lastname,
-          address: data.address,
-          city: data.city,
-          postal_code: data.postal_code,
-          shipping_method: data.shipping_method,
-          country: data.country,
-          userId: userInfo.id,
-        },
-        order: {
-          status: "pending",
-          payment_method: data.payment_method,
-          userId: userInfo.id,
-        },
-      })
+      .post(`${backendURL}/shipping`, data)
       .then((res) => {
-        console.log("Order and shipping created successfully", res);
+        console.log("Shipping created successfully", res);
+        data.shippingId = res.data.id;
+        console.log("data :>> ", data);
+        axios
+          .post(`${backendURL}/order`, data)
+          .then((res) => {
+            console.log("Order created successfully", res);
+          })
+          .catch((err) => {
+            console.error("Error:", err);
+          });
       })
       .catch((err) => {
         console.error("Error:", err);
@@ -119,15 +113,15 @@ export default function Order() {
           <div className="flex w-[90%] flex-col gap-4  sm:w-[80%] sm:gap-6 md:w-[70%] lg:w-1/2">
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Adresse :</label>
-              <input type="text" name="Adress" />
+              <input type="text" name="address" />
             </div>
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Ville :</label>
-              <input type="text" name="City" />
+              <input type="text" name="city" />
             </div>
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Code postal :</label>
-              <input type="text" name="postal_code" />
+              <input type="text" name="postalCode" />
             </div>
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Pays :</label>
@@ -147,7 +141,7 @@ export default function Order() {
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>Options de paiement :</label>
-              <select name="payment_method">
+              <select name="paymentMethod">
                 <option value="">Sélectionnez une option</option>
                 <option value="stripe">Carte bancaire</option>
                 <option value="paypal">PayPal</option>
@@ -156,7 +150,7 @@ export default function Order() {
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>Options de livraison :</label>
-              <select name="Delivery">
+              <select name="shippingMethod">
                 <option value="">Sélectionnez une option</option>
                 <option value="Pick-up">
                   Envoi au point relais (2J ouvrés)
