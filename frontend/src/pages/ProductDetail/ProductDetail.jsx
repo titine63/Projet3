@@ -1,31 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
+import { useContext, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { GlobalContext } from "../../contexts/GlobalContextProvider";
+import {
+  TbSquareRoundedChevronLeft,
+  TbSquareRoundedChevronRight,
+} from "react-icons/tb";
 import { HiUserGroup } from "react-icons/hi";
 import { BsTagsFill } from "react-icons/bs";
 import { PiHandHeartFill } from "react-icons/pi";
 import { GiClothes, GiBodyHeight } from "react-icons/gi";
 import { IoIosColorPalette } from "react-icons/io";
-import { GlobalContext } from "../../contexts/GlobalContextProvider";
-import { useContext, useState, useEffect } from "react";
-import {
-  TbSquareRoundedChevronLeft,
-  TbSquareRoundedChevronRight,
-} from "react-icons/tb";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const { wishlist, setWishlist, showToast, userInfo } =
-    useContext(GlobalContext);
+  const { wishlist, setWishlist, showToast } = useContext(GlobalContext);
 
   const [isFavorite, setIsFavorite] = useState(false);
   const [product, setProduct] = useState({});
   console.log("product :>> ", product);
   const [currentPicture, setCurrentPicture] = useState(0);
+
+  const userInfo = Cookies.get("userData")
+    ? JSON.parse(Cookies.get("userData"))
+    : null;
 
   const [modalVisible, setModalVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");

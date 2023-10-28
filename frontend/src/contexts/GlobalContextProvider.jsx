@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useMemo } from "react";
 import Cookies from "js-cookie";
-import Toast from "../utils/Toast"; // Import du composant Toast
+import Toast from "./../components/Toast/Toast";
 
 // Création du contexte global de l'application
 export const GlobalContext = createContext();

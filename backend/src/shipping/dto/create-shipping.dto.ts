@@ -1,4 +1,10 @@
-import { IsInt, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateShippingDto {
   @IsString()
@@ -34,6 +40,7 @@ export class CreateShippingDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
+  @IsEnum(['point-relais', 'laposte'])
   shippingMethod: string;
 
   @IsInt()

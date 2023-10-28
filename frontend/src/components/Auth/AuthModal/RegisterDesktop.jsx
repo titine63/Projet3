@@ -1,4 +1,3 @@
-//RegisterDesktop.jsx
 /* eslint-disable react/no-unescaped-entities */
 import { useContext } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";

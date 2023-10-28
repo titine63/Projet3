@@ -1,13 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { GlobalContext } from "./../../contexts/GlobalContextProvider";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { LiaTimesCircleSolid } from "react-icons/lia";
 import { MdOutlineAddBox } from "react-icons/md";
-import axios from "axios";
 import { productFormSchema } from "./../../utils/const";
-import { yupResolver } from "@hookform/resolvers/yup";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -18,7 +18,9 @@ export default function ProductForm({
   setProductId,
   mode,
 }) {
-  const { userInfo } = useContext(GlobalContext);
+  const userInfo = Cookies.get("userData")
+    ? JSON.parse(Cookies.get("userData"))
+    : null;
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -31,7 +33,7 @@ export default function ProductForm({
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onSubmit",
+    mode: "onBlur",
     resolver: yupResolver(productFormSchema),
   });
 
@@ -234,11 +236,18 @@ export default function ProductForm({
               <select name="clothing_type" {...register("clothing_type")}>
                 <option value="">Sélectionnez une option</option>
                 <option value="T-shirt">T-shirt</option>
+                <option value="Chemise">Chemise</option>
                 <option value="Pantalon">Pantalon</option>
                 <option value="Jean">Jean</option>
-                <option value="Robe">Robe</option>
                 <option value="Short">Short</option>
-                <option value="Sous-vêtement">Sous-vêtement</option>
+                <option value="Robe">Robe</option>
+                <option value="Pull">Pull</option>
+                <option value="Veste">Veste</option>
+                <option value="Manteau">Manteau</option>
+                <option value="Echarpe">Echarpe</option>
+                <option value="Chapeau">Chapeau</option>
+                <option value="Sous-vêtements">Sous-vêtements</option>
+                <option value="Chaussures">Chaussures</option>
               </select>
               {errors.clothing_type && (
                 <span className="error-span">
@@ -294,9 +303,9 @@ export default function ProductForm({
               <select name="state" {...register("state")}>
                 <option value="">Sélectionnez une option</option>
                 <option value="Neuf">Neuf</option>
-                <option value="Très bon état">Très bon état</option>
-                <option value="Bon état">Bon état</option>
-                <option value="Satisfaisnt">Satisfaisnt</option>
+                <option value="Très bon">Très bon état</option>
+                <option value="Bon">Bon état</option>
+                <option value="Satisfaisant">Satisfaisnt</option>
               </select>
             </div>
 
@@ -321,14 +330,23 @@ export default function ProductForm({
               <label>Couleur :</label>
               <select name="color" {...register("color")}>
                 <option value="">Sélectionnez une option</option>
+                <option value="Blanc">Blanc</option>
+                <option value="Noir">Noir</option>
+                <option value="Gris">Gris</option>
+                <option value="Jaune">Jaune</option>
                 <option value="Rouge">Rouge</option>
+                <option value="Bleu">Bleu</option>
+                <option value="Vert">Vert</option>
+                <option value="Rose">Rose</option>
+                <option value="Violet">Violet</option>
                 <option value="Orange">Orange</option>
-                <option value="Gris">gris</option>
-                <option value="Noir">noir</option>
-                <option value="Bleu">bleu</option>
-                <option value="Vert">vert</option>
-                <option value="Jaune">jaune</option>
-                <option value="Violet">violet</option>
+                <option value="Marron">Marron</option>
+                <option value="Doré">Doré</option>
+                <option value="Argenté">Argenté</option>
+                <option value="Beige">Beige</option>
+                <option value="Kaki">Kaki</option>
+                <option value="Bordeaux">Bordeaux</option>
+                <option value="Moutarde">Moutarde</option>
               </select>
             </div>
           </div>

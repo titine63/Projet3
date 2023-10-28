@@ -1,8 +1,7 @@
-//ModalDeleteAccount.jsx
 import PropTypes from "prop-types";
 import { AiFillWarning } from "react-icons/ai"; // Import du composant
-import axios from "axios";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 function ModalDeleteAccount({
   isOpen,

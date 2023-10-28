@@ -1,22 +1,21 @@
-// RegisterForm.jsx
-
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext } from "react"; // Ajout de useState
-import { useForm } from "react-hook-form";
-import { AiOutlineUser } from "react-icons/ai";
-import { HiOutlineMail } from "react-icons/hi";
-import { RiLockPasswordFill } from "react-icons/ri";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
-import axios from "axios";
+import { AiOutlineUser, AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { HiOutlineMail } from "react-icons/hi";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../../utils/const";
+import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function RegisterForm({ className }) {
   const { setModalContent, showToast } = useContext(GlobalContext);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -75,13 +74,24 @@ export default function RegisterForm({ className }) {
       <div className="div-input">
         <RiLockPasswordFill className=" absolute left-5 top-[0.9rem] text-xl text-[#5e5e5e]" />
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           id="password"
           name="password"
           className="input-auth"
           placeholder="Mot de passe"
           {...register("password")}
         />
+        {showPassword ? (
+          <AiFillEye
+            className="absolute right-5 top-[0.9rem] cursor-pointer text-xl text-[#5e5e5e]"
+            onClick={() => setShowPassword(false)}
+          />
+        ) : (
+          <AiFillEyeInvisible
+            className="absolute right-5 top-[0.9rem] cursor-pointer text-xl text-[#5e5e5e]"
+            onClick={() => setShowPassword(true)}
+          />
+        )}
         {errors.password && (
           <span className="error-span">{errors.password.message}</span>
         )}
@@ -89,13 +99,24 @@ export default function RegisterForm({ className }) {
       <div className="div-input">
         <RiLockPasswordFill className=" absolute left-5 top-[0.9rem] text-xl text-[#5e5e5e]" />
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           id="confirmpassword"
           name="confirmpassword"
           className="input-auth"
           placeholder="Confirmez le mot de passe"
           {...register("confirmpassword")}
         />
+        {showPassword ? (
+          <AiFillEye
+            className="absolute right-5 top-[0.9rem] cursor-pointer text-xl text-[#5e5e5e]"
+            onClick={() => setShowPassword(false)}
+          />
+        ) : (
+          <AiFillEyeInvisible
+            className="absolute right-5 top-[0.9rem] cursor-pointer text-xl text-[#5e5e5e]"
+            onClick={() => setShowPassword(true)}
+          />
+        )}
         {errors.confirmpassword && (
           <span className="error-span">{errors.confirmpassword.message}</span>
         )}

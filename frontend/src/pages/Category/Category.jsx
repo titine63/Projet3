@@ -13,8 +13,6 @@ export default function Category() {
 
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(null);
-  console.log("products :>> ", products);
-  console.log("filteredProducts :>> ", filteredProducts);
 
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
@@ -83,11 +81,9 @@ export default function Category() {
       ) : (
         <div className="my-8 grid w-[90%] grid-cols-2 items-center justify-center gap-6 sm:grid-cols-3 md:grid-cols-4 lg:w-[80%] lg:grid-cols-5 xl:grid-cols-6">
           {filteredProducts && filteredProducts.length != 0
-            ? filteredProducts
-                .filter((product) => product.id >= 1 && product.id <= 12)
-                .map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))
+            ? filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))
             : products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

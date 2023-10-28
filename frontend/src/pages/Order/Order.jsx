@@ -1,6 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { orderFormSchema } from "./../../utils/const";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -10,7 +13,19 @@ export default function Order() {
   const { id } = useParams();
   const [productData, setProductData] = useState([]);
 
-  const userInfo = JSON.parse(Cookies.get("userData"));
+  const userInfo = Cookies.get("userData")
+    ? JSON.parse(Cookies.get("userData"))
+    : null;
+
+  const {
+    register,
+
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(orderFormSchema),
+  });
 
   useEffect(() => {
     axios
@@ -25,7 +40,7 @@ export default function Order() {
       });
   }, []);
 
-  function handleSubmit(e) {
+  function onSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
@@ -64,13 +79,13 @@ export default function Order() {
           <p className="text-start lg:block lg:font-medium">
             *{" "}
             <span className="underline underline-offset-4">
-              Informations obligatoires
+              Toutes les informations sont obligatoires
             </span>
           </p>
         </div>
       </section>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="params-product-form items-center gap-4 pb-8 sm:gap-6 lg:ml-[33%] lg:flex lg:w-3/4 lg:flex-col lg:bg-white lg:pb-8 lg:pt-16"
       >
         <div className="mb-8 flex flex-col items-center gap-2 lg:w-[80%] lg:flex-row lg:gap-4">
@@ -113,50 +128,82 @@ export default function Order() {
           <div className="flex w-[90%] flex-col gap-4  sm:w-[80%] sm:gap-6 md:w-[70%] lg:w-1/2">
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Adresse :</label>
-              <input type="text" name="address" />
+              <input type="text" name="address" {...register("address")} />
+              {errors.address && (
+                <span className="error-span">{errors.address.message}</span>
+              )}
             </div>
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Ville :</label>
-              <input type="text" name="city" />
+              <input type="text" name="city" {...register("city")} />
+              {errors.city && (
+                <span className="error-span">{errors.city.message}</span>
+              )}
             </div>
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Code postal :</label>
-              <input type="text" name="postalCode" />
+              <input
+                type="text"
+                name="postalCode"
+                {...register("postalCode")}
+              />
+              {errors.postalCode && (
+                <span className="error-span">{errors.postalCode.message}</span>
+              )}
             </div>
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Pays :</label>
-              <input type="text" name="country" />
+              <input type="text" name="country" {...register("country")} />
+              {errors.country && (
+                <span className="error-span">{errors.country.message}</span>
+              )}
             </div>
           </div>
 
           <div className="flex w-[90%] flex-col gap-4 sm:w-[80%] sm:gap-6 md:w-[70%] lg:w-1/2 lg:items-start">
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Nom :</label>
-              <input type="text" name="lastname" />
+              <input type="text" name="lastname" {...register("lasttname")} />
+              {errors.lastname && (
+                <span className="error-span">{errors.lasttname.message}</span>
+              )}
             </div>
             <div className="flex w-full flex-col gap-2 lg:items-start">
               <label>* Prénom :</label>
-              <input type="text" name="firstname" />
+              <input type="text" name="firstname" {...register("firstname")} />
+              {errors.firstname && (
+                <span className="error-span">{errors.firstname.message}</span>
+              )}
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
-              <label>Options de paiement :</label>
-              <select name="paymentMethod">
+              <label>* Méthode de paiement :</label>
+              <select name="paymentMethod" {...register("paymentMethod")}>
                 <option value="">Sélectionnez une option</option>
-                <option value="stripe">Carte bancaire</option>
+                <option value="stripe">Stripe</option>
                 <option value="paypal">PayPal</option>
               </select>
+              {errors.paymentMethod && (
+                <span className="error-span">
+                  {errors.paymentMethod.message}
+                </span>
+              )}
             </div>
 
             <div className="flex w-full flex-col gap-2 lg:items-start">
-              <label>Options de livraison :</label>
-              <select name="shippingMethod">
+              <label>* Méthode de livraison :</label>
+              <select name="shippingMethod" {...register("shippingMethod")}>
                 <option value="">Sélectionnez une option</option>
-                <option value="Pick-up">
-                  Envoi au point relais (2J ouvrés)
+                <option value="point-relais">
+                  Envoi en point relais (2J ouvrés)
                 </option>
-                <option value="Home">Envoi à domicile (3J ouvrés)</option>
+                <option value="laposte">Envoi à domicile (3J ouvrés)</option>
               </select>
+              {errors.shippingMethod && (
+                <span className="error-span">
+                  {errors.shippingMethod.message}
+                </span>
+              )}
             </div>
           </div>
         </div>

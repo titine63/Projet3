@@ -61,10 +61,92 @@ export const productFormSchema = yup
       .oneOf(["XS", "S", "M", "L", "XL", "XXL", "XXXL"], "Taille non valide.")
       .required("La taille est obligatoire"),
 
+    color: yup
+      .string()
+      .max(20, "Maximum 20 caractères")
+      .oneOf(
+        [
+          "Rouge",
+          "Bleu",
+          "Vert",
+          "Jaune",
+          "Orange",
+          "Violet",
+          "Rose",
+          "Marron",
+          "Noir",
+          "Blanc",
+          "Gris",
+          "Beige",
+          "Doré",
+          "Argenté",
+          "Bordeaux",
+          "Kaki",
+          "Moutarde",
+        ],
+        "Couleur non valide.",
+      )
+      .optional(),
+
+    state: yup
+      .string()
+      .max(20, "Maximum 20 caractères")
+      .oneOf(["Neuf", "Très bon", "Bon", "Satisfaisant"], "Etat non valide.")
+      .optional(),
+
+    brand: yup.string().max(50, "Maximum 50 caractères").optional(),
+
     clothing_type: yup.string().required("Le type de vêtement est obligatoire"),
+
     category: yup
       .string()
+      .max(10, "Maximum 10 caractères")
       .oneOf(["Homme", "Femme", "Enfant"], "Catégorie non valide.")
       .required("La catégorie est obligatoire"),
+  })
+  .required();
+
+export const orderFormSchema = yup
+  .object()
+  .shape({
+    address: yup
+      .string()
+      .max(255, "Maximum 255 caractères")
+      .required("L'adresse est obligatoire"),
+
+    city: yup
+      .string()
+      .max(255, "Maximum 255 caractères")
+      .required("La ville est obligatoire"),
+
+    postalCode: yup
+      .string()
+      .max(10, "Maximum 10 caractères")
+      .required("Le code postal est obligatoire"),
+
+    country: yup
+      .string()
+      .max(50, "Maximum 50 caractères")
+      .required("Le pays est obligatoire"),
+
+    firstname: yup
+      .string()
+      .max(255, "Maximum 255 caractères")
+      .required("Le prénom est obligatoire"),
+
+    lastname: yup
+      .string()
+      .max(255, "Maximum 255 caractères")
+      .required("Le nom de famille est obligatoire"),
+
+    paymentMethod: yup
+      .string()
+      .oneOf(["paypal", "stripe"], "Méthode de payment non valide.")
+      .required("La méthode de payment est obligatoire."),
+
+    shippingMethod: yup
+      .string()
+      .oneOf(["point-relais", "laposte"], "Méthode de livraison non valide.")
+      .required("La méthode de livraison est obligatoire"),
   })
   .required();

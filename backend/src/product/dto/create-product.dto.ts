@@ -44,6 +44,25 @@ export class CreateProductDto {
 
   @IsString()
   @IsOptional()
+  @IsEnum([
+    'Rouge',
+    'Bleu',
+    'Vert',
+    'Jaune',
+    'Orange',
+    'Violet',
+    'Rose',
+    'Marron',
+    'Noir',
+    'Blanc',
+    'Gris',
+    'Beige',
+    'Doré',
+    'Argenté',
+    'Bordeaux',
+    'Kaki',
+    'Moutarde',
+  ])
   @MaxLength(20)
   color: string;
 
@@ -57,6 +76,7 @@ export class CreateProductDto {
 
   @IsString()
   @IsOptional()
+  @IsEnum(['Neuf', 'Très bon', 'Bon', 'Satisfaisant'])
   @MaxLength(20)
   state: string;
 

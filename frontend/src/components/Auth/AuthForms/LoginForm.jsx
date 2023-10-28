@@ -1,23 +1,25 @@
 /* eslint-disable react/prop-types */
-//LoginForm.jsx
-import { useContext, useState } from "react"; // Import useState
-import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
+import ModalResetPassword from "./../../../components/Auth/Modals/ModalResetPassword";
+import ModalError from "./../../../components/Auth/Modals/ModalError";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordFill } from "react-icons/ri";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../../utils/const";
-import ModalResetPassword from "./../../../components/Auth/Modals/ModalResetPassword"; // Import du composant
-import ModalError from "./../../../components/Auth/Modals/ModalError"; // Import du composant
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export default function LoginForm({ className }) {
   const { setIsLogged, setShowAuthModal } = useContext(GlobalContext);
-  const [showErrorModal, setShowErrorModal] = useState(false); // Ajout de l'état pour la modale d'erreur
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
 
   let navigate = useNavigate();
@@ -91,13 +93,25 @@ export default function LoginForm({ className }) {
         <div className="div-input">
           <RiLockPasswordFill className=" absolute left-5 top-[0.9rem] text-xl text-[#5e5e5e]" />
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             name="password"
             className="input-auth"
             placeholder="Mot de passe"
             {...register("password")}
           />
+          {showPassword ? (
+            <AiFillEye
+              className="absolute right-5 top-[0.9rem] cursor-pointer text-xl text-[#5e5e5e]"
+              onClick={() => setShowPassword(false)}
+            />
+          ) : (
+            <AiFillEyeInvisible
+              className="absolute right-5 top-[0.9rem] cursor-pointer text-xl text-[#5e5e5e]"
+              onClick={() => setShowPassword(true)}
+            />
+          )}
+
           {errors.password && (
             <span className="error-span">{errors.password.message}</span>
           )}

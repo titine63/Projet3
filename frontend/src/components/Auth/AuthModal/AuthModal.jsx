@@ -1,4 +1,3 @@
-//AuthModal.jsx
 import { useContext } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContextProvider";
 import LoginDesktop from "./LoginDesktop";

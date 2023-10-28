@@ -1,14 +1,13 @@
-//Profile.jsx
 import { useContext, useState } from "react";
-import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 import { Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { GlobalContext } from "./../../contexts/GlobalContextProvider";
 import { TiStarFullOutline } from "react-icons/ti";
 import { LuPenSquare } from "react-icons/lu";
 import { ImCross } from "react-icons/im";
 import ModalResetPassword from "./../../components/Auth/Modals/ModalResetPassword";
 import ModalDeleteAccount from "./../../components/Auth/Modals/ModalDeleteAccount";
 import AdsByUser from "../../components/AdsByUser/AdsByUser";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
