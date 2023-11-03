@@ -48,7 +48,7 @@ export default function Sell() {
       <ProductForm
         setModalVisible={setModalVisible}
         setSuccessMessage={setSuccessMessage}
-        setCreatedProductId={setProductId}
+        setProductId={setProductId}
         mode="create"
       />
 
