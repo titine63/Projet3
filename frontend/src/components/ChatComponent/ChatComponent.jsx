@@ -2,37 +2,30 @@
 import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-export default function ChatComponent({ userId, partnerId, userToken }) {
+export default function ChatComponent() {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const socket = useRef();
 
-  const room = `${userId}-${partnerId}`;
-
   useEffect(() => {
-    socket.current = io(backendUrl, { query: { token: userToken } });
-
+    socket.current = io(backendURL);
+    // Écoute des nouveaux messages
     socket.current.on("message", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
-    // Rejoindre la room dès la connexion
-    console.log(`Joining room ${room}`);
-    socket.current.emit("joinRoom", room);
-
     return () => {
-      // Quitter la room à la déconnexion
-      socket.current.emit("leaveRoom", room);
       socket.current.disconnect();
     };
-  }, [room]);
+  }, []);
 
   const sendMessage = () => {
     if (inputMessage.trim() !== "") {
-      socket.current.emit("privateMessage", { room, message: inputMessage });
-      setMessages([...messages, { username: "Vous", content: inputMessage }]);
+      socket.current.emit("message", inputMessage);
+      // Ajoute le message à la liste locale
+      setMessages([...messages, inputMessage]);
       setInputMessage("");
     }
   };
@@ -42,11 +35,11 @@ export default function ChatComponent({ userId, partnerId, userToken }) {
       <div className="chat-box h-96 border-2 border-black text-lg font-medium">
         {messages.map((message, index) => (
           <div key={index} className="message">
-            {message.username}: {message.content}
+            {message}
           </div>
         ))}
       </div>
-      <div className="flex  w-full">
+      <div className="flex w-full">
         <input
           type="text"
           className="w-4/5 border border-black text-lg font-medium"
