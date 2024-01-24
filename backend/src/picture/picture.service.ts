@@ -34,6 +34,6 @@ export class PictureService {
   }
 
   async removePic(productId: number) {
-    return await this.pictureRepository.delete(productId);
+    return await this.pictureRepository.delete({ productId: productId });
   }
 }

@@ -64,34 +64,11 @@ export const productFormSchema = yup
     color: yup
       .string()
       .max(20, "Maximum 20 caractères")
-      .oneOf(
-        [
-          "Rouge",
-          "Bleu",
-          "Vert",
-          "Jaune",
-          "Orange",
-          "Violet",
-          "Rose",
-          "Marron",
-          "Noir",
-          "Blanc",
-          "Gris",
-          "Beige",
-          "Doré",
-          "Argenté",
-          "Bordeaux",
-          "Kaki",
-          "Moutarde",
-        ],
-        "Couleur non valide.",
-      )
       .optional(),
 
     state: yup
       .string()
       .max(20, "Maximum 20 caractères")
-      .oneOf(["Neuf", "Très bon", "Bon", "Satisfaisant"], "Etat non valide.")
       .optional(),
 
     brand: yup.string().max(50, "Maximum 50 caractères").optional(),

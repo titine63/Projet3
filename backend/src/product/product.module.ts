@@ -6,6 +6,7 @@ import { Product } from './entities/product.entity';
 import { PictureModule } from './../picture/picture.module';
 import { OrderService } from './../order/order.service';
 import { UsersService } from './../users/users.service';
+import { PictureService } from './../picture/picture.service';
 import { OrderModule } from './../order/order.module';
 import { UsersModule } from './../users/users.module';
 import { ShippingModule } from './../shipping/shipping.module';
@@ -19,7 +20,7 @@ import { ShippingModule } from './../shipping/shipping.module';
     ShippingModule,
   ],
   controllers: [ProductController],
-  providers: [ProductService, OrderService, UsersService],
+  providers: [ProductService, OrderService, UsersService, PictureService],
   exports: [ProductService, TypeOrmModule.forFeature([Product])],
 })
 export class ProductModule {}

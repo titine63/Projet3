@@ -22,7 +22,7 @@ async function bootstrap() {
   // Activer CORS
 
   app.enableCors({
-    origin: cors, // Remplacez par l'URL de votre frontend
+    origin: cors,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });

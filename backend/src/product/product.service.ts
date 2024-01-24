@@ -9,6 +9,7 @@ import { Product, Category } from './entities/product.entity';
 import { validate } from 'class-validator';
 import { OrderService } from './../order/order.service';
 import { UsersService } from './../users/users.service';
+import { PictureService } from './../picture/picture.service';
 
 @Injectable()
 export class ProductService {
@@ -17,6 +18,7 @@ export class ProductService {
     private productRepository: Repository<Product>,
     private orderService: OrderService,
     private usersService: UsersService,
+    private pictureService: PictureService,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -59,6 +61,7 @@ export class ProductService {
   }
 
   async remove(id: number) {
+    this.pictureService.removePic(id);
     return await this.productRepository.delete(id);
   }
 
