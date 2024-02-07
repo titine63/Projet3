@@ -15,7 +15,7 @@ export default function Home() {
             Vendre <span className="text-xl font-bold text-[#EC5A13]">.</span>
           </p>
           <p className="carousel-text">
-            Recommencez{" "}
+            Recommencer{" "}
             <span className="text-xl font-bold text-[#EC5A13]">.</span>
           </p>
         </>
@@ -25,8 +25,7 @@ export default function Home() {
       id: 2,
       text: (
         <p className="carousel-text">
-          Si vous cherchez à transformer vos vêtements oubliés en trésor
-          recherché ! Alors, vous êtes au bon endroit.
+          Des trésors dans vos penderies ? Alors c'est ici que ça se passe ! 
         </p>
       ),
     },
@@ -34,7 +33,7 @@ export default function Home() {
       id: 3,
       text: (
         <p className="carousel-text">
-          TRINDED est une brocante virtuelle, où chaque pièce a son histoire.
+          TRINDED est votre vide-placard en ligne.
         </p>
       ),
     },
@@ -57,7 +56,7 @@ export default function Home() {
         <div className="flexflex-col items-center md:text-2xl xl:mb-8 xl:w-1/3 xl:gap-10">
           <div className="flex flex-col items-center gap-8 text-center md:gap-12 lg:gap-14 xl:gap-16">
             <div className="flex flex-col items-center gap-2 md:gap-6">
-              <h2 className="w-[90%]">Explorez notre brocante virtuelle.</h2>
+              <h2 className="w-[90%]">Explorez et dénichez de nouveaux trésors.</h2>
               <Link to="/buy" className="btn-homepage">
                 Acheter
                 <BiSolidChevronsRight className="absolute right-2 top-1/2 -translate-y-1/2 text-[#ec5a13]" />
@@ -65,7 +64,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col items-center gap-2 md:gap-6">
               <h2 className="w-[90%]">
-                Donnez une seconde vie à vos vêtements.
+                Redonnez vie à vos vêtements.
               </h2>
               <Link to="/sell" className="btn-homepage">
                 Vendre
