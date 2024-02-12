@@ -7,7 +7,7 @@ import heartIcon from "./../../../assets/icons/heart.svg";
 import chatIcon from "./../../../assets/icons/msg.svg";
 import userIcon from "./../../../assets/icons/users-group-rounded-line.svg";
 import AuthModal from "../../Auth/AuthModal/AuthModal";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaHome } from "react-icons/fa";
 import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -57,10 +57,11 @@ export default function Header() {
   return (
     <>
       <header className="header fixed top-0 z-10 flex h-20 w-full items-center justify-between gap-4 bg-stone-100 px-4 py-4 sm:gap-6 sm:px-6 lg:px-8">
-        {/* Logo Trinded */}
-        <Link to="/">
-          <span className="logo">TRINDED</span>
-        </Link>
+      <div className="flex items-center">
+        
+        {/* Logo Trinded,sans lien de retour à la page d'accueil */}
+        <span className="logo">TRINDED</span>
+      </div>
         {/* Barre de recherche */}
         <form
           className="relative mr-auto hidden flex-grow rounded-lg border-y-2 border-[#ec5a13] sm:block sm:max-w-[50%] lg:ml-4"
@@ -100,6 +101,10 @@ export default function Header() {
             )}
           </div>
         </form>
+        {/* Icône maison pour revenir à la page d'accueil */}
+        <Link to="/" className="mr-2" title="Accueil">
+          <FaHome className="h-12 w-12 text-[#ec5a13]" />
+        </Link>
         {/* Boutons de navigation */}
         <nav className="flex items-center gap-4 lg:gap-6">
           {/* --- Si l'utilisateur est connecté, on affiche ça --- */}
@@ -108,26 +113,27 @@ export default function Header() {
               {/* Lien vers favoris desktop */}
               <Link
                 to="/favorites"
-                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform sm:block"
+                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform sm:block" title="Ma liste d'envies"
               >
                 <img src={heartIcon}></img>
               </Link>
               {/* Lien vers chat desktop */}
               <Link
                 to="/chat"
-                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform sm:block"
+                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform sm:block" title="Messagerie"
               >
                 <img src={chatIcon}></img>
               </Link>
               {/* Lien vers profil desktop */}
               <Link
                 to="/profile"
-                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform lg:block"
+                className="hidden transition duration-300 ease-in-out hover:scale-110 hover:transform lg:block" title="Mon profil"
               >
                 <img src={userIcon}></img>
               </Link>
               {/* Lien vers profil mobile (si connecté, l'icône user renvoie vers le profil) */}
-              <Link to="/profile" className="lg:hidden">
+              <Link to="/profile" className="lg:hidden" title="Mon profil"
+              >
                 <img src={userIcon}></img>
               </Link>
             </>

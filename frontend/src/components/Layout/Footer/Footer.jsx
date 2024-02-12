@@ -1,12 +1,19 @@
+// Footer.jsx
 import NavbarMobile from "../NavbarMobile/NavbarMobile";
+import NavbarDesktop from "../NavbarDesktop/NavbarDesktop"; // Assurez-vous que ce composant est créé
 
-// Footer en mobile (apparait en mobile uniquement)
 export default function Footer() {
   return (
-    <>
-      <footer className="fixed bottom-0 z-10 w-full bg-stone-100 px-4 py-2 sm:hidden">
+    <footer className="w-full bg-stone-100 px-4 py-2">
+      {/* NavbarMobile est affichée uniquement sur les petits écrans */}
+      <div className="sm:hidden">
         <NavbarMobile />
-      </footer>
-    </>
+      </div>
+      
+      {/* NavbarDesktop est affichée uniquement sur les écrans medium et plus grands */}
+      <div className="hidden sm:block">
+        <NavbarDesktop />
+      </div>
+    </footer>
   );
 }

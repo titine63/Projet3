@@ -1,3 +1,4 @@
+//Order.jsx
 /* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -32,13 +33,13 @@ export default function Order() {
       .get(`${backendURL}/product/${id}`)
       .then((res) => {
         setProductData(res.data);
-
-        console.log("productData :>> ", productData);
       })
       .catch((err) => {
         console.error("err", err);
       });
-  }, []);
+  // Écoutez pour `id` pour réexécuter l'effet si `id` change
+  }, [id]);
+
 
   function onSubmit(e) {
     e.preventDefault();
@@ -180,8 +181,9 @@ export default function Order() {
               <label>* Méthode de paiement :</label>
               <select name="paymentMethod" {...register("paymentMethod")}>
                 <option value="">Sélectionnez une option</option>
-                <option value="stripe">Stripe</option>
+                <option value="credit_card">Carte Bancaire</option>
                 <option value="paypal">PayPal</option>
+                <option value="google_pay">Google Pay</option>
               </select>
               {errors.paymentMethod && (
                 <span className="error-span">

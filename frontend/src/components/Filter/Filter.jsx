@@ -30,7 +30,7 @@ export default function FilterModal({
       className="filter-modal flex h-screen flex-col gap-4 pb-20 md:pb-8"
     >
       <h3 className="h3 relative mt-4 w-full self-start pl-[5%] xl:mt-8">
-        Filtrer par :{" "}
+        Choisir par :{" "}
         <span
           className="absolute bottom-1 right-3 cursor-pointer text-4xl xl:text-5xl"
           onClick={onRequestClose}

@@ -65,7 +65,7 @@ export default function Buy() {
 
   return (
     <main className="main my-8 flex flex-col items-center gap-8">
-      <h1 className="h1 my-8 text-center">Filtrer par catégorie</h1>
+      <h1 className="h1 my-8 text-center">Affiner votre choix par catégorie</h1>
       <div className="grid w-[90%] grid-cols-3 justify-center gap-4 md:gap-8 lg:w-[80%] lg:gap-12 xl:w-[70%] xl:gap-24">
         {categories.map((category) => (
           <div key={category.name} className="flex flex-col gap-2">

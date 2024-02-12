@@ -1,3 +1,4 @@
+//NavbarMobile.jsx is a component that contains the mobile navbar with icons.
 import { Link } from "react-router-dom";
 import homeIcon from "./../../../assets/icons/home-simple.svg";
 import searchIcon from "./../../../assets/icons/search.svg";
