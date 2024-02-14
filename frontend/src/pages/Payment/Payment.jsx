@@ -1,6 +1,8 @@
+//Payment.jsx
+
 import { useState } from 'react';
 
-const Paiement = () => {
+const Payment = () => {
   const [nom, setNom] = useState('');
   const [numeroCarte, setNumeroCarte] = useState('');
   const [dateExpiration, setDateExpiration] = useState('');
@@ -9,12 +11,12 @@ const Paiement = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Ici, vous pourriez intégrer un système de paiement ou valider les données
-    console.log('Paiement soumis', { nom, numeroCarte, dateExpiration, cvv });
+    console.log('Règlement soumis', { nom, numeroCarte, dateExpiration, cvv });
   };
 
   return (
     <div>
-      <h2>Page de Paiement</h2>
+      <h2>Page de Règlement</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Nom sur la carte:</label>
@@ -54,4 +56,4 @@ const Paiement = () => {
   );
 };
 
-export default Paiement;
+export default Payment;

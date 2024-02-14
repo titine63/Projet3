@@ -25,7 +25,7 @@ export default function Home() {
       id: 2,
       text: (
         <p className="carousel-text">
-          Des trésors dans vos penderies ? Alors c'est ici que ça se passe ! 
+          Des trésors dans vos penderies ? Alors c&apos;est ici que ça se passe ! 
         </p>
       ),
     },
