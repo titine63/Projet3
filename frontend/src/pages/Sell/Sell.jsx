@@ -22,28 +22,22 @@ export default function Sell() {
   return (
     <main className="main flex flex-col gap-10 bg-[#FCE3D7] text-center lg:flex-row lg:gap-0">
       <section className="sell-section flex flex-col gap-6 pt-12 text-center lg:w-1/3 lg:pb-4 lg:pt-0">
-        <div className="flex w-full flex-col gap-8 lg:h-full lg:items-center lg:justify-center">
-          <h1 className="h2">Déposez votre annonce</h1>
-          <h3 className="mx-auto w-[80%] text-start lg:text-center lg:text-lg">
-            Pour augmenter vos chances de trouver le bon contact, ajoutez des
-            informations au max !
-          </h3>
-        </div>
-        <div className="hidden w-[80%] flex-col gap-2 self-center lg:flex lg:w-[70%]">
-          <p className="text-start lg:block lg:font-medium">
-            *{" "}
-            <span className="underline underline-offset-4">
-              Informations obligatoires
-            </span>
-          </p>
-          <p className="text-start lg:block lg:font-medium">
-            **{" "}
-            <span className="underline underline-offset-4">
-              Vous pouvez ajouter jusqu'à 6 photos{" "}
-            </span>
-          </p>
-        </div>
-      </section>
+  <div className="flex w-full flex-col gap-8 lg:h-full lg:items-center lg:justify-center">
+    <h1 className="h2">Déposez votre annonce</h1>
+    <h3 className="mx-auto w-[80%] text-start lg:text-center lg:text-lg">
+      Pour augmenter vos chances auprès des acheteurs, ajoutez un maximum d'informations !
+    </h3>
+    <div className="w-[80%] flex-col gap-2 self-center lg:flex lg:w-[70%]">
+      <p className="text-start lg:block lg:font-medium">
+        * <span className="underline underline-offset-4">Informations obligatoires</span>
+      </p>
+      <p className="text-start lg:block lg:font-medium">
+        ** <span className="underline underline-offset-4">Vous pouvez ajouter jusqu'à 6 photos</span>
+      </p>
+    </div>
+  </div>
+</section>
+
 
       <ProductForm
         setModalVisible={setModalVisible}

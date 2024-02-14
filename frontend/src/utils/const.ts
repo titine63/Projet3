@@ -118,7 +118,7 @@ export const orderFormSchema = yup
 
     paymentMethod: yup
       .string()
-      .oneOf(["paypal", "stripe"], "Méthode de payment non valide.")
+      .oneOf(["paypal", "credit_card", "google_pay"], "Méthode de payment non valide.")
       .required("La méthode de payment est obligatoire."),
 
     shippingMethod: yup

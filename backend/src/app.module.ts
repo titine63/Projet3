@@ -11,7 +11,8 @@ import { OrderModule } from './order/order.module';
 import { ShippingModule } from './shipping/shipping.module';
 import { ProductModule } from './product/product.module';
 import { StaticModule } from 'static.module';
-import { ChatModule } from './chat/chat.module';
+import { PaymentsModule } from './payments/payments.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { ChatModule } from './chat/chat.module';
     OrderModule,
     ShippingModule,
     StaticModule,
-    ChatModule,
+    PaymentsModule,
+    WishlistModule,
   ],
   controllers: [AppController],
   providers: [AppService],

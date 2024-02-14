@@ -1,3 +1,4 @@
+//order.entity.ts
 import {
   Entity,
   Column,
@@ -8,7 +9,7 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { User } from './../../users/user.entity/user.entity';
+import { User } from './../../users/entities/user.entity';
 import { Shipping } from './../../shipping/entities/shipping.entity';
 import { Product } from './../../product/entities/product.entity';
 
@@ -17,7 +18,7 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 20, default: 'pending' })
+  @Column({ length: 20 })
   status: string;
 
   @Column({ length: 20 })
@@ -39,9 +40,6 @@ export class Order {
   })
   @JoinColumn({ name: 'shippingId' })
   shipping: Shipping;
-
-  @Column()
-  shippingId: number;
 
   @OneToMany(() => Product, (product) => product.order, {
     cascade: false,

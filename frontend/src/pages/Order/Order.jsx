@@ -13,6 +13,8 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 export default function Order() {
   const { id } = useParams();
   const [productData, setProductData] = useState([]);
+  const [paymentMethod, setPaymentMethod] = useState(null);
+
 
   const userInfo = Cookies.get("userData")
     ? JSON.parse(Cookies.get("userData"))
@@ -33,58 +35,101 @@ export default function Order() {
       .get(`${backendURL}/product/${id}`)
       .then((res) => {
         setProductData(res.data);
+
+        console.log("productData :>> ", productData);
       })
       .catch((err) => {
         console.error("err", err);
       });
-  // Écoutez pour `id` pour réexécuter l'effet si `id` change
   }, [id]);
 
-
-  function onSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+  function onSubmit(data) {
+    //e.preventDefault();
+    //const formData = new FormData(e.target);
+    //const data = Object.fromEntries(formData);
     data.userId = userInfo.id;
-    axios
-      .post(`${backendURL}/shipping`, data)
-      .then((res) => {
-        console.log("Shipping created successfully", res);
-        data.shippingId = res.data.id;
-        console.log("data :>> ", data);
-        axios
-          .post(`${backendURL}/order`, data)
-          .then((res) => {
-            console.log("Order created successfully", res);
+    // Vérification si l'utilisateur existe déjà (assurez-vous d'avoir une route pour ça dans votre backend)
+  axios.get(`${backendURL}/users/${data.userId}`)
+  .then(userRes => {
+    if (userRes.status === 200) {
+      // Création de l'entrée d'expédition
+      axios.post(`${backendURL}/shipping`, data)
+      .then(shippingRes => {
+        console.log("Shipping created successfully", shippingRes);
+
+        // Ajout de l'ID de l'expédition aux données de la commande
+        const orderData = {
+          ...data,
+          shippingId: shippingRes.data.id
+        };
+
+        // Création de la commande
+axios.post(`${backendURL}/order`, orderData)
+.then(orderRes => {
+  console.log("Order created successfully", orderRes);
+
+  // After order creation, handle payment
+  if (paymentMethod === "paypal") {
+    // Ici, nous passons l'ID de la commande à l'API de création de paiement PayPal
+    const paypalPaymentData = {
+      productId: id,
+      orderId: orderRes.data.id // Utilisez l'ID de la commande comme 'orderId'
+    };
+    axios.post(`${backendURL}/payments/create-paypal-payment`, paypalPaymentData)
+      .then(paymentRes => {
+      // Obtenez l'URL pour approuver le paiement
+      const approvalUrl = paymentRes.data.result.links.find(link => link.rel === "approve").href;
+      
+      // Ouvrir l'URL de PayPal dans une nouvelle fenêtre/tab
+      window.open(approvalUrl, '_blank');
+    })
+    .catch(paymentError => {
+      console.error("Error during PayPal payment creation:", paymentError);
+    });
+  } else if (paymentMethod === "credit_card") {
+    // Gérer le paiement carte bancaire
+    // la logique pour traiter le paiement par carte bancaire.
+    // Par exemple, initier un paiement avec Stripe ou un autre fournisseur de paiement par carte.
+  } else if (paymentMethod === "google_pay") {
+    // Gérer le paiement Google Pay
+    // la logique pour traiter le paiement via Google Pay.
+    // utiliser l'API Google Pay pour obtenir le token de paiement et le soumettre au backend pour traitement.
+  }
           })
-          .catch((err) => {
-            console.error("Error:", err);
+          .catch(orderError => {
+            console.error("Error creating the order:", orderError);
           });
       })
-      .catch((err) => {
-        console.error("Error:", err);
+      .catch(shippingError => {
+        console.error("Error creating shipping:", shippingError);
       });
+  } else {
+    console.error("User does not exist");
+    // Gérez l'erreur ici, peut-être afficher un message à l'utilisateur
   }
+})
+.catch(userError => {
+  console.error("Error fetching user:", userError);
+  // Gérez l'erreur ici, peut-être afficher un message à l'utilisateur
+});
+}
 
   return (
     <main className="main flex flex-col gap-6 bg-[#FCE3D7] text-center md:gap-10 lg:flex-row lg:gap-0">
       <section className="sell-section flex flex-col gap-6 pt-12 text-center lg:w-1/3 lg:pb-4 lg:pt-0">
-        <div className="flex w-full flex-col gap-4 sm:gap-8 lg:h-full lg:items-center lg:justify-center">
-          <h1 className="h2">Passez votre commande</h1>
-          <h3 className="mx-auto w-[80%] text-start lg:text-center lg:text-lg">
-            Remplissez vos informations pour que votre article puisse vous
-            trouver rapidement.
-          </h3>
-        </div>
-        <div className="hidden w-[80%] flex-col gap-2 self-center lg:flex lg:w-[70%]">
-          <p className="text-start lg:block lg:font-medium">
-            *{" "}
-            <span className="underline underline-offset-4">
-              Toutes les informations sont obligatoires
-            </span>
-          </p>
-        </div>
-      </section>
+  <div className="flex w-full flex-col gap-4 sm:gap-8 lg:h-full lg:items-center lg:justify-center">
+    <h1 className="h2">Passez votre commande</h1>
+    <h3 className="mx-auto w-[80%] text-start lg:text-center lg:text-lg">
+      Complétez vos informations pour que votre article puisse vous trouver.
+    </h3>
+    <div className="w-[80%] flex-col gap-2 self-center lg:flex lg:w-[70%]">
+      <p className="text-start lg:block lg:font-medium">
+        * <span className="underline underline-offset-4">Toutes ces informations sont obligatoires</span>
+      </p>
+    </div>
+  </div>
+  
+</section>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="params-product-form items-center gap-4 pb-8 sm:gap-6 lg:ml-[33%] lg:flex lg:w-3/4 lg:flex-col lg:bg-white lg:pb-8 lg:pt-16"

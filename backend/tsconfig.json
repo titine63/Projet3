@@ -20,6 +20,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "uploads/**/*" // Ajoutez cette ligne pour inclure le dossier uploads et son contenu
+    "uploads/**/*", // inclure le dossier uploads et son contenu
+    "src/payments/paypalConfig.ts" // Add this line to include the file
   ]
 }

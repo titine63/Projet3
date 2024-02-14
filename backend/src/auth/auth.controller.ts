@@ -9,7 +9,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User } from '../users/user.entity/user.entity';
+import { User } from '../users/entities/user.entity';
 import { Response } from 'express';
 import { JwtAuthGuard } from './jwt-aut.guards';
 

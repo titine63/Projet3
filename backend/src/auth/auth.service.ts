@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from './../users/user.entity/user.entity';
+import { User } from './../users/entities/user.entity';
 import { UsersService } from './../users/users.service';
 import * as crypto from 'crypto';
 import { Response } from 'express'; // Ajoutez cet import
