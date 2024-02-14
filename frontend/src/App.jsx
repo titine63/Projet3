@@ -13,6 +13,7 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Category from "./pages/Category/Category";
 import UpdateProduct from "./pages/UpdateProduct/UpdateProduct";
 import Order from "./pages/Order/Order";
+import Paiement from "./pages/Paiement/Paiement";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                 path="/product/category/:category"
                 element={<Category />}
               />
+              <Route path="/paiement" element={<Paiement />} />
             </Routes>
           </Layout>
         </GlobalContextProvider>

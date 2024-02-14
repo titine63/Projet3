@@ -116,11 +116,6 @@ export const orderFormSchema = yup
       .max(255, "Maximum 255 caractères")
       .required("Le nom de famille est obligatoire"),
 
-    paymentMethod: yup
-      .string()
-      .oneOf(["paypal", "stripe"], "Méthode de payment non valide.")
-      .required("La méthode de payment est obligatoire."),
-
     shippingMethod: yup
       .string()
       .oneOf(["point-relais", "laposte"], "Méthode de livraison non valide.")

@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+// LoginForm.jsx
 import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { GlobalContext } from "./../../../contexts/GlobalContextProvider";
@@ -15,6 +15,7 @@ import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
+// eslint-disable-next-line react/prop-types
 export default function LoginForm({ className }) {
   const { setIsLogged, setShowAuthModal } = useContext(GlobalContext);
   const [showPassword, setShowPassword] = useState(false);

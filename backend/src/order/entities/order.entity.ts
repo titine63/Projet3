@@ -1,3 +1,4 @@
+//order.entity.ts will contain the schema for the order table. The order table will have the following columns:
 import {
   Entity,
   Column,
@@ -20,8 +21,8 @@ export class Order {
   @Column({ length: 20, default: 'pending' })
   status: string;
 
-  @Column({ length: 20 })
-  paymentMethod: string;
+  //@Column({ length: 20 })
+  //paymentMethod: string;
 
   @ManyToOne(() => User, (user) => user.order, {
     cascade: false,
