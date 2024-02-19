@@ -13,6 +13,7 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 export default function Order() {
   const { id } = useParams();
   const [productData, setProductData] = useState([]);
+  const [shippingData, setShippingData] = useState([]);
   const navigate = useNavigate();
 
   const userInfo = Cookies.get("userData")
@@ -49,6 +50,16 @@ export default function Order() {
 
   const onSubmit = async (data) => {
     data.userId = userInfo.id;
+
+  // Mise à jour shippingData avec les données du formulaire
+  setShippingData({
+    address: data.address,
+    city: data.city,
+    postalCode: data.postalCode,
+    country: data.country,
+    shippingMethod: data.shippingMethod,
+  });
+  
     
     // Vérification si l'utilisateur existe déjà (assurez-vous d'avoir une route pour ça dans votre backend)
   axios.get(`${backendURL}/users/${data.userId}`)
@@ -70,7 +81,7 @@ axios.post(`${backendURL}/order`, orderData)
   .then(orderRes => {
     console.log("Order created successfully", orderRes);
     // Redirigez l'utilisateur vers la page de confirmation de commande
-    navigate(`/payment`);
+    navigate('/payment', { state: { productData, backendURL, shippingData } });
   })
   .catch(orderError => {
     console.error("Error creating the order:", orderError);
@@ -96,19 +107,18 @@ axios.post(`${backendURL}/order`, orderData)
   return (
     <main className="main flex flex-col gap-6 bg-[#FCE3D7] text-center md:gap-10 lg:flex-row lg:gap-0">
       <section className="sell-section flex flex-col gap-6 pt-12 text-center lg:w-1/3 lg:pb-4 lg:pt-0">
-  <div className="flex w-full flex-col gap-4 sm:gap-8 lg:h-full lg:items-center lg:justify-center">
-    <h1 className="h2">Passez votre commande</h1>
-    <h3 className="mx-auto w-[80%] text-start lg:text-center lg:text-lg">
+      <div className="flex w-full flex-col gap-4 sm:gap-8 lg:h-full lg:items-center lg:justify-center">
+        <h1 className="h2">Passez votre commande</h1>
+        <h3 className="mx-auto w-[80%] text-start lg:text-center lg:text-lg">
       Complétez vos informations pour que votre article puisse vous trouver.
-    </h3>
-    <div className="w-[80%] flex-col gap-2 self-center lg:flex lg:w-[70%]">
-      <p className="text-start lg:block lg:font-medium">
+        </h3>
+        <div className="w-[80%] flex-col gap-2 self-center lg:flex lg:w-[70%]">
+          <p className="text-start lg:block lg:font-medium">
         * <span className="underline underline-offset-4">Toutes ces informations sont obligatoires</span>
-      </p>
-    </div>
-  </div>
-  
-</section>
+          </p>
+        </div>
+      </div>
+      </section>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="params-product-form items-center gap-4 pb-8 sm:gap-6 lg:ml-[33%] lg:flex lg:w-3/4 lg:flex-col lg:bg-white lg:pb-8 lg:pt-16">
