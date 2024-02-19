@@ -20,9 +20,9 @@ import { useState, useEffect } from 'react';
         
         {/* Bouton de paiement PayPal */}
         <section className="params-product-form items-center gap-4 pb-8 sm:gap-6 lg:ml-[33%] lg:flex lg:w-3/4 lg:flex-col lg:bg-white lg:pb-8 lg:pt-16">
-        <h3 className="mx-auto w-[80%] text-start lg:text-center lg:text-lg">
+        <h1 className="h2">
       Choisissez votre mode de règlement.
-        </h3>
+        </h1>
         <div className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2">
             <PayPalCheckoutButton />
           </div>
