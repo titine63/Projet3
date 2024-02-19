@@ -81,7 +81,7 @@ axios.post(`${backendURL}/order`, orderData)
   .then(orderRes => {
     console.log("Order created successfully", orderRes);
     // Redirigez l'utilisateur vers la page de confirmation de commande
-    navigate('/payment', { state: { productData, backendURL, shippingData } });
+    navigate('/confirmation', { state: { orderData, productData, backendURL, shippingData } });
   })
   .catch(orderError => {
     console.error("Error creating the order:", orderError);

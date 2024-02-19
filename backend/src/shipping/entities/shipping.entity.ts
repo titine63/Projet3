@@ -1,3 +1,4 @@
+//shipping.entity.ts
 import { Order } from './../../order/entities/order.entity';
 import { User } from './../../users/user.entity/user.entity';
 import {

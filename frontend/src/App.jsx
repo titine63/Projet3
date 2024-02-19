@@ -13,6 +13,7 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Category from "./pages/Category/Category";
 import UpdateProduct from "./pages/UpdateProduct/UpdateProduct";
 import Order from "./pages/Order/Order";
+import ConfirmationOrder from "./pages/Order/ConfirmationOrder"; // Import de la page "ConfirmationOrder"
 import Payment from "./pages/Payment/Payment";
 
 function App() {
@@ -34,10 +35,8 @@ function App() {
               <Route path="/buy/product/:id" element={<ProductDetail />} />
               <Route path="/product/update/:id" element={<UpdateProduct />} />
               <Route path="/order/:id" element={<Order />} />
-              <Route
-                path="/product/category/:category"
-                element={<Category />}
-              />
+              <Route path="/product/category/:category" element={<Category />} />
+              <Route path="/confirmation" element={<ConfirmationOrder />} /> {/*Ajout de la route "confirmation"*/}
               <Route path="/payment" element={<Payment />} />
             </Routes>
           </Layout>
