@@ -81,14 +81,18 @@ const ConfirmationOrder = () => {
         Vos instructions de livraison :
        </h1>
 
-       <div className="flex w-[90%] flex-col gap-4 md:w-[75%] md:gap-8 lg:flex-row lg:justify-between lg:justify-self-end">
-                <div className="flex flex-col justify-center text-start md:text-lg">
+      <div className="flex w-[90%] flex-col gap-4 md:w-[75%] md:gap-8 lg:flex-row lg:justify-between lg:justify-self-end">
+        <div className="flex flex-col justify-center text-start md:text-lg">
           <p>{shippingData.firstname} {shippingData.lastname}</p>
           <p>Adresse : {shippingData.address}</p>
           <p>Code postal : {shippingData.postalCode}</p>
           <p>Ville : {shippingData.city}</p>
-         </div>
+          {/* Condition pour afficher le type d'expédition si différent de "laposte" */}
+          {shippingData.shippingMethod !== 'laposte' && (
+            <p>Méthode d&apos;expédition : Envoi en point relais</p>
+          )}
         </div>
+      </div>
       </div>
       </div>
       </div>
