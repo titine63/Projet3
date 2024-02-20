@@ -1,7 +1,6 @@
 //ConfirmationOrder.jsx
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from "axios";
+
 
 
 const ConfirmationOrder = () => {
@@ -57,6 +56,7 @@ const ConfirmationOrder = () => {
             <h1 className="h2">
                 Votre commande :
             </h1>
+
               <div className="flex w-[90%] flex-col gap-4 md:w-[75%] md:gap-8 lg:flex-row lg:justify-between lg:justify-self-end">
                 <div className="flex flex-col justify-center text-start md:text-lg">
                   <p>{productData.title}</p>
@@ -71,14 +71,18 @@ const ConfirmationOrder = () => {
             </div>
           </div>
         </div>
-       
+
         {/* Bloc pour les instructions de livraison */}
-      <div className="product-delivery-details flex flex-col gap-10 lg:w-2/3 bg-[#FCE3D7] ">
-       <h1 className="h2">
+        <div className="mb-8 flex flex-col items-center gap-2 lg:w-[80%] lg:flex-row lg:gap-4">
+          <div className=" flex w-[90%] flex-col items-center gap-4 bg-[#e6c9ba] p-4 sm:w-[80%] md:w-[75%] md:gap-8 lg:w-full lg:flex-row lg:items-stretch lg:gap-0 lg:bg-[#fce3d7]">
+
+      <div className="flex h-full w-full flex-col items-center gap-4 font-medium md:gap-8 lg:h-full lg:justify-stretch lg:gap-32">
+            <h1 className="h2">
         Vos instructions de livraison :
        </h1>
-        <div className="flex w-[90%] flex-col gap-4 md:w-[75%] md:gap-8 lg:flex-row lg:justify-between lg:justify-self-end mx-auto">
-         <div className="flex flex-col justify-center text-start md:text-lg">
+
+       <div className="flex w-[90%] flex-col gap-4 md:w-[75%] md:gap-8 lg:flex-row lg:justify-between lg:justify-self-end">
+                <div className="flex flex-col justify-center text-start md:text-lg">
           <p>{shippingData.firstname} {shippingData.lastname}</p>
           <p>Adresse : {shippingData.address}</p>
           <p>Code postal : {shippingData.postalCode}</p>
@@ -86,12 +90,18 @@ const ConfirmationOrder = () => {
          </div>
         </div>
       </div>
+      </div>
+      </div>
+
+      {/* Bouton pour régler la commande */}
         <button
           type="button"
           className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2"
           onClick={() => navigate('/payment')}>
           Régler la commande
         </button>
+
+    
     </form>
   </main>
     );

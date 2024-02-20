@@ -1,5 +1,4 @@
 //Order.jsx
-
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -13,7 +12,6 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 export default function Order() {
   const { id } = useParams();
   const [productData, setProductData] = useState([]);
-  const [shippingData, setShippingData] = useState([]);
   const navigate = useNavigate();
 
   const userInfo = Cookies.get("userData")
@@ -22,7 +20,6 @@ export default function Order() {
 
   const {
     register,
-
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -35,8 +32,6 @@ export default function Order() {
       .get(`${backendURL}/product/${id}`)
       .then((res) => {
         setProductData(res.data);
-
-        //console.log("productData :>> ", productData);
       })
       .catch((err) => {
         console.error("Error fetching product:", err);
@@ -50,44 +45,34 @@ export default function Order() {
 
   const onSubmit = async (data) => {
     data.userId = userInfo.id;
-
-  // Mise à jour shippingData avec les données du formulaire
-  setShippingData({
-    address: data.address,
-    city: data.city,
-    postalCode: data.postalCode,
-    country: data.country,
-    shippingMethod: data.shippingMethod,
-  });
-  
-    
+     
     // Vérification si l'utilisateur existe déjà (assurez-vous d'avoir une route pour ça dans votre backend)
   axios.get(`${backendURL}/users/${data.userId}`)
   .then(userRes => {
     if (userRes.status === 200) {
-      // Création de l'entrée d'expédition
+    // Création de l'entrée d'expédition
       axios.post(`${backendURL}/shipping`, data)
       .then(shippingRes => {
         console.log("Shipping created successfully", shippingRes);
 
-        // Ajout de l'ID de l'expédition aux données de la commande
+    // Ajout de l'ID de l'expédition aux données de la commande
         const orderData = {
           ...data,
           shippingId: shippingRes.data.id
         };
 
-// Création de la commande
-axios.post(`${backendURL}/order`, orderData)
+    // Création de la commande
+  axios.post(`${backendURL}/order`, orderData)
   .then(orderRes => {
     console.log("Order created successfully", orderRes);
     // Redirigez l'utilisateur vers la page de confirmation de commande
-    navigate('/confirmation', { state: { orderData, productData, backendURL, shippingData } });
+    navigate('/confirmation', { state: { orderData, productData, backendURL, shippingData: data } });
   })
   .catch(orderError => {
     console.error("Error creating the order:", orderError);
   });
 
-      })
+  })
       .catch(shippingError => {
         console.error("Error creating shipping:", shippingError);
       });
@@ -95,13 +80,11 @@ axios.post(`${backendURL}/order`, orderData)
     console.error("User does not exist");
     // Gérez l'erreur ici, peut-être afficher un message à l'utilisateur
   }
-})
+  })
 .catch(userError => {
   console.error("Error fetching user:", userError);
-  // Gérez l'erreur ici, peut-être afficher un message à l'utilisateur
-});
-
-
+    // Gérez l'erreur ici, peut-être afficher un message à l'utilisateur
+  }); 
 }
 
   return (
