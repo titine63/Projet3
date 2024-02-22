@@ -1,3 +1,4 @@
+//order.service.ts
 import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -26,7 +27,10 @@ export class OrderService {
   }
 
   async findOne(id: number) {
-    return await this.orderRepository.findOne({ where: { id: id } });
+    return await this.orderRepository.findOne({
+      where: { id: id },
+      relations: ['product'],
+    });
   }
 
   async update(id: number, updateOrderDto: UpdateOrderDto) {

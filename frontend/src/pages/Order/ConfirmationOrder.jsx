@@ -1,16 +1,21 @@
 //ConfirmationOrder.jsx
 import { useLocation, useNavigate } from 'react-router-dom';
 
-
-
 const ConfirmationOrder = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const shippingData = location.state?.shippingData;
+  const { orderDetails } = location.state;
+
+  console.log("Order Data in ConfirmationOrder:", orderDetails);
+  console.log("Shipping Data in ConfirmationOrder:", shippingData);
+  console.log("Location state in ConfirmationOrder:", location.state);
+
+
   const productData = location.state?.productData;
   const backendURL = location.state?.backendURL;
     // Extrait shippingId de orderData, qui est dans location.state
-  const shippingId = location.state?.orderData?.shippingId;
+  const shippingId = location.state?.orderDetails?.shippingId;
 
   // Gestion des données manquantes sans rediriger
   if (!productData || !backendURL || !shippingId) {
@@ -101,7 +106,7 @@ const ConfirmationOrder = () => {
         <button
           type="button"
           className="h2 button mt-8 w-[90%] sm:w-[80%] md:w-[70%] lg:mx-auto lg:w-1/2"
-          onClick={() => navigate('/payment')}>
+          onClick={() => navigate('/payment', { state: { orderId: orderDetails.id }})}>
           Régler la commande
         </button>
 

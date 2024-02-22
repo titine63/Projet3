@@ -43,34 +43,50 @@ export default function Order() {
     }
   }, [productData]);
 
-  const onSubmit = async (data) => {
-    data.userId = userInfo.id;
+  const onSubmit = async (formData) => {
+    console.log("Form data :>> ", formData);
+    const userData =  { ...formData, userId: userInfo.id };
      
-    // Vérification si l'utilisateur existe déjà (assurez-vous d'avoir une route pour ça dans votre backend)
-  axios.get(`${backendURL}/users/${data.userId}`)
+    // Vérification si l'utilisateur existe déjà 
+  axios.get(`${backendURL}/users/${userData.userId}`)
   .then(userRes => {
     if (userRes.status === 200) {
     // Création de l'entrée d'expédition
-      axios.post(`${backendURL}/shipping`, data)
+      axios.post(`${backendURL}/shipping`, userData)
       .then(shippingRes => {
         console.log("Shipping created successfully", shippingRes);
 
     // Ajout de l'ID de l'expédition aux données de la commande
-        const orderData = {
-          ...data,
-          shippingId: shippingRes.data.id
-        };
-
+    const orderData = {
+      productId: productData.id,
+      userId: userInfo.id,
+      shippingId: shippingRes.data.id
+    };
     // Création de la commande
-  axios.post(`${backendURL}/order`, orderData)
-  .then(orderRes => {
-    console.log("Order created successfully", orderRes);
-    // Redirigez l'utilisateur vers la page de confirmation de commande
-    navigate('/confirmation', { state: { orderData, productData, backendURL, shippingData: data } });
-  })
-  .catch(orderError => {
-    console.error("Error creating the order:", orderError);
-  });
+axios.post(`${backendURL}/order`, orderData)
+.then(orderRes => {
+  console.log("Order created successfully", orderRes.data);
+  const orderId = orderRes.data.id;
+  
+    // Mise à jour du produit avec l'orderId
+  const updateProductData = { orderId: orderId};
+  axios.put(`${backendURL}/product/${productData.id}`, updateProductData)
+    .then(updateRes => {
+        console.log("Product updated successfully", updateRes);
+
+      // Redirigez l'utilisateur avec les données nécessaires à la confirmation
+      navigate('/confirmation', { state: { orderDetails: orderRes.data, productData, backendURL, shippingData: userData } });
+
+    })
+        .catch(updateError => {
+        console.error("Error updating the product:", updateError);
+      // Gérez l'erreur de mise à jour du produit
+    });
+})
+      .catch(orderError => {
+        console.error("Error creating the order:", orderError);
+});
+
 
   })
       .catch(shippingError => {
@@ -81,7 +97,7 @@ export default function Order() {
     // Gérez l'erreur ici, peut-être afficher un message à l'utilisateur
   }
   })
-.catch(userError => {
+      .catch(userError => {
   console.error("Error fetching user:", userError);
     // Gérez l'erreur ici, peut-être afficher un message à l'utilisateur
   }); 
