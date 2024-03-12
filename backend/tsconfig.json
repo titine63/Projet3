@@ -13,6 +13,7 @@
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
+    "types": ["jest", "node"],
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
@@ -20,6 +21,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "uploads/**/*" // Ajoutez cette ligne pour inclure le dossier uploads et son contenu
+    "uploads/**/*", // Ajoutez cette ligne pour inclure le dossier uploads et son contenu
+    "app.e2e-spec.ts",
+    "jest.config.ts"
   ]
 }

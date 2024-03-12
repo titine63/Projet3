@@ -32,7 +32,7 @@ export function GlobalContextProvider({ children }) {
 
   // Fonction pour afficher un toast
   function showToast(message) {
-    // Votre logique pour afficher le toast ici
+    // Logique pour afficher le toast ici
     setToastMessage(message);
     setToastVisibility(true);
 
@@ -53,8 +53,8 @@ export function GlobalContextProvider({ children }) {
       setModalContent,
       userInfo,
       setUserInfo,
-      isToastVisible, // Ajout de l'état du toast
-      showToast, // Ajout de la fonction pour afficher le toast
+      isToastVisible, // Etat du toast
+      showToast, // Fonction pour afficher le toast
       wishlist,
       setWishlist,
     }),

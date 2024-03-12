@@ -1,3 +1,4 @@
+//App.jsx
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import { GlobalContextProvider } from "./contexts/GlobalContextProvider";
 import Layout from "./components/Layout/Layout";
@@ -13,8 +14,9 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Category from "./pages/Category/Category";
 import UpdateProduct from "./pages/UpdateProduct/UpdateProduct";
 import Order from "./pages/Order/Order";
-import ConfirmationOrder from "./pages/Order/ConfirmationOrder"; // Import de la page "ConfirmationOrder"
+import ConfirmationOrder from "./pages/Order/ConfirmationOrder";
 import Payment from "./pages/Payment/Payment";
+import Summary from "./pages/Payment/Summary";
 
 function App() {
   return (
@@ -36,8 +38,9 @@ function App() {
               <Route path="/product/update/:id" element={<UpdateProduct />} />
               <Route path="/order/:id" element={<Order />} />
               <Route path="/product/category/:category" element={<Category />} />
-              <Route path="/confirmation" element={<ConfirmationOrder />} /> {/*Ajout de la route "confirmation"*/}
+              <Route path="/confirmation" element={<ConfirmationOrder />} />
               <Route path="/payment" element={<Payment />} />
+              <Route path="/summary" element={<Summary/>} />
             </Routes>
           </Layout>
         </GlobalContextProvider>

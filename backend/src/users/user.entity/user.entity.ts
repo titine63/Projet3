@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+//user.entity.ts
 import { Shipping } from './../../shipping/entities/shipping.entity';
 import { Order } from './../../order/entities/order.entity';
 import { Product } from './../../product/entities/product.entity';

@@ -1,4 +1,4 @@
-// src/config/database.config.ts
+//database.config.ts
 
 import { DataSourceOptions } from 'typeorm';
 import 'dotenv/config';

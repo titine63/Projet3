@@ -1,4 +1,4 @@
-// PayPalButton.jsx
+//PayPalButton.jsx
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
@@ -8,11 +8,9 @@ const PayPalCheckoutButton = ({ orderId }) => {
   const [amount, setAmount] = useState('0.00');
 
   useEffect(() => {
-
     const fetchOrderAmount = async () => {
       try {
         const response = await axios(`http://localhost:3000/order/${orderId}`);
-        
         const orderDetails = response.data;
         setAmount(orderDetails.product[0].price.toString());
       } catch (error) {
@@ -27,57 +25,59 @@ const PayPalCheckoutButton = ({ orderId }) => {
 
   return (
     <PayPalScriptProvider options={{
-      "client-id": "AVTfrFC0Zb4LIxBqZzYm1LFYZmrNxPqARqw4OvaRkuZ9ATto866WFAGIlzdHrz8g9liLz54QqjR5pNa_",
-      currency: "EUR" // Ajouter cette ligne pour spécifier la devise
+      "client-id": "AVTfrFC0Zb4LIxBqZzYm1LFYZmrNxPqARqw4OvaRkuZ9ATto866WFAGIlzdHrz8g9liLz54QqjR5pNa_", // Votre Client ID sandbox
+      currency: "EUR"
     }}>
       <PayPalButtons
         createOrder={(data, actions) => {
+          console.log("Amount being used for the transaction:", amount);
           return actions.order.create({
             purchase_units: [{
-              description: "Description de votre commande",
-              custom_id: `IDCommande${orderId}`,
-              soft_descriptor: "DescCourteCommande",
+              description: "Votre commande",
+              custom_id: `OrderID${orderId}`,
+              soft_descriptor: "Votre Boutique",
               amount: {
-                value: amount, // Utilisez le montant récupéré de la commande
+                value: amount,
                 currency_code: "EUR",
                 breakdown: {
                   item_total: { value: amount, currency_code: "EUR" },
-                  // Ajoutez d'autres frais comme shipping, taxes, etc., si nécessaire
                 }
               },
-              items: [ // Détails des articles de la commande
+              items: [
                 {
-                  name: "Article de la commande",
-                  description: "Description de l'article",
+                  name: "Produit Commandé",
+                  description: "Description du produit",
                   sku: "sku01",
                   unit_amount: { value: amount, currency_code: "EUR" },
                   quantity: '1',
-                  // Ajoutez d'autres attributs ici si nécessaire
                 },
-                // Ajoutez d'autres articles si la commande en contient plusieurs
               ],
-              // Ajoutez des informations sur l'expédition ici si nécessaire
             }],
           });
         }}
         onApprove={(data, actions) => {
-          // Logique à exécuter en cas d'approbation de la commande
           return actions.order.capture().then((details) => {
-            alert(`Transaction complétée par ${details.payer.name.given_name}!`);
+            alert(`Transaction completed by ${details.payer.name.given_name}!`);
           });
         }}
         onError={(err) => {
-          // Logique à exécuter en cas d'erreur lors de la transaction
-          console.error("Erreur lors de la transaction :", err);
+          console.error("Payment Error:", err);
+          alert("Une erreur est survenue lors du paiement. Veuillez réessayer.");
         }}
       />
     </PayPalScriptProvider>
   );
 };
 
-// Définition des PropTypes pour PayPalCheckoutButton
 PayPalCheckoutButton.propTypes = {
-  orderId: PropTypes.number.isRequired, // ou PropTypes.string si votre ID est une chaîne
+  orderId: PropTypes.number.isRequired,
 };
 
 export default PayPalCheckoutButton;
+
+
+
+
+
+
+
